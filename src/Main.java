@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.lang.*;
 
 public class Main {      //Movie reader
     public static List<Movie> readMoviesFromFile(String filePath) {
@@ -41,7 +42,7 @@ public class Main {      //Movie reader
         return movies;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NumberFormatException {
         List<Movie> movies = readMoviesFromFile("Movies.txt");
 
         // Print the details of each movie

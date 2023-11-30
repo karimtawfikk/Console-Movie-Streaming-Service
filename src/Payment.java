@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 public class Payment {//extends Subscriptions
     private String planName;
     //price andd plan inherited from subscriptions
@@ -39,3 +40,7 @@ public class Payment {//extends Subscriptions
     }
 
 }
+=======
+public class Payment {
+}
+>>>>>>> 15f1369 (committ)

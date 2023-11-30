@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-public class Movie {
+public class Movie implements Serializable {
     int movieId;
     String movieTitle;
     LocalDate releaseDate;
@@ -35,4 +36,54 @@ public class Movie {
         this.languages = languages;
         this.poster = poster;
     }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public String getMovieTitle() {
+        return movieTitle;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public LocalTime getDurationTime() {
+        return durationTime;
+    }
+
+    public String getDirector() {
+        return Director;
+    }
+
+    public String[] getGenre() {
+        return genre;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public float getBudget() {
+        return budget;
+    }
+
+    public float getRevenue() {
+        return revenue;
+    }
+
+    public float getImbd_score() {
+        return imbd_score;
+    }
+
+    public String[] getLanguages() {
+        return languages;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+
 }

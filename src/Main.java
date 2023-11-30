@@ -43,10 +43,11 @@ public class Main {      //Movie reader
     }
 
     public static void main(String[] args) throws NumberFormatException {
-        List<Movie> movies = readMoviesFromFile("Movies.txt");
+        List<Movie> movies = readMoviesFromFile("C:\\Users\\LENOVO\\IdeaProjects\\WATCHIT project\\WatchIt\\Data\\Movies.txt");
 
         // Print the details of each movie
         for (Movie movie : movies) {
+            System.out.println("Movie ID: " + movie.getMovieId());
             System.out.println("Movie Title: " + movie.getMovieTitle());
             System.out.println("Release Date: " + movie.getReleaseDate());
             System.out.println("Director: " + movie.getDirector());

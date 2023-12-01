@@ -1,4 +1,6 @@
-public class Cast_Person
+package model;
+
+public class CastPerson
 {
     String first_name;
     String last_name;

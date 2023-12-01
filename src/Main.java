@@ -1,5 +1,4 @@
-import model.*;
-import service.*;
+import model.Movie;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,8 +18,9 @@ public class Main {
             String line;
             int i = 0;
             while ((line = reader.readLine()) != null && i < 3) {
+
                 String[] parts = line.split(",");
-                 movies[i] = new Movie(
+                movies[i] = new Movie(
                         Integer.parseInt(parts[0]),//id
                         parts[1],//movieTitle
                         LocalDate.parse(parts[2]),//releaseDate
@@ -40,6 +40,7 @@ public class Main {
             System.err.println(e.getMessage());
         }
         for (Movie movie : movies) {
+
             System.out.println(movie.getMovieTitle());
         }
 

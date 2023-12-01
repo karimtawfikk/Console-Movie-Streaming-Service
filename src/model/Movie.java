@@ -10,7 +10,7 @@ public class Movie {
     String Director;
 
     // Actor[] actors;
-    String [] genre = new String [3];
+    String [] genre = new String [5];
     String country;
     float budget;
     float revenue;

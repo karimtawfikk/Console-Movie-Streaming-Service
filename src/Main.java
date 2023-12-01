@@ -1,4 +1,5 @@
-import model.Movie;
+import model.*;
+import service.*;
 
 import java.io.BufferedReader;
 import java.io.File;

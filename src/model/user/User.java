@@ -1,3 +1,5 @@
+package model.user;
+
 public class User {
     int ID;
     String password;

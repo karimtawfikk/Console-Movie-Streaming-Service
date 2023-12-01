@@ -1,0 +1,3 @@
+1,model.Movie 1,2023-11-30,02:15,Director 1,Action;Adventure,Country 1,1000000.0,5000000.0,8.2,English,poster1.jpg
+2,model.Movie 2,2023-11-30,01:45,Director 2,Drama,Country 2,500000.0,2000000.0,7.5,English;Spanish,poster2.jpg
+3,model.Movie 3,2022-12-01,03:05,Director 3,Comedy;Romance,Country 3,600000.0,2000000.0,9.0,English;Arabic,poster3.jpg

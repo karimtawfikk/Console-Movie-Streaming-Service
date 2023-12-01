@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.lang.*;
 
-public class Main {       //Movie reader
+public class Main {      //Movie reader
     public static List<Movie> readMoviesFromFile(String filePath) {
         List<Movie> movies = new ArrayList<>();
 

@@ -37,6 +37,7 @@ public class Subscriptions {
             }
 
         }
+        Payment p=new Payment(plan,price);
 
     }
 

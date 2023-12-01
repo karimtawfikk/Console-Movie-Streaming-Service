@@ -2,7 +2,7 @@ package model;
 
 public class Payment {//extends Subscriptions
     private String planName;
-    //price andd plan inherited from subscriptions
+    //price and plan inherited from subscriptions
     private double price;
     private int duration; // in months
 

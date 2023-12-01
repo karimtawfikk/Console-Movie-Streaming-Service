@@ -1,5 +1,5 @@
 
-public class Payment {//extends Subscriptions
+public class Payment {//extends model.Playlist.Subscriptions
     private String planName;
     //price andd plan inherited from subscriptions
     private double price;

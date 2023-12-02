@@ -15,8 +15,8 @@ public class Main {      //Movie reader
         List<Movie> movies = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(filePath)))
         {
-
             while (scanner.hasNextLine() ) {
+
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
                 // Extract the values for each field from the line

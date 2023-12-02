@@ -1,49 +1,71 @@
-import model.Movie;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.lang.*;
+import model.*;
+import service.*;
 
-public class Main {
+public class Main {      //Movie reader
+    public static List<Movie> readMoviesFromFile(String filePath)
+    {
 
-    public static void main(String[] args) {
+        List<Movie> movies = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(filePath)))
+        {
 
-        Movie[] movies = new Movie[3];
-        try (BufferedReader reader = new BufferedReader(
-                new FileReader("Data" + File.separator + "Movie.txt"))
-        ) {
-            String line;
-            int i = 0;
-            while ((line = reader.readLine()) != null && i < 3) {
+            while (scanner.hasNextLine() ) {
+                String line = scanner.nextLine();
+                String[] values = line.split(",");
+                // Extract the values for each field from the line
+                if (values.length >= 12) {
+                    int movieId = Integer.parseInt(values[0]);
+                    String movieTitle = values[1];
+                    LocalDate releaseDate = LocalDate.parse(values[2]);
+                    LocalTime durationTime = LocalTime.parse(values[3]);
+                    String director = values[4];
+                    String[] genre = values[5].split(";");
+                    String country = values[6];
+                    float budget = Float.parseFloat(values[7]);
+                    float revenue = Float.parseFloat(values[8]);
+                    float imdbScore = Float.parseFloat(values[9]);
+                    String[] languages = values[10].split(";");
+                    String poster = values[11];
 
-                String[] parts = line.split(",");
-                movies[i] = new Movie(
-                        Integer.parseInt(parts[0]),//id
-                        parts[1],//movieTitle
-                        LocalDate.parse(parts[2]),//releaseDate
-                        LocalTime.parse(parts[3]),//durationTime
-                        parts[4],//director
-                        parts[5].split(";"),//genre
-                        parts[6],//country
-                        Float.parseFloat(parts[7]),//budget
-                        Float.parseFloat(parts[8]),//revenue
-                        Float.parseFloat(parts[9]),//IMDBScore
-                        parts[10].split(";"),//languages
-                        parts[11]//poster
-                );
-                i++;
+                    // Create a new Movie instance and add it to the list
+                    Movie movie = new Movie(movieId, movieTitle, releaseDate, durationTime, director, genre, country,
+                            budget, revenue, imdbScore, languages, poster);
+                    movies.add(movie);
+                }
             }
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
+
             System.err.println(e.getMessage());
         }
-        for (Movie movie : movies) {
 
-            System.out.println(movie.getMovieTitle());
-        }
-
+        return movies;
     }
 
-}
+    public static void main(String[] args) throws NumberFormatException {
+        List<Movie> movies = readMoviesFromFile("Data" + File.separator + "Movie.txt" );
+
+        // Print the details of each movie
+        for (Movie movie : movies) {
+
+         System.out.println("Movie ID: " + movie.getMovieId());
+            System.out.println("Movie Title: " + movie.getMovieTitle());
+            System.out.println("Release Date: " + movie.getReleaseDate());
+            System.out.println("Director: " + movie.getDirector());
+            System.out.println("Genre: " + String.join(", ", movie.getGenre()));
+            System.out.println("Country: " + movie.getCountry());
+            System.out.println("Budget: " + movie.getBudget());
+            System.out.println("Revenue: " + movie.getRevenue());
+            System.out.println("IMDB Score: " + movie.getImbd_score());
+            System.out.println("Languages: " + String.join(", ", movie.getLanguages()));
+            System.out.println("Poster: " + movie.getPoster());
+            System.out.println();
+
+        }
+}}

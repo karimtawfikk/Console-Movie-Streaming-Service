@@ -85,4 +85,5 @@ public class Movie {
     public String getPoster() {
         return poster;
     }
+
 }

@@ -98,4 +98,55 @@ public class Movie {
         return languages;
     }
 
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
+    }
+
+    public void setMovieTitle(String movieTitle) {
+        this.movieTitle = movieTitle;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setDurationTime(LocalTime durationTime) {
+        this.durationTime = durationTime;
+    }
+
+    public void setActors(ArrayList<String> actors) {
+        this.actors = actors;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public void setGenres(ArrayList<String> genres) {
+        this.genres = genres;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setBudget(float budget) {
+        this.budget = budget;
+    }
+
+    public void setRevenue(float revenue) {
+        this.revenue = revenue;
+    }
+
+    public void setImdb_score(float imdb_score) {
+        this.imdb_score = imdb_score;
+    }
+
+    public void setLanguages(ArrayList<String> languages) {
+        this.languages = languages;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
 }

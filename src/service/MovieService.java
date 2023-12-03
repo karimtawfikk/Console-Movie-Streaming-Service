@@ -10,13 +10,15 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Arrays;
 
+import static utils.Constants.DATA_DIRECTORY;
+import static utils.Constants.MOVIE_PATH;
+
 public class MovieService {
 
-
-    public static ArrayList<Movie> readMoviesFromFile(String filePath)
+    public static ArrayList<Movie> readMoviesFromFile()
     {
         ArrayList<Movie> movies = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File(filePath)))
+        try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + MOVIE_PATH)))
         {
             while (scanner.hasNextLine() ) {
 
@@ -51,7 +53,5 @@ public class MovieService {
         return movies;
 // hatb3t kol l elements beta3 movies 3shan 8arad el function di bs enaha te read mn lfile, fa hanb2a 3ayzin nestkhdm l movies di f heta fa hanstlmha fl calling
     }
-
-
 
 }

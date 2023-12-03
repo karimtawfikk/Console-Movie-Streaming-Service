@@ -1,46 +1,52 @@
 package model;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 public class Movie {
+
     int movieId;
     String movieTitle;
     LocalDate releaseDate;
     LocalTime durationTime;
-    String Director;
+    ArrayList<String> actors=new ArrayList<>();
+    String director;
+    ArrayList<String> genres=new ArrayList<>();
 
-    // Actor[] actors;
-    String [] genre = new String [5];
+
+
     String country;
     float budget;
     float revenue;
-    float imbd_score;
+    float imdb_score;
 
-    String [] languages;
+    ArrayList<String> languages=new ArrayList<>();
     String poster;
 
     public Movie(){
 
     }
 
-    public Movie(int movieId, String movieTitle, LocalDate releaseDate, LocalTime durationTime, String director, String[] genre, String country, float budget, float revenue, float imbd_score, String[] languages, String poster) {
+    public Movie(int movieId, String movieTitle, LocalDate releaseDate, LocalTime durationTime,ArrayList<String> actors, String director, ArrayList<String> genres, String country, float budget, float revenue, float imdb_score, ArrayList<String> languages, String poster) {
         this.movieId = movieId;
         this.movieTitle = movieTitle;
         this.releaseDate = releaseDate;
         this.durationTime = durationTime;
-        Director = director;
-        this.genre = genre;
+        this.actors=actors;
+        this.director = director;
+        this.genres = genres;
         this.country = country;
         this.budget = budget;
         this.revenue = revenue;
-        this.imbd_score = imbd_score;
+        this.imdb_score = imdb_score;
         this.languages = languages;
         this.poster = poster;
     }
 
+
     public int getMovieId() {
         return movieId;
     }
+
 
     public String getMovieTitle() {
         return movieTitle;
@@ -55,11 +61,7 @@ public class Movie {
     }
 
     public String getDirector() {
-        return Director;
-    }
-
-    public String[] getGenre() {
-        return genre;
+        return director;
     }
 
     public String getCountry() {
@@ -74,16 +76,26 @@ public class Movie {
         return revenue;
     }
 
-    public float getImbd_score() {
-        return imbd_score;
+    public float getImdb_score() {
+        return imdb_score;
     }
 
-    public String[] getLanguages() {
-        return languages;
-    }
 
     public String getPoster() {
         return poster;
+    }
+
+
+    public ArrayList<String> getGenres() {
+        return genres;
+    }
+
+    public ArrayList<String> getActors() {
+        return actors;
+    }
+
+    public ArrayList<String> getLanguages() {
+        return languages;
     }
 
 }

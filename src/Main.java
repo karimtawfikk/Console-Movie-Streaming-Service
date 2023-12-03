@@ -91,12 +91,10 @@ public class Main {
 
             System.out.println("Movie poster:");
             String poster = input.nextLine();
-
             movie = new Movie(movieId, movieName, releaseDate, durationTime, actors, director, genres, country, budget, revenue, imdbScore, languages, poster);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         if (movie != null)
             movies.add(movie);
     }

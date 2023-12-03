@@ -13,31 +13,26 @@ import static utils.Constants.DATA_DIRECTORY;
 import static utils.Constants.MOVIE_PATH;
 
 public class AdminService {
-    private static final List<Movie> newMoviesToBeAdded = new ArrayList<>();
 
-    public void addMovie(List<Movie> movies, Movie movie) {
-        movies.add(movie);
-    }
+    public void editMovies(List<Movie> movies, String movieTitle, int userInput, String userInputString) {
+        for (Movie mov : movies) {
+            if (mov.getMovieTitle().contains(movieTitle)) {
+               switch (userInput){
+                   case 1 -> {}
+                   case 2 -> {}
+                   case 3 -> mov.setDurationTime(LocalTime.parse(userInputString));
+                   case 4 -> {}
+                   case 5 -> {}
+                   case 6 -> {}
+                   case 7 -> {}
 
-    public void addMovies(ArrayList<Movie> movies, Movie movie) {
-        newMoviesToBeAdded.add(movie);
-    }
-
-    public void editMovies(ArrayList<Movie> m, int movieId, LocalTime newDuration) {
-        for (Movie mov : m) {
-            if (mov.getMovieId() == movieId)
-                mov.setDurationTime(newDuration);
+               }
+            }
         }
-        editMovieInFile(movieId, newDuration);
     }
-
-    private void editMovieInFile(int movieId, LocalTime newDuration) {
-        //TODO
-    }
-
-    private void addMovieToFile(List<Movie> movies) {
+    public void addMoviesToFile(List<Movie> movies) {
         for (Movie movie : movies) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + MOVIE_PATH, true))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + MOVIE_PATH))) {
                 // Append the new movie details to the file
                 writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",
                         movie.getMovieId(),

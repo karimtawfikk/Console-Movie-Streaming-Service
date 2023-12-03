@@ -15,9 +15,11 @@ public class Main {
     public static void main(String[] args) {
 
         List<Movie> movies = MovieService.readMoviesFromFile();
+
         // if(admin wants to add)//TODO
         addMovie(movies);
-//movies hya el arraylist elhanb2a shaghleen aaleha dayman we han assign it bl arraylist el temporary eli kona benkhazn fi el info bs(movies)
+
+        adminService.addMoviesToFile(movies);
     }
 
     private static void addMovie(List<Movie> movies) {
@@ -54,7 +56,8 @@ public class Main {
 
             System.out.println("Movie Genres (Write 'done' when finished):");
             ArrayList<String> genres = new ArrayList<>();
-            while (true) {
+            while (true)
+            {
                 String genre = input.nextLine();
                 if (genre.equalsIgnoreCase("done")) {
                     break;
@@ -95,7 +98,7 @@ public class Main {
         }
 
         if (movie != null)
-            adminService.addMovie(movies, movie);
+            movies.add(movie);
     }
 
 }

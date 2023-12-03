@@ -12,5 +12,6 @@ public class Main {
 
 
        ArrayList<Movie>movie= MovieService.readMoviesFromFile(DATA_DIRECTORY + MOVIE_PATH);
+
     }
 }

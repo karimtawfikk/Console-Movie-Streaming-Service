@@ -16,20 +16,20 @@ public class Payment {//extends Subscriptions
         return planName;
     }
 
-    public double getPrice() { //mn subscriptions
-        return price;
-    }
-
-    public int getDuration() { //elmafrud 1 month bas
-        return duration;
-    }
-
     public void setPlanName(String planName) { ///mn subscriptions
         this.planName = planName;
     }
 
+    public double getPrice() { //mn subscriptions
+        return price;
+    }
+
     public void setPrice(double price) { //mn subscriptions
         this.price = price;
+    }
+
+    public int getDuration() { //elmafrud 1 month bas
+        return duration;
     }
 
     public void setDuration(int duration) { //elmafrud 1 month bas

@@ -5,6 +5,7 @@ import service.MovieService;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -13,13 +14,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Movie> movies = MovieService.readMoviesFromFile();
+        List<Movie> movies = MovieService.readMoviesFromFile();
         // if(admin wants to add)//TODO
         addMovie(movies);
 //movies hya el arraylist elhanb2a shaghleen aaleha dayman we han assign it bl arraylist el temporary eli kona benkhazn fi el info bs(movies)
     }
 
-    private static void addMovie(ArrayList<Movie> movies) {
+    private static void addMovie(List<Movie> movies) {
         Movie movie = null;
         try (Scanner input = new Scanner(System.in)) {
             System.out.println("Enter the details of the movie:");

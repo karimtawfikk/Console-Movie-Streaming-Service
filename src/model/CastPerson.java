@@ -1,7 +1,6 @@
 package model;
 
-public class CastPerson
-{
+public class CastPerson {
     String first_name;
     String last_name;
     int age;

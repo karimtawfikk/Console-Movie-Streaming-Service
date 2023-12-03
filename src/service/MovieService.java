@@ -2,25 +2,24 @@ package service;
 
 import model.Movie;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Arrays;
 
 import static utils.Constants.DATA_DIRECTORY;
 import static utils.Constants.MOVIE_PATH;
 
 public class MovieService {
 
-    public static ArrayList<Movie> readMoviesFromFile()
-    {
+    public static List<Movie> readMoviesFromFile() {
         ArrayList<Movie> movies = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + MOVIE_PATH)))
-        {
-            while (scanner.hasNextLine() ) {
+        try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + MOVIE_PATH))) {
+            while (scanner.hasNextLine()) {
 
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
@@ -41,7 +40,7 @@ public class MovieService {
                 String poster = values[12];
 
                 // Create a new Movie instance and add it to the list
-                Movie movie = new Movie(movieId, movieTitle, releaseDate, durationTime,  actors, director, genres, country,
+                Movie movie = new Movie(movieId, movieTitle, releaseDate, durationTime, actors, director, genres, country,
                         budget, revenue, imdbScore, languages, poster);
                 movies.add(movie); // kol loop hathot fe element gedid beta3 movies movie gedid
             }

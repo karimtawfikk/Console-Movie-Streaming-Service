@@ -64,6 +64,7 @@ public class AdminService {
 
 Movie NewMovie=new Movie(Mid,Mname,Mdate,Mduration,Mactors,Mdirector,Mgenres,Mcountry,Mbudget,MRevenue,Mimdb,Mlanguages,Mposter);
    m.add(NewMovie);
+
     }
 
 

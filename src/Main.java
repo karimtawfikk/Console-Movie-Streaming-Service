@@ -10,8 +10,7 @@ public class Main {
 
     public static void main(String[] args){
 
-
        ArrayList<Movie>movie= MovieService.readMoviesFromFile(DATA_DIRECTORY + MOVIE_PATH);
-
+//
     }
 }

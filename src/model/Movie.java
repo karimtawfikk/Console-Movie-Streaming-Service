@@ -1,5 +1,4 @@
 package model;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 public class Movie {
@@ -7,9 +6,10 @@ public class Movie {
     String movieTitle;
     LocalDate releaseDate;
     LocalTime durationTime;
-    String Director;
+    String [] actors;
+    String director;
 
-    // Actor[] actors;
+
     String [] genre = new String [5];
     String country;
     float budget;
@@ -23,12 +23,13 @@ public class Movie {
 
     }
 
-    public Movie(int movieId, String movieTitle, LocalDate releaseDate, LocalTime durationTime, String director, String[] genre, String country, float budget, float revenue, float imbd_score, String[] languages, String poster) {
+    public Movie(int movieId, String movieTitle, LocalDate releaseDate, LocalTime durationTime,String[] actors, String director, String[] genre, String country, float budget, float revenue, float imbd_score, String[] languages, String poster) {
         this.movieId = movieId;
         this.movieTitle = movieTitle;
         this.releaseDate = releaseDate;
         this.durationTime = durationTime;
-        Director = director;
+        this.actors=actors;
+        this.director = director;
         this.genre = genre;
         this.country = country;
         this.budget = budget;
@@ -55,7 +56,7 @@ public class Movie {
     }
 
     public String getDirector() {
-        return Director;
+        return director;
     }
 
     public String[] getGenre() {
@@ -86,4 +87,7 @@ public class Movie {
         return poster;
     }
 
+    public String[] getActors() {
+        return actors;
+    }
 }

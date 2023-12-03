@@ -39,6 +39,7 @@ public class Movie {
         this.poster = poster;
     }
 
+
     public int getMovieId() {
         return movieId;
     }

@@ -28,7 +28,7 @@ public class MovieService {
                 String movieTitle = values[1];
                 LocalDate releaseDate = LocalDate.parse(values[2]);
                 LocalTime durationTime = LocalTime.parse(values[3]);
-                ArrayList<String> actors = new ArrayList<>(Arrays.asList(values[4].split(";")));
+                ArrayList<String> actors = new ArrayList<>(Arrays.asList(values[4].split(";"))); // aslist bethawl men array le arraylist
                 String director = values[5];
                 ArrayList<String> genres = new ArrayList<>(Arrays.asList(values[6].split(";")));
                 String country = values[7];
@@ -41,7 +41,7 @@ public class MovieService {
                 // Create a new Movie instance and add it to the list
                 Movie movie = new Movie(movieId, movieTitle, releaseDate, durationTime,  actors, director, genres, country,
                         budget, revenue, imdbScore, languages, poster);
-                movies.add(movie);
+                movies.add(movie); // kol loop hathot fe element gedid beta3 movies movie gedid
             }
         } catch (FileNotFoundException e) {
 
@@ -49,7 +49,7 @@ public class MovieService {
         }
 
         return movies;
-
+// hatb3t kol l elements beta3 movies 3shan 8arad el function di bs enaha te read mn lfile, fa hanb2a 3ayzin nestkhdm l movies di f heta fa hanstlmha fl calling
     }
 
 

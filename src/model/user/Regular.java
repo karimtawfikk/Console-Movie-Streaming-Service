@@ -2,9 +2,7 @@ package model.user;
 
 import java.util.List;
 
-public class Regular extends User
-
-{
+public class Regular extends User {
     String subscription;
     List<String> watchLater;
     List<String> watched;

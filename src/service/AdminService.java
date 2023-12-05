@@ -5,6 +5,7 @@ import model.Movie;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,26 @@ public class AdminService {
         for (Movie mov : movies) {
             if (mov.getMovieTitle().contains(movieTitle)) {
                switch (userInput){
-                   case 1 -> {}
-                   case 2 -> {}
-                   case 3 -> mov.setDurationTime(LocalTime.parse(userInputString));
-                   case 4 -> {}
-                   case 5 -> {}
-                   case 6 -> {}
-                   case 7 -> {}
+                   case 1:
+                       mov.setMovieId(Integer.parseInt(userInputString));
+                       break;
+                   case 2:
+                       mov.setReleaseDate(LocalDate.parse(userInputString));
+                       break;
+                   case 3:
+                       mov.setDurationTime(LocalTime.parse(userInputString));
+                       break;
+                   case 4:
+                       mov.setCountry(userInputString);
+                       break;
+                   case 5:
+                       mov.setImdb_score(Float.parseFloat(userInputString));
+                       break;
+                   case 6:
+                       mov.setRevenue(Float.parseFloat(userInputString));
+                       break;
+                   case 7:
+
 
                }
             }

@@ -7,4 +7,5 @@ public class CastPerson {
     String gender;
     String nationality;
     String[] list_of_movies;
+
 }

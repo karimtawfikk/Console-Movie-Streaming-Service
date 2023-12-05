@@ -4,27 +4,24 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 public class Movie {
 
-    int movieId;
-    String movieTitle;
-    LocalDate releaseDate;
-    LocalTime durationTime;
-    ArrayList<String> actors=new ArrayList<>();
-    String director;
-    ArrayList<String> genres=new ArrayList<>();
+   private int movieId;
+   private String movieTitle;
+   private LocalDate releaseDate;
+   private LocalTime durationTime;
+    private ArrayList<String> actors=new ArrayList<>();
+   private String director;
+   private ArrayList<String> genres=new ArrayList<>();
+   private String country;
+   private float budget;
+   private float revenue;
+   private float imdb_score;
 
+   private ArrayList<String> languages=new ArrayList<>();
+   private String poster;
 
-
-    String country;
-    float budget;
-    float revenue;
-    float imdb_score;
-
-    ArrayList<String> languages=new ArrayList<>();
-    String poster;
-
-    public Movie(){
-
-    }
+//    public Movie(){
+//
+//    }
 
     public Movie(int movieId, String movieTitle, LocalDate releaseDate, LocalTime durationTime,ArrayList<String> actors, String director, ArrayList<String> genres, String country, float budget, float revenue, float imdb_score, ArrayList<String> languages, String poster) {
         this.movieId = movieId;

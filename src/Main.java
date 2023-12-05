@@ -10,20 +10,33 @@ import java.util.Scanner;
 
 public class Main {
 
+
     private static final AdminService adminService = new AdminService();
 
     public static void main(String[] args) {
 
         List<Movie> movies = MovieService.readMoviesFromFile();
-
-        // if(admin wants to add)//TODO
+        // if(admin wants to add movie)//TODO
         addMovie(movies);
+        // if(admin wants to edit movie)//TODO
+      //  adminService.editMovies(movies,esm l movie,userinput);
+
+
+
+
+
+
+
+
+
+
+
 
         adminService.addMoviesToFile(movies);
     }
 
     private static void addMovie(List<Movie> movies) {
-        Movie movie = null;
+        Movie newMovie=null;
         try (Scanner input = new Scanner(System.in)) {
             System.out.println("Enter the details of the movie:");
 
@@ -38,7 +51,7 @@ public class Main {
             String movieDateString = input.nextLine();
             LocalDate releaseDate = LocalDate.parse(movieDateString);
 
-            System.out.println("Movie Duration:");
+            System.out.println("Movie Duration(hr:min):");
             LocalTime durationTime = LocalTime.parse(input.nextLine());
 
             System.out.println("Movie Actors (Write 'done' when finished):");
@@ -91,12 +104,17 @@ public class Main {
 
             System.out.println("Movie poster:");
             String poster = input.nextLine();
-            movie = new Movie(movieId, movieName, releaseDate, durationTime, actors, director, genres, country, budget, revenue, imdbScore, languages, poster);
+            newMovie = new Movie(movieId, movieName, releaseDate, durationTime, actors, director, genres, country, budget, revenue, imdbScore, languages, poster);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (movie != null)
-            movies.add(movie);
+        if (newMovie != null)
+            movies.add(newMovie);
+
     }
+
+
+
 
 }

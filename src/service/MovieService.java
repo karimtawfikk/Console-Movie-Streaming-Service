@@ -20,7 +20,6 @@ public class MovieService {
         ArrayList<Movie> movies = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + MOVIE_PATH))) {
             while (scanner.hasNextLine()) {
-
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
                 // Extract the values for each field from the line
@@ -45,11 +44,8 @@ public class MovieService {
                 movies.add(movie); // kol loop hathot fe element gedid beta3 movies movie gedid
             }
         } catch (FileNotFoundException e) {
-
             System.err.println(e.getMessage());
-        }
-
-        return movies;
+        }return movies;
 // hatb3t kol l elements beta3 movies 3shan 8arad el function di bs enaha te read mn lfile, fa hanb2a 3ayzin nestkhdm l movies di f heta fa hanstlmha fl calling
     }
 

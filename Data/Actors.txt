@@ -1,0 +1,8 @@
+Karim Abdelaziz,48,Male,Egyptian,El Basha Telmeez
+Ghada Adel,48,Female,Egyptian,El Basha Telmeez;Gaalatny Mogreman
+Ahmed Helmy,54,Male,Egyptian,Gaalatny Mogreman
+Hassan Hosny,88,Male,Egyptian,Gaalatny Mogreman
+Yasmin Abdelaziz,43,Female,Egyptian,Al Talata Yashtghloonaha
+Lotfy Labib,76,Male,Egyptian,Al Talata Yashtghloonaha
+Ragaa AlGiddawy,81,Female,Egyptian,Al Talata Yashtghloonaha
+Salah Abdullah,68,Male,Egyptian,Al Talata Yashtghloonaha

@@ -36,6 +36,7 @@ public class AdminService {
         return new ArrayList<>(Arrays.asList(genresInput.split(";")));
     }
 
+
     private static ArrayList<String> getLanguagesFromUser() {
 
         System.out.println("Enter the new list of languages (separate each actor with a semicolon):");

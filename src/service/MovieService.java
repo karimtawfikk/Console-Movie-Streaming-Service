@@ -1,11 +1,7 @@
 package service;
-
 import model.Movie;
 
-
-
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -25,7 +21,6 @@ public class MovieService {
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
                 // Extract the values for each field from the line
-
                 int movieId = Integer.parseInt(values[0]);
                 String movieTitle = values[1];
                 LocalDate releaseDate = LocalDate.parse(values[2]);
@@ -47,8 +42,37 @@ public class MovieService {
             }
         } catch (FileNotFoundException e) {
             System.err.println(e.getMessage());
-        }return movies;
+        }
+        return movies;
 // hatb3t kol l elements beta3 movies 3shan 8arad el function di bs enaha te read mn lfile, fa hanb2a 3ayzin nestkhdm l movies di f heta fa hanstlmha fl calling
     }
 
+
+    public static void writeMoviesToFile(List<Movie> movies) {
+        for (Movie movie : movies) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + MOVIE_PATH))) {
+                // Append the new movie details to the file
+                writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",
+                        movie.getMovieId(),
+                        movie.getMovieTitle(),
+                        movie.getReleaseDate(),
+                        movie.getDurationTime(),
+                        String.join(";", movie.getActors()),
+                        movie.getDirector(),
+                        String.join(";", movie.getGenres()),
+                        movie.getCountry(),
+                        movie.getBudget(),
+                        movie.getRevenue(),
+                        movie.getImdb_score(),
+                        String.join(";", movie.getLanguages()),
+                        movie.getPoster()
+                ));
+                // Add a new line at the end
+                writer.newLine();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }
 }

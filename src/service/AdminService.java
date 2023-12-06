@@ -9,7 +9,13 @@ import model.user.Admin;
 import java.util.Scanner;
 import static utils.Constants.*;
 import java.util.ArrayList;
+import java.lang.Math;
 public class AdminService {
+
+        public static int Basic_Counter=-0;
+        public static int Standard_Counter=0;
+
+        public static int Premium_Counter=0;
 
         public static List<Admin> readAdminsFromFile() {
 
@@ -35,12 +41,12 @@ public class AdminService {
             }
             return Admins;
         }
-        private static void addRegularUsers(List<Regular> users, Regular newUser) {
+        public static void addRegularUsers(List<Regular> users, Regular newUser) {
 
         if (newUser != null)
             users.add(newUser);
 
-    }
+        }
 
        public static void AdminEditUsers(int id,List<Regular> users,int choice,String newValue) {
         int index = -1;
@@ -97,6 +103,30 @@ public class AdminService {
        public static void adminRemovesUserAccount(List<Regular> users, int index)
     {
         users.remove(index);
+    }
+
+    public static String seeMostSubscribed(List<Regular> users){
+        for(Regular user:users){
+            if(user.getSubscription().getPlan().equals("basic")) {
+                Basic_Counter++;
+            }
+            else if (user.getSubscription().getPlan().equals("standard")) {
+                Standard_Counter++;
+            }
+            else if(user.getSubscription().getPlan().equals("premium")){
+                Premium_Counter++;
+            }
+        }
+        int mostSubscribed = Math.max(Basic_Counter, Math.max(Standard_Counter, Premium_Counter));
+        if(mostSubscribed==Basic_Counter){
+            return "Basic";
+        }
+        else if(mostSubscribed==Standard_Counter){
+            return "Standard";
+        }
+        else{
+            return "Premium";
+        }
     }
 
       public static void writeAdminsToFile(List<Admin> admins) {

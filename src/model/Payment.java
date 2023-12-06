@@ -1,6 +1,6 @@
 package model;
 
-public class Payment {//extends Subscriptions
+public class Payment {//extends model.Subscriptions
     private String planName;
     //price and plan inherited from subscriptions
     private double price;

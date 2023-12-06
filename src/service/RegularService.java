@@ -1,8 +1,10 @@
 package service;
 import model.Movie;
+import model.Subscriptions;
 import model.user.Regular;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +26,12 @@ public class RegularService {
                 String firstName = values[3];
                 String lastName = values[4];
                 String email = values[5];
-                String subscription = values[6];
+                String[] subscriptionValues = values[6].split(";");
+                boolean isSubscribed = Boolean.parseBoolean(subscriptionValues[0]);
+                String subscriptionPlan =subscriptionValues[0];
+                LocalDate subscriptionDate = LocalDate.parse(subscriptionValues[1]);
+                Subscriptions subscription = new Subscriptions(isSubscribed, subscriptionPlan, subscriptionDate);
+
                 ArrayList<String> watchLater = new ArrayList<>(Arrays.asList(values[7].split(";")));
                 ArrayList<String> watched = new ArrayList<>(Arrays.asList(values[8].split(";")));
 
@@ -38,8 +45,6 @@ public class RegularService {
         return regularUsers;
 
     }
-
-
 
     public static void writeUsersToFile(List<Regular> regularUsers) {
         for (Regular user : regularUsers) {

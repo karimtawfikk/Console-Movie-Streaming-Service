@@ -1,7 +1,9 @@
 package service;
 
+import model.Subscriptions;
 import model.user.Regular;
 import java.io.*;
+import java.time.LocalDate;
 import java.util.List;
 import model.user.Admin;
 import java.util.Scanner;
@@ -33,8 +35,14 @@ public class AdminService {
             }
             return Admins;
         }
+        private static void addRegularUsers(List<Regular> users, Regular newUser) {
 
-        public void AdminEditUsers(int id,List<Regular> users,int choice,String newValue) {
+        if (newUser != null)
+            users.add(newUser);
+
+    }
+
+       public static void AdminEditUsers(int id,List<Regular> users,int choice,String newValue) {
         int index = -1;
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getID()==id) {
@@ -69,8 +77,15 @@ public class AdminService {
                     System.out.println("Email updated successfully");
                     break;
                 case 7:
-                    users.get(index).setSubscription(newValue);
-                    System.out.println("Plan updated successfully");
+                    Subscriptions subscription = users.get(index).getSubscription();
+                    subscription.setStatus(Boolean.parseBoolean(newValue));
+                    subscription.setPlan(null);
+                    subscription.setSubscribeDate(null);
+                    break;
+                case 8:
+                    Subscriptions subscriptionn = users.get(index).getSubscription();
+                    subscriptionn.setPlan(newValue);
+                    subscriptionn.setSubscribeDate(LocalDate.now());
                     break;
             }
         }
@@ -79,31 +94,32 @@ public class AdminService {
         }
 
     }
+       public static void adminRemovesUserAccount(List<Regular> users, int index)
+    {
+        users.remove(index);
+    }
 
-        public static void writeAdminsToFile(List<Admin> admins)
-        {
-            for (Admin admin : admins) {
+      public static void writeAdminsToFile(List<Admin> admins) {
+        for (Admin admin : admins) {
 
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + ADMIN_PATH))) {
-                    // Append the new movie details to the file
-                    writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",
-                            admin.getID(),
-                            admin.getUserName(),
-                            admin.getPassword(),
-                            admin.getFirstName(),
-                            admin.getLastName(),
-                            admin.getEmail()
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + ADMIN_PATH))) {
+                // Append the new movie details to the file
+                writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",
+                        admin.getID(),
+                        admin.getUserName(),
+                        admin.getPassword(),
+                        admin.getFirstName(),
+                        admin.getLastName(),
+                        admin.getEmail()
 
-                    ));
+                ));
 
-                    writer.newLine();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+                writer.newLine();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
-
         }
 
-
+    }
 
 }

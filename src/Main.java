@@ -1,7 +1,9 @@
 import model.Movie;
+import model.Subscriptions;
 import model.user.*;
 import service.MovieService;
 import service.RegularService;
+import service.AdminService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,6 +21,7 @@ public class Main {
 
         List<Movie> movies = MovieService.readMoviesFromFile();
         List<Regular> users = RegularService.readUsersFromFile();
+        List<Admin> admins = AdminService.readAdminsFromFile();
         // if(admin wants to add movie)//TODO
         addMovie(movies);
         // if(admin wants to edit movie)//TODO
@@ -36,8 +39,8 @@ public class Main {
 
 
 
-
-
+        AdminService.writeAdminsToFile(admins);
+        RegularService.writeUsersToFile(users);
         MovieService.writeMoviesToFile(movies);
     }
     private static void addMovie(List<Movie> movies) {
@@ -301,16 +304,11 @@ public class Main {
         }
     }
 
-    private static void addRegularUsers(List<Regular> users, Regular newUser) {
-
-        if (newUser != null)
-            users.add(newUser);
-
-    }
     private static boolean isIdValid (String id){
         return  id.matches("\\d{4}");
     }
-    public static void UserEditedInfo(List <Regular> users) {
+
+    public static void UserEditInfo(List <Regular> users) {
 
         System.out.println("Enter your saved id: (last 4 numbers only): ");
         int savedId = input.nextInt();
@@ -331,34 +329,66 @@ public class Main {
                     System.out.println("Invalid ID..Please enter exactly 4 digits");
                     newId = input.nextInt();
                 }
+                AdminService.AdminEditUsers(savedId,users,1, String.valueOf(newId));
                 break;
             case 2:
                 System.out.println("Enter updated username:");
                 String newUsername = input.nextLine();
+                AdminService.AdminEditUsers(savedId,users,2,newUsername);
                 break;
             case 3:
                 System.out.println("Enter updated password:");
                 String newPassword = input.nextLine();
+                AdminService.AdminEditUsers(savedId,users,3, newPassword);
                 break;
             case 4:
                 System.out.println("Enter first name after update:");
                 String newFirstName = input.nextLine();
+                AdminService.AdminEditUsers(savedId,users,4, newFirstName);
                 break;
             case 5:
                 System.out.println("Enter last name after update:");
                 String newLastName = input.nextLine();
+                AdminService.AdminEditUsers(savedId,users,5, newLastName);
                 break;
             case 6:
                 System.out.println("Enter updated email:");
                 String newEmail = input.nextLine();
+                AdminService.AdminEditUsers(savedId,users,6, newEmail);
                 break;
             case 7:
-                System.out.println("Enter the desired plan to change to:");
-                String newSubscription = input.nextLine();
-                //updateSubscription
+                System.out.println("Press: \n1 to unsubscribe \n2 to change plan ");
+                int ans = input.nextInt();
+                while((ans != 1) && (ans != 2)){
+                    System.out.println("Invalid choice ..Please enter either 1 or 2 only ");
+                     ans = input.nextInt();
+                }
+                if(ans==1) {
+                    AdminService.AdminEditUsers(savedId,users,7, "false");
+                }
+                else {
+                    System.out.println("What plan do you want to upgrade to (Basic/Standard/Premium)");
+                    String newPlan=input.nextLine().toLowerCase();
+                    AdminService.AdminEditUsers(savedId,users,8, newPlan);
+                }
+
                 break;
 
         }
+    }
+
+    public static void deleteAccount(List<Regular> users) {
+        System.out.println("To confirm deleting your account enter your password");
+        String response = input.nextLine();
+
+        for (int index = 0; index < users.size(); index++)
+        {
+            Regular user = users.get(index);
+            if (response.equals(user.getPassword())) {
+                AdminService.adminRemovesUserAccount(users,index);
+            }
+        }
+
     }
 }
 

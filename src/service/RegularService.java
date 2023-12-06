@@ -39,6 +39,8 @@ public class RegularService {
 
     }
 
+
+
     public static void writeUsersToFile(List<Regular> regularUsers) {
         for (Regular user : regularUsers) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + REGULAR_PATH))) {

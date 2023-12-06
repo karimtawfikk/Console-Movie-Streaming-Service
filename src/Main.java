@@ -1,6 +1,7 @@
 import model.Movie;
-
+import model.user.*;
 import service.MovieService;
+import service.RegularService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,12 +17,15 @@ public class Main {
     public static void main(String[] args) {
 
         List<Movie> movies = MovieService.readMoviesFromFile();
+        List<Regular> users = RegularService.readUsersFromFile();
         // if(admin wants to add movie)//TODO
         addMovie(movies);
         // if(admin wants to edit movie)//TODO
         editMovies(movies);
         // if(admin wants to delete movie(s))//TODO
         deleteMovies(movies);
+        // if(admin wants to add a new registered user)//TODO
+        //addRegularUsers(users,newUser)
 
 
 
@@ -295,4 +299,65 @@ public class Main {
             System.out.println("No movies found with the specified titles.");
         }
     }
+
+    private static void addRegularUsers(List<Regular> users, Regular newUser) {
+
+        if (newUser != null)
+            users.add(newUser);
+
+    }
+    private static boolean isIdValid (String id){
+        return  id.matches("\\d{4}");
+    }
+    public static void UserEditedInfo(List <Regular> users) {
+
+        System.out.println("Enter your saved id: (last 4 numbers only): ");
+        int savedId = input.nextInt();
+
+        while(!isIdValid(Integer.toString(savedId))){
+            System.out.println("Invalid ID..Please enter exactly 4 digits");
+            savedId = input.nextInt();
+        }
+
+        System.out.println("Press: \n1 to edit your id (write only last 4 numbers) \n2 to edit your username \n3 to edit your password \n4 to edit your first name \n5 to edit your last name \n6 to edit your email \n7 to change your subscription plan ");
+        int choice = input.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.println("Enter updated id (last 4 digits only):");
+                int newId = input.nextInt();
+                while(!isIdValid(Integer.toString(newId))){
+                    System.out.println("Invalid ID..Please enter exactly 4 digits");
+                    newId = input.nextInt();
+                }
+                break;
+            case 2:
+                System.out.println("Enter updated username:");
+                String newUsername = input.nextLine();
+                break;
+            case 3:
+                System.out.println("Enter updated password:");
+                String newPassword = input.nextLine();
+                break;
+            case 4:
+                System.out.println("Enter first name after update:");
+                String newFirstName = input.nextLine();
+                break;
+            case 5:
+                System.out.println("Enter last name after update:");
+                String newLastName = input.nextLine();
+                break;
+            case 6:
+                System.out.println("Enter updated email:");
+                String newEmail = input.nextLine();
+                break;
+            case 7:
+                System.out.println("Enter the desired plan to change to:");
+                String newSubscription = input.nextLine();
+                //updateSubscription
+                break;
+
+        }
+    }
 }
+

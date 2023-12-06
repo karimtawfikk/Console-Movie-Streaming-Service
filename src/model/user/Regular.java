@@ -15,4 +15,28 @@ public class Regular extends User {
         this.watchLater = watchLater;
         this.watched = watched;
     }
+
+    public String getSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(String subscription) {
+        this.subscription = subscription;
+    }
+
+    public List<String> getWatchLater() {
+        return watchLater;
+    }
+
+    public void setWatchLater(List<String> watchLater) {
+        this.watchLater = watchLater;
+    }
+
+    public List<String> getWatched() {
+        return watched;
+    }
+
+    public void setWatched(List<String> watched) {
+        this.watched = watched;
+    }
 }

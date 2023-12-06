@@ -2,8 +2,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Subscriptions {
-    float price = 0;
-    char plan;
+    boolean status;
+    String  plan;
     LocalDate date;
     //int sday=date.getDayOfMonth();
     //int smonth=date.getMonthValue();

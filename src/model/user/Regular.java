@@ -1,18 +1,15 @@
 package model.user;
+import model.Playlist;
 import  model.Subscriptions;
-import java.util.List;
 
 public class Regular extends User {
     Subscriptions subscription;
-    List<String> watchLater;
-    List<String> watched;
+    Playlist playLists;
 
-
-    public Regular(int ID, String userName, String password, String firstName, String lastName, String email, Subscriptions subscription, List<String> watchLater, List<String> watched) {
+    public Regular(int ID, String userName, String password, String firstName, String lastName, String email, Subscriptions subscription, Playlist lists) {
         super(ID, userName, password, firstName, lastName, email);
         this.subscription = subscription;
-        this.watchLater = watchLater;
-        this.watched = watched;
+        this.playLists = lists;
     }
 
     public Subscriptions getSubscription() {
@@ -23,19 +20,11 @@ public class Regular extends User {
         this.subscription = subscription;
     }
 
-    public List<String> getWatchLater() {
-        return watchLater;
+    public Playlist getPlayLists() {
+        return playLists;
     }
 
-    public void setWatchLater(List<String> watchLater) {
-        this.watchLater = watchLater;
-    }
-
-    public List<String> getWatched() {
-        return watched;
-    }
-
-    public void setWatched(List<String> watched) {
-        this.watched = watched;
+    public void setPlayLists(Playlist playLists) {
+        this.playLists = playLists;
     }
 }

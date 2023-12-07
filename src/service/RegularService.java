@@ -1,5 +1,6 @@
 package service;
 import model.Movie;
+import model.Playlist;
 import model.Subscriptions;
 import model.user.Regular;
 
@@ -32,11 +33,14 @@ public class RegularService {
                 LocalDate subscriptionDate = LocalDate.parse(subscriptionValues[1]);
                 Subscriptions subscription = new Subscriptions(isSubscribed, subscriptionPlan, subscriptionDate);
 
-                ArrayList<String> watchLater = new ArrayList<>(Arrays.asList(values[7].split(";")));
-                ArrayList<String> watched = new ArrayList<>(Arrays.asList(values[8].split(";")));
+                String[] playlistValues = values[7].split(";");
+                ArrayList<String> favourites=new ArrayList<>(Arrays.asList(playlistValues[0].split(":")));
+                ArrayList<String> watchLater=new ArrayList<>(Arrays.asList(playlistValues[1].split(":")));
+                ArrayList<String> watched=new ArrayList<>(Arrays.asList(playlistValues[2].split(":")));
 
-                Regular user = new Regular(userId, userName, password, firstName, lastName, email, subscription, watchLater,
-                        watched);
+                Playlist playlist=new Playlist (favourites,watchLater,watched);
+
+                Regular user = new Regular(userId, userName, password, firstName, lastName, email, subscription,playlist);
                 regularUsers.add(user);
             }
         } catch (FileNotFoundException e) {
@@ -50,7 +54,7 @@ public class RegularService {
         for (Regular user : regularUsers) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + REGULAR_PATH))) {
                 // Append the new movie details to the file
-                writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%s",
+                writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s",
                         user.getID(),
                         user.getUserName(),
                         user.getPassword(),
@@ -58,8 +62,7 @@ public class RegularService {
                         user.getLastName(),
                         user.getEmail(),
                         user.getSubscription(),
-                        String.join(";", user.getWatchLater()),
-                        String.join(";", user.getWatched())
+                        user.getPlayLists()     //nshoof ezay hyhoto fl file w da object msh string ashan katbeen %s TODO
                 ));
                 // Add a new line at the end
                 writer.newLine();

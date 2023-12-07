@@ -48,6 +48,11 @@ public class AdminService {
 
         }
 
+       public static void addSubscription(List<Regular>users, String plan,int index)
+       {
+        Subscriptions newSub=new Subscriptions(true,plan,LocalDate.now());
+        users.get(index).setSubscription(newSub);
+    }
        public static void AdminEditUsers(int id,List<Regular> users,int choice,String newValue) {
         int index = -1;
         for (int i = 0; i < users.size(); i++) {

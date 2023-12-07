@@ -54,7 +54,7 @@ public class Subscriptions {
         long diff = ChronoUnit.DAYS.between(subscribeDate, LocalDate.now());
         if (diff > 30) {
             plan = null;
-            System.out.println("your subscription has ended");
+            System.out.println("Your subscription has ended");
         }
 
     }

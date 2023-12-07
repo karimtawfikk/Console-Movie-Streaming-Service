@@ -4,7 +4,6 @@ package model.user;
 {
 
     int ID;
-
     String userName;
     String password;
     String firstName;

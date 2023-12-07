@@ -1,13 +1,11 @@
-import model.Actor;
-import model.Director;
 import model.Movie;
 import model.Subscriptions;
-import model.user.Admin;
-import model.user.Regular;
-import service.AdminService;
+import model.user.*;
+import model.*;
 import service.CastService;
 import service.MovieService;
 import service.RegularService;
+import service.AdminService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,161 +14,58 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import static utils.Constants.*;
-
 
 public class Main {
+
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
+
         List<Movie> movies = MovieService.readMoviesFromFile();
         List<Regular> users = RegularService.readUsersFromFile();
         List<Admin> admins = AdminService.readAdminsFromFile();
-        List<Actor> actors = CastService.readActorsFromFile();
-        List<Director> directors = CastService.readDirectorFromFile();
+        List<Actor> actors= CastService.readActorsFromFile();
+        List<Director> directors=CastService.readDirectorFromFile();
+        // if(admin wants to add movie)//TODO
+        addMovie(movies);
+        // if(admin wants to edit movie)//TODO
+        editMovies(movies);
+        // if(admin wants to delete movie(s))//TODO
+        deleteMovies(movies);
+        // if(admin wants to add a new registered user)//TODO
+        //addRegularUsers(users,newUser)
 
-        System.out.println("\t\t\t\t\t\tWelcome to WATCH IT\n\n");
-        boolean continueLoop = true;
-        boolean loggedInAsAnAdmin = false; // aw momken testkhdm Boolean loggedInAsAnAdmin=null;
-        while (continueLoop) {
-            System.out.println("Press: \n 1:To register\n 2:To Login");
-            int userResponse = input.nextInt();
-            switch (userResponse) {
-                case 1: {
-                    registerAnAccount(users);
-                    break;
-                }
-                case 2: {
-                    loggedInAsAnAdmin = logIN(users, admins);
-                    continueLoop = false;
-                    break;
-                }
-                default: {
-                    System.out.println("Invalid option. Please try again.");
-                    break;
-                }
-            }
-        }
-        if (loggedInAsAnAdmin) {
-            System.out.println("Press the following \n1:To add a movie\n2:To edit a movie\n3:To delete a movie\n4:To display the most subscribed plan");
-            int adminResponse = input.nextInt();
-            switch (adminResponse) {
-                case 1:
-                    addMovie(movies);
-                    break;
-                case 2:
-                    editMovies(movies);
-                    break;
-                case 3:
-                    deleteMovies(movies);
-                    break;
-                case 4:
-                    displayMostSubscribed(users);
-                    break;
+        //if(admin wants to see most subscribed plan)//TODO
+        displayMostSubscribed(users);
+
+        //if (users wants to search for a movie)//TODO
+        searchForMovie(movies);
+
+        //if (user wants to delete his account)//TODO
+        deleteUserAccount(users);
+
+        //if(user wants to search for actors)
+        searchForActors(actors);
+        //if(user wants to search for directors)
+        searchForDirectors(directors);
 
 
-            }
 
 
-        } else {
-            checkSubscription(users);
-            System.out.println("Press the following:\n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To delete your account");
-            int userInput= input.nextInt();
-            switch(userInput) {
-                case 1:
-                    searchForMovie(movies);
-                    break;
-                case 2:
-                    searchForActors(actors);
-                    break;
-                case 3:
-                    searchForDirectors(directors);
-                    break;
-                case 4:
-                    deleteUserAccount(users);
-                    break;
-            }
-        }
+
+
+
+
+
+
+
+
+
         AdminService.writeAdminsToFile(admins);
         RegularService.writeUsersToFile(users);
         MovieService.writeMoviesToFile(movies);
     }
-
-    public static void registerAnAccount(List<Regular> users) {
-        System.out.println("Please enter the following details to complete your registration");
-
-
-        System.out.println("Enter your id: (last 4 digits only): ");
-        int ID = input.nextInt();
-
-        while (!isIdValid(Integer.toString(ID))) {
-            System.out.println("Invalid ID..Please enter exactly 4 digits");
-            ID = input.nextInt();
-        }
-
-        System.out.print("Enter username: ");
-        String username = input.nextLine();
-
-        System.out.print("Enter password: ");
-        String password = input.nextLine();
-
-        System.out.print("Enter first name: ");
-        String firstName = input.nextLine();
-
-        System.out.print("Enter last name: ");
-        String lastName = input.nextLine();
-
-        System.out.print("Enter email: ");
-        String email = input.nextLine();
-        Subscriptions newRegisteredSubscription = new Subscriptions(false, null, null);
-        Regular newUser = new Regular(ID, username, password, firstName, lastName, email, newRegisteredSubscription, null, null);
-        AdminService.addRegularUsers(users, newUser);
-
-    }
-
-    public static boolean logIN(List<Regular> users, List<Admin> admins) {
-        System.out.println("Please enter your username and Password:");
-
-        while (true) {
-            String username = input.nextLine();
-            String password = input.nextLine();
-            for (Regular user : users) {
-                if (username.equals(user.getUserName()) && password.equals(user.getPassword())) {
-                    return false;
-                }
-
-            }
-            for (Admin admin : admins) {
-                if (username.equals(admin.getUserName()) && password.equals(admin.getPassword())) {
-                    return true;
-                }
-            }
-            System.out.println("Incorrect username or password... Please re-enter correct username and password");
-        }
-    }
-
-    public static void checkSubscription(List<Regular> users) {
-        for (int i = 0; i < users.size(); i++) {
-            Regular user = users.get(i);
-            if (!user.getSubscription().isStatus()) {
-                System.out.println("Subscribe to one of our plans");
-                System.out.println("\nBasic Plan: \t\t Standard Plan: \t\t Premium Plan: \t\t ");
-                System.out.println("\nPrice: " + BASIC_PRICE + "LE  \t\t Price: " + STANDARD_PRICE + "LE  \t\t Price: " + PREMIUM_PRICE);
-                System.out.println("\nYou have up to: " + BASIC_MOVIES + "movies per month \t You have up to: " + STANDARD_MOVIES + "movies per month \t You have up to: " + PREMIUM_MOVIES + "movies per month");
-                System.out.println("\nWhich plan do you want to subscribe to?\n");
-                String enteredPlan = input.nextLine().toLowerCase();
-                AdminService.addSubscription(users, enteredPlan, i);
-            } else {
-                System.out.println("You are subscribed to the " + user.getSubscription().getPlan() + " plan");
-            }
-
-        }
-
-
-    }
-
-
-    public static void addMovie(List<Movie> movies) {
+    private static void addMovie(List<Movie> movies) {
         Movie newMovie = null;
         try {
             System.out.println("Enter the details of the movie:");
@@ -189,7 +84,7 @@ public class Main {
             System.out.println("Movie Duration(hr:min):");
             LocalTime durationTime = LocalTime.parse(input.nextLine());
 
-            System.out.println("Movie Actors.txt (Write 'done' when finished):");
+            System.out.println("Movie Actors (Write 'done' when finished):");
             ArrayList<String> actors = new ArrayList<>();
             while (true) {
                 String actorName = input.nextLine();
@@ -247,7 +142,6 @@ public class Main {
             movies.add(newMovie);
 
     }
-
     private static ArrayList<String> getActorsFromUser() {
 
         System.out.println("Enter the new list of actors (separate each actor with a semicolon):");
@@ -256,7 +150,6 @@ public class Main {
         //  Arrays.asList to convert the array returned by split to a List
         return new ArrayList<>(Arrays.asList(actorsInput.split(";")));
     }
-
     private static ArrayList<String> getGenresFromUser() {
 
         System.out.println("Enter the new list of genres (separate each actor with a semicolon):");
@@ -265,7 +158,6 @@ public class Main {
         //  Arrays.asList to convert the array returned by split to a List
         return new ArrayList<>(Arrays.asList(genresInput.split(";")));
     }
-
     private static ArrayList<String> getLanguagesFromUser() {
 
         System.out.println("Enter the new list of languages (separate each actor with a semicolon):");
@@ -274,7 +166,6 @@ public class Main {
         //  Arrays.asList to convert the array returned by split to a List
         return new ArrayList<>(Arrays.asList(languagesInput.split(";")));
     }
-
     public static void editMovies(List<Movie> movies) {
         //how to make sure in el movie da mawgood aandna
         System.out.println("Enter the movie name you want to edit:");
@@ -422,7 +313,6 @@ public class Main {
 
 
     }
-
     public static void deleteMovies(List<Movie> movies) {
         System.out.println("Enter the movie name or list of movies you want to remove (separate movies with a semicolon if more than one ):");
         String moviesToDelete = input.nextLine();
@@ -436,16 +326,16 @@ public class Main {
         }
     }
 
-    private static boolean isIdValid(String id) {
-        return id.matches("\\d{4}");
+    private static boolean isIdValid (String id){
+        return  id.matches("\\d{4}");
     }
 
-    public static void UserEditInfo(List<Regular> users) {
+    public static void UserEditInfo(List <Regular> users) {
 
-        System.out.println("Enter your saved id: (last 4 digits only): ");
+        System.out.println("Enter your saved id: (last 4 numbers only): ");
         int savedId = input.nextInt();
 
-        while (!isIdValid(Integer.toString(savedId))) {
+        while(!isIdValid(Integer.toString(savedId))){
             System.out.println("Invalid ID..Please enter exactly 4 digits");
             savedId = input.nextInt();
         }
@@ -457,50 +347,51 @@ public class Main {
             case 1:
                 System.out.println("Enter updated id (last 4 digits only):");
                 int newId = input.nextInt();
-                while (!isIdValid(Integer.toString(newId))) {
+                while(!isIdValid(Integer.toString(newId))){
                     System.out.println("Invalid ID..Please enter exactly 4 digits");
                     newId = input.nextInt();
                 }
-                AdminService.AdminEditUsers(savedId, users, 1, String.valueOf(newId));
+                AdminService.AdminEditUsers(savedId,users,1, String.valueOf(newId));
                 break;
             case 2:
                 System.out.println("Enter updated username:");
                 String newUsername = input.nextLine();
-                AdminService.AdminEditUsers(savedId, users, 2, newUsername);
+                AdminService.AdminEditUsers(savedId,users,2,newUsername);
                 break;
             case 3:
                 System.out.println("Enter updated password:");
                 String newPassword = input.nextLine();
-                AdminService.AdminEditUsers(savedId, users, 3, newPassword);
+                AdminService.AdminEditUsers(savedId,users,3, newPassword);
                 break;
             case 4:
                 System.out.println("Enter first name after update:");
                 String newFirstName = input.nextLine();
-                AdminService.AdminEditUsers(savedId, users, 4, newFirstName);
+                AdminService.AdminEditUsers(savedId,users,4, newFirstName);
                 break;
             case 5:
                 System.out.println("Enter last name after update:");
                 String newLastName = input.nextLine();
-                AdminService.AdminEditUsers(savedId, users, 5, newLastName);
+                AdminService.AdminEditUsers(savedId,users,5, newLastName);
                 break;
             case 6:
                 System.out.println("Enter updated email:");
                 String newEmail = input.nextLine();
-                AdminService.AdminEditUsers(savedId, users, 6, newEmail);
+                AdminService.AdminEditUsers(savedId,users,6, newEmail);
                 break;
             case 7:
                 System.out.println("Press: \n1 to unsubscribe \n2 to change plan ");
                 int ans = input.nextInt();
-                while ((ans != 1) && (ans != 2)) {
+                while((ans != 1) && (ans != 2)){
                     System.out.println("Invalid choice ..Please enter either 1 or 2 only ");
-                    ans = input.nextInt();
+                     ans = input.nextInt();
                 }
-                if (ans == 1) {
-                    AdminService.AdminEditUsers(savedId, users, 7, "false");
-                } else {
-                    System.out.println("What plan do you want to upgrade to (Basic/Standard/Premium)");
-                    String newPlan = input.nextLine().toLowerCase();
-                    AdminService.AdminEditUsers(savedId, users, 8, newPlan);
+                if(ans==1) {
+                    AdminService.AdminEditUsers(savedId,users,7, "false");
+                }
+                else {
+                    System.out.println("What plan do you want to change to (Basic/Standard/Premium)");
+                    String newPlan=input.nextLine().toLowerCase();
+                    AdminService.AdminEditUsers(savedId,users,8, newPlan);
                 }
 
                 break;
@@ -512,66 +403,73 @@ public class Main {
         System.out.println("To confirm deleting your account enter your password");
         String response = input.nextLine();
 
-        for (int index = 0; index < users.size(); index++) {
+        for (int index = 0; index < users.size(); index++)
+        {
             Regular user = users.get(index);
             if (response.equals(user.getPassword())) {
-                AdminService.adminRemovesUserAccount(users, index);
+                AdminService.adminRemovesUserAccount(users,index);
             }
         }
 
     }
 
-    public static void searchForActors(List<Actor> actors) {
+    public static void searchForActors(List<Actor> actors)
+    {
         System.out.println("Enter the actor's name:");
-        String actorName = input.nextLine();
-        for (int index = 0; index < actors.size(); index++) {
+        String actorName= input.nextLine();
+        for (int index = 0; index < actors.size(); index++)
+        {
             Actor actor = actors.get(index);
-            if (actorName.equals(actor.getFullName())) {
-                CastService.displayActorDetails(actors, index);
+            if (actorName.equals(actor.getFullName()))
+            {
+                CastService.displayActorDetails(actors,index);
             }
         }
 
-    }
 
-    public static void searchForDirectors(List<Director> directors) {
+
+    }
+    public static void searchForDirectors(List<Director> directors)
+    {
         System.out.println("Enter the actor's name:");
-        String directorName = input.nextLine();
-        for (int index = 0; index < directors.size(); index++) {
+        String directorName= input.nextLine();
+        for (int index = 0; index < directors.size(); index++)
+        {
             Director director = directors.get(index);
-            if (directorName.equals(director.getFullName())) {
-                CastService.displayDirectorDetails(directors, index);
+            if (directorName.equals(director.getFullName()))
+            {
+                CastService.displayDirectorDetails(directors,index);
             }
         }
 
     }
 
-    public static void searchForMovie(List<Movie> movies) {
+    public static void searchForMovie(List<Movie> movies){
         System.out.println("Press: \n1 to search for a specific movie by its name \n2 to search for movies by a specific genre");
-        int in = input.nextInt();
-        switch (in) {
+        int in=input.nextInt();
+        switch(in){
             case 1:
                 System.out.println("Enter Movie Name to search for");
-                String movieName = input.nextLine();
-                Movie MovieReturned = MovieService.searchForMovieByTitle(movies, movieName);
-                System.out.println("Movie details: \nDuration: " + MovieReturned.getDurationTime() + "\nImdb_score: " + MovieReturned.getImdb_score() + "\nOrigin country: " + MovieReturned.getCountry() + "\nActors: " + MovieReturned.getActors() + "\nDirector: " + MovieReturned.getDirector() + "\nGenres: " + MovieReturned.getGenres() + "\nLanguaes: " + MovieReturned.getLanguages() + "\nRelease Year: " + MovieReturned.getReleaseDate().getYear());
+                String movieName= input.nextLine();
+                Movie MovieReturned=MovieService.searchForMovieByTitle(movies,movieName);
+                System.out.println("Movie details: \nDuration: "+MovieReturned.getDurationTime()+"\nImdb_score: "+MovieReturned.getImdb_score()+"\nOrigin country: "+MovieReturned.getCountry()+"\nActors: "+MovieReturned.getActors()+"\nDirector: "+MovieReturned.getDirector()+"\nGenres: "+MovieReturned.getGenres()+"\nLanguaes: "+MovieReturned.getLanguages()+"\nRelease Year: "+MovieReturned.getReleaseDate().getYear());
                 break;
             case 2:
                 System.out.println("Enter Genre to search by");
-                String Genre = input.nextLine();
-                List<Movie> MoviesFound = MovieService.searchForMovieByGenre(movies, Genre);
-                int i = 1;
-                for (Movie movie : MoviesFound) {
-                    System.out.println("Movie " + i + ": \nMovie Name:" + movie.getMovieTitle() + " \nMovie duration: " + movie.getDurationTime() + "\nImdb_score: " + movie.getImdb_score() + "\nOrigin country: " + movie.getCountry() + "\nActors: " + movie.getActors() + "\nDirector: " + movie.getDirector() + "\nLanguaes: " + movie.getLanguages() + "\nRelease Year: " + movie.getReleaseDate().getYear() + "\n");
+                String Genre= input.nextLine();
+                List<Movie> MoviesFound=MovieService.searchForMovieByGenre(movies,Genre);
+                int i=1;
+                for(Movie movie:MoviesFound){
+                    System.out.println("Movie "+i+": \nMovie Name:"+movie.getMovieTitle()+" \nMovie duration: "+movie.getDurationTime()+"\nImdb_score: "+movie.getImdb_score()+"\nOrigin country: "+movie.getCountry()+"\nActors: "+movie.getActors()+"\nDirector: "+movie.getDirector()+"\nLanguaes: "+movie.getLanguages()+"\nRelease Year: "+movie.getReleaseDate().getYear()+"\n");
                     i++;
                 }
                 break;
         }
     }
 
-    public static void displayMostSubscribed(List<Regular> users) {
-        System.out.println("The most subscribed plan up till now is the " + AdminService.seeMostSubscribed(users) + " plan");
+    public static void displayMostSubscribed(List<Regular> users){
+        System.out.println("The most subscribed plan up till now is the "+AdminService.seeMostSubscribed(users)+" plan");
     }
 
 }
-
 

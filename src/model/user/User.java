@@ -1,6 +1,6 @@
 package model.user;
 
-abstract public class User
+ public abstract class User
 {
 
     int ID;

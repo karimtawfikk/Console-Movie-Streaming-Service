@@ -1,4 +1,4 @@
-0901,MalakDiab04,Malak2004,Malak,Diab,lokydiab@gmail.com,true;premium;28-12-2023,Movie 1;Movie 2;Movie 3,Mov 1;Mov 2;Mov 3
-0087,SuhailaRefaay_4,Suhaila_2004,Suhaila,Reafaay,lolarefa3i.2004@gmail.com,false;;,Movie 1;Movie 2;Movie 3;Movie 4,Mov 1;Mov 2
-1123,KimoKono,Kim1234,Karim,Tawfik,Karimtawfik481@gmail.com,true;basic;05-09-2023,Movie 1;Movie 2;Movie 3;Movie 4;Movie 5,Mov 1;Mov 2;Mov 3
-2342,EmanMoh23,emy*04,Eman,FathElBab,eman0muhammed@gmail.com,true;standard;28-11-2023,Movie 1;Movie 2,Mov 1;Mov 2
+0901,MalakDiab04,Malak2004,Malak,Diab,lokydiab@gmail.com,true;premium;28-12-2023,Movie 1;Mov 1:Mov 2;mov 1:mov 2
+0087,SuhailaRefaay_4,Suhaila_2004,Suhaila,Reafaay,lolarefa3i.2004@gmail.com,false;;,Movie 1:Movie 2;Mov 1:Mov 2:Mov 3;mov 1:mov 2:mov 3
+1123,KimoKono,Kim1234,Karim,Tawfik,Karimtawfik481@gmail.com,true;basic;05-09-2023,Movie 1:Movie 2:Movie 3;Mov 1:Mov 2:Mov 3:Mov 4;mov 1:mov 2:mov 3:mov 4:mov 5
+2342,EmanMoh23,emy*04,Eman,FathElBab,eman0muhammed@gmail.com,false;standard;28-11-2023,Movie 1:Movie 2:Movie 3;Mov 1:Mov 2:Mov 3;mov 1:mov 2:mov 3:mov 4

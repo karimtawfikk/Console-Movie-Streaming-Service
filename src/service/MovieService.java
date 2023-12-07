@@ -1,9 +1,7 @@
 package service;
-
 import model.Movie;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -20,11 +18,9 @@ public class MovieService {
         ArrayList<Movie> movies = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + MOVIE_PATH))) {
             while (scanner.hasNextLine()) {
-
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
                 // Extract the values for each field from the line
-
                 int movieId = Integer.parseInt(values[0]);
                 String movieTitle = values[1];
                 LocalDate releaseDate = LocalDate.parse(values[2]);
@@ -45,12 +41,55 @@ public class MovieService {
                 movies.add(movie); // kol loop hathot fe element gedid beta3 movies movie gedid
             }
         } catch (FileNotFoundException e) {
-
             System.err.println(e.getMessage());
         }
-
         return movies;
 // hatb3t kol l elements beta3 movies 3shan 8arad el function di bs enaha te read mn lfile, fa hanb2a 3ayzin nestkhdm l movies di f heta fa hanstlmha fl calling
     }
 
+
+    public static ArrayList<Movie> searchForMovieByGenre(List<Movie> movies,String genreValue){
+        ArrayList<Movie> MoviesFound =new ArrayList<>();
+        for(Movie movie: movies) {
+            if(movie.hasGenre(genreValue))
+                MoviesFound.add(movie);
+        }
+        return MoviesFound;
+    }
+    public static Movie searchForMovieByTitle(List<Movie> movies,String MovieName){
+        for(Movie movie: movies) {
+        if(movie.getMovieTitle().contains(MovieName))
+            return movie;
+        }
+        return null;
+    }
+
+
+    public static void writeMoviesToFile(List<Movie> movies) {
+        for (Movie movie : movies) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + MOVIE_PATH))) {
+                // Append the new movie details to the file
+                writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",
+                        movie.getMovieId(),
+                        movie.getMovieTitle(),
+                        movie.getReleaseDate(),
+                        movie.getDurationTime(),
+                        String.join(";", movie.getActors()),
+                        movie.getDirector(),
+                        String.join(";", movie.getGenres()),
+                        movie.getCountry(),
+                        movie.getBudget(),
+                        movie.getRevenue(),
+                        movie.getImdb_score(),
+                        String.join(";", movie.getLanguages()),
+                        movie.getPoster()
+                ));
+                // Add a new line at the end
+                writer.newLine();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }
 }

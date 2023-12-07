@@ -28,8 +28,8 @@ public class RegularService {
                 String email = values[5];
                 String[] subscriptionValues = values[6].split(";");
                 boolean isSubscribed = Boolean.parseBoolean(subscriptionValues[0]);
-                String subscriptionPlan =subscriptionValues[0];
-                LocalDate subscriptionDate = LocalDate.parse(subscriptionValues[1]);
+                String subscriptionPlan =subscriptionValues[1];
+                LocalDate subscriptionDate = LocalDate.parse(subscriptionValues[2]);
                 Subscriptions subscription = new Subscriptions(isSubscribed, subscriptionPlan, subscriptionDate);
 
                 ArrayList<String> watchLater = new ArrayList<>(Arrays.asList(values[7].split(";")));

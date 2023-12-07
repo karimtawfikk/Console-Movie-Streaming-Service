@@ -1,5 +1,8 @@
 package service;
-
+import model.user.Regular;
+import java.io.*;
+import java.util.List;
+import model.user.Admin;
 import model.Subscriptions;
 import model.user.Regular;
 import java.io.*;
@@ -9,13 +12,12 @@ import model.user.Admin;
 import java.util.Scanner;
 import static utils.Constants.*;
 import java.util.ArrayList;
-import java.lang.Math;
 public class AdminService {
 
-        public static int Basic_Counter=-0;
-        public static int Standard_Counter=0;
+    public static int Basic_Counter=-0;
+    public static int Standard_Counter=0;
 
-        public static int Premium_Counter=0;
+    public static int Premium_Counter=0;
 
         public static List<Admin> readAdminsFromFile() {
 
@@ -42,12 +44,14 @@ public class AdminService {
             return Admins;
         }
         public static void addRegularUsers(List<Regular> users, Regular newUser) {
-
         if (newUser != null)
             users.add(newUser);
-
-        }
-
+    }
+    public static void addSubscription(List<Regular>users, String plan,int index)
+    {
+        Subscriptions newSub=new Subscriptions(true,plan,LocalDate.now());
+        users.get(index).setSubscription(newSub);
+    }
        public static void AdminEditUsers(int id,List<Regular> users,int choice,String newValue) {
         int index = -1;
         for (int i = 0; i < users.size(); i++) {
@@ -104,53 +108,50 @@ public class AdminService {
     {
         users.remove(index);
     }
-
-    public static String seeMostSubscribed(List<Regular> users){
-        for(Regular user:users){
-            if(user.getSubscription().getPlan().equals("basic")) {
+    public static String seeMostSubscribed(List<Regular> users)
+    {
+        for (Regular user : users) {
+            if (user.getSubscription().getPlan().equals("basic")) {
                 Basic_Counter++;
-            }
-            else if (user.getSubscription().getPlan().equals("standard")) {
+            } else if (user.getSubscription().getPlan().equals("standard")) {
                 Standard_Counter++;
-            }
-            else if(user.getSubscription().getPlan().equals("premium")){
+            } else if (user.getSubscription().getPlan().equals("premium")) {
                 Premium_Counter++;
             }
         }
         int mostSubscribed = Math.max(Basic_Counter, Math.max(Standard_Counter, Premium_Counter));
-        if(mostSubscribed==Basic_Counter){
+        if (mostSubscribed == Basic_Counter) {
             return "Basic";
-        }
-        else if(mostSubscribed==Standard_Counter){
+        } else if (mostSubscribed == Standard_Counter) {
             return "Standard";
-        }
-        else{
+        } else {
             return "Premium";
         }
     }
+        public static void writeAdminsToFile (List <Admin> admins) {
+            for (Admin admin : admins) {
 
-      public static void writeAdminsToFile(List<Admin> admins) {
-        for (Admin admin : admins) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + ADMIN_PATH))) {
+                    // Append the new movie details to the file
+                    writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",
+                            admin.getID(),
+                            admin.getUserName(),
+                            admin.getPassword(),
+                            admin.getFirstName(),
+                            admin.getLastName(),
+                            admin.getEmail()
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + ADMIN_PATH))) {
-                // Append the new movie details to the file
-                writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",
-                        admin.getID(),
-                        admin.getUserName(),
-                        admin.getPassword(),
-                        admin.getFirstName(),
-                        admin.getLastName(),
-                        admin.getEmail()
+                    ));
 
-                ));
-
-                writer.newLine();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+                    writer.newLine();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
             }
+
         }
 
     }
 
 
-}
+

@@ -4,7 +4,6 @@ abstract public class User
 {
 
     int ID;
-
     String userName;
     String password;
     String firstName;
@@ -67,4 +66,5 @@ abstract public class User
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

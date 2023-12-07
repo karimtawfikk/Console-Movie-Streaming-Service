@@ -8,7 +8,6 @@ public class Subscriptions {
     String  plan;
     LocalDate subscribeDate;
 
-
     public Subscriptions(boolean status, String plan, LocalDate subscribeDate) {
         this.status = status;
         this.plan = plan;
@@ -50,11 +49,11 @@ public class Subscriptions {
         return price;
     }
 
-    void dueDate() {
+     public void dueDate() {
         long diff = ChronoUnit.DAYS.between(subscribeDate, LocalDate.now());
         if (diff > 30) {
             plan = null;
-            System.out.println("your subscription has ended");
+            System.out.println("Your subscription has ended");
         }
 
     }

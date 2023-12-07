@@ -44,7 +44,6 @@ public class MovieService {
             System.err.println(e.getMessage());
         }
         return movies;
-// hatb3t kol l elements beta3 movies 3shan 8arad el function di bs enaha te read mn lfile, fa hanb2a 3ayzin nestkhdm l movies di f heta fa hanstlmha fl calling
     }
 
 
@@ -63,9 +62,8 @@ public class MovieService {
         }
         return null;
     }
-
-
-    public static void writeMoviesToFile(List<Movie> movies) {
+    public static void writeMoviesToFile(List<Movie> movies)
+    {
         for (Movie movie : movies) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + MOVIE_PATH))) {
                 // Append the new movie details to the file
@@ -92,4 +90,8 @@ public class MovieService {
         }
 
     }
+
+
+
+
 }

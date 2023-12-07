@@ -13,6 +13,11 @@ public class Regular extends User {
         this.subscription = subscription;
         this.watchLater = watchLater;
         this.watched = watched;
+
+    }
+
+    public Regular(int ID, String userName, String password, String firstName, String lastName, String email) {
+        super(ID, userName, password, firstName, lastName, email);
     }
 
     public Subscriptions getSubscription() {

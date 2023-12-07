@@ -1,6 +1,8 @@
 import model.Movie;
 import model.Subscriptions;
 import model.user.*;
+import model.*;
+import service.CastService;
 import service.MovieService;
 import service.RegularService;
 import service.AdminService;
@@ -22,6 +24,8 @@ public class Main {
         List<Movie> movies = MovieService.readMoviesFromFile();
         List<Regular> users = RegularService.readUsersFromFile();
         List<Admin> admins = AdminService.readAdminsFromFile();
+        List<Actor> actors= CastService.readActorsFromFile();
+        List<Director> directors=CastService.readDirectorFromFile();
         // if(admin wants to add movie)//TODO
         addMovie(movies);
         // if(admin wants to edit movie)//TODO
@@ -30,6 +34,24 @@ public class Main {
         deleteMovies(movies);
         // if(admin wants to add a new registered user)//TODO
         //addRegularUsers(users,newUser)
+
+        //if(admin wants to see most subscribed plan)//TODO
+        displayMostSubscribed(users);
+
+        //if (users wants to search for a movie)//TODO
+        searchForMovie(movies);
+
+        //if (user wants to delete his account)//TODO
+        deleteUserAccount(users);
+
+        //if(user wants to search for actors)
+        searchForActors(actors);
+        //if(user wants to search for directors)
+        searchForDirectors(directors);
+
+
+
+
 
 
 
@@ -367,7 +389,7 @@ public class Main {
                     AdminService.AdminEditUsers(savedId,users,7, "false");
                 }
                 else {
-                    System.out.println("What plan do you want to upgrade to (Basic/Standard/Premium)");
+                    System.out.println("What plan do you want to change to (Basic/Standard/Premium)");
                     String newPlan=input.nextLine().toLowerCase();
                     AdminService.AdminEditUsers(savedId,users,8, newPlan);
                 }
@@ -377,7 +399,7 @@ public class Main {
         }
     }
 
-    public static void deleteAccount(List<Regular> users) {
+    public static void deleteUserAccount(List<Regular> users) {
         System.out.println("To confirm deleting your account enter your password");
         String response = input.nextLine();
 
@@ -390,5 +412,64 @@ public class Main {
         }
 
     }
+
+    public static void searchForActors(List<Actor> actors)
+    {
+        System.out.println("Enter the actor's name:");
+        String actorName= input.nextLine();
+        for (int index = 0; index < actors.size(); index++)
+        {
+            Actor actor = actors.get(index);
+            if (actorName.equals(actor.getFullName()))
+            {
+                CastService.displayActorDetails(actors,index);
+            }
+        }
+
+
+
+    }
+    public static void searchForDirectors(List<Director> directors)
+    {
+        System.out.println("Enter the actor's name:");
+        String directorName= input.nextLine();
+        for (int index = 0; index < directors.size(); index++)
+        {
+            Director director = directors.get(index);
+            if (directorName.equals(director.getFullName()))
+            {
+                CastService.displayDirectorDetails(directors,index);
+            }
+        }
+
+    }
+
+    public static void searchForMovie(List<Movie> movies){
+        System.out.println("Press: \n1 to search for a specific movie by its name \n2 to search for movies by a specific genre");
+        int in=input.nextInt();
+        switch(in){
+            case 1:
+                System.out.println("Enter Movie Name to search for");
+                String movieName= input.nextLine();
+                Movie MovieReturned=MovieService.searchForMovieByTitle(movies,movieName);
+                System.out.println("Movie details: \nDuration: "+MovieReturned.getDurationTime()+"\nImdb_score: "+MovieReturned.getImdb_score()+"\nOrigin country: "+MovieReturned.getCountry()+"\nActors: "+MovieReturned.getActors()+"\nDirector: "+MovieReturned.getDirector()+"\nGenres: "+MovieReturned.getGenres()+"\nLanguaes: "+MovieReturned.getLanguages()+"\nRelease Year: "+MovieReturned.getReleaseDate().getYear());
+                break;
+            case 2:
+                System.out.println("Enter Genre to search by");
+                String Genre= input.nextLine();
+                List<Movie> MoviesFound=MovieService.searchForMovieByGenre(movies,Genre);
+                int i=1;
+                for(Movie movie:MoviesFound){
+                    System.out.println("Movie "+i+": \nMovie Name:"+movie.getMovieTitle()+" \nMovie duration: "+movie.getDurationTime()+"\nImdb_score: "+movie.getImdb_score()+"\nOrigin country: "+movie.getCountry()+"\nActors: "+movie.getActors()+"\nDirector: "+movie.getDirector()+"\nLanguaes: "+movie.getLanguages()+"\nRelease Year: "+movie.getReleaseDate().getYear()+"\n");
+                    i++;
+                }
+                break;
+        }
+    }
+
+    public static void displayMostSubscribed(List<Regular> users){
+        System.out.println("The most subscribed plan up till now is the "+AdminService.seeMostSubscribed(users)+" plan");
+    }
+
 }
 

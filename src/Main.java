@@ -31,7 +31,7 @@ public class Main {
         List<Admin> admins = AdminService.readAdminsFromFile();
         List<Actor> actors = CastService.readActorsFromFile();
         List<Director> directors = CastService.readDirectorFromFile();
-
+//TODO write el welcome w kol l kalam da f function w ncall it
         System.out.println("\t\t\t\t\t\tWelcome to WATCH IT\n\n");
         boolean continueLoop = true;
         boolean loggedInAsAnAdmin = false; // aw momken testkhdm Boolean loggedInAsAnAdmin=null;
@@ -154,7 +154,7 @@ public class Main {
                     return admin;
                 }
             }
-            System.out.println("Incorrect username or password... Please re-enter correct username and password");
+            System.out.println("Incorrect username or password... Please re-enter correct username and password:");
         }
     }
 
@@ -593,13 +593,14 @@ public class Main {
         int entered= input.nextInt();
         switch (entered){
             case 1:
-                System.out.println(user.getPlayLists().getFavplaylist());
+                System.out.println(user.getPlayLists().getFavoritePlaylist()) ;
+                //user:esm l object 3ady, we 3shan tendah getfav function lazm objname.fnname, fa getplaylist beyrg3lna l object
                 break;
             case 2:
                 System.out.println(user.getPlayLists().getWatchLaterplaylist());
                 break;
             case 3:
-                System.out.println(user.getPlayLists().getWatchedplaylist());
+                System.out.println(user.getPlayLists().getWatchedPlaylist());
                 break;
         }
     }

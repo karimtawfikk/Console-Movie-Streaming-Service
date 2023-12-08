@@ -1,5 +1,6 @@
 package service;
 import model.Movie;
+import utils.FileUtil;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -46,7 +47,7 @@ public class MovieService {
         return movies;
     }
 
-
+private static final String FILE_PATH= DATA_DIRECTORY+ MOVIE_PATH;
     public static ArrayList<Movie> searchForMovieByGenre(List<Movie> movies,String genreValue){
         ArrayList<Movie> MoviesFound =new ArrayList<>();
         for(Movie movie: movies) {
@@ -65,8 +66,10 @@ public class MovieService {
     }
     public static void writeMoviesToFile(List<Movie> movies)
     {
+        FileUtil.deleteFileContentBeforeWritingNewOne(FILE_PATH);
         for (Movie movie : movies) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + MOVIE_PATH))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH,true)))
+            {
                 // Append the new movie details to the file
                 writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",
                         movie.getMovieId(),

@@ -8,15 +8,15 @@ public class Movie {
    private String movieTitle;
    private LocalDate releaseDate;
    private LocalTime durationTime;
-    private ArrayList<String> actors=new ArrayList<>();
+    private ArrayList<String> actors;
    private String director;
-   private ArrayList<String> genres=new ArrayList<>();
+   private ArrayList<String> genres;
    private String country;
    private float budget;
    private float revenue;
    private float imdb_score;
 
-   private ArrayList<String> languages=new ArrayList<>();
+   private ArrayList<String> languages;
    private String poster;
 
 //    public Movie(){

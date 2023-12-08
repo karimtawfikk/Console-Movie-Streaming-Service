@@ -54,12 +54,12 @@ public class Payment {
             int cvv=input.nextInt();
 
             //bool x ashan ashuf law el cvv =3 fe3lan wala laa w law la alef aleha lehad ma ydkhal 3 digits bas
-            boolean x=false;
-            while (x == false) {
+            boolean checkCVV =false;
+            while (checkCVV == false) {
                 if (Integer.toString(cvv).length() == 3) {
                     System.out.println("Enter EXACTLY 3 numbers: ");
                     cvv = input.nextInt();
-                    x=true;
+                    checkCVV =true;
                 }
 
                 System.out.println("Invalid ID..Please enter exactly 16 digits");

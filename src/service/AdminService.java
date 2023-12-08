@@ -6,12 +6,15 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.List;
 import model.user.Admin;
+import utils.FileUtil;
+
 import java.util.Scanner;
 import static utils.Constants.*;
 import java.util.ArrayList;
 import java.lang.Math;
 public class AdminService {
 
+    private final static String FILE_PATH = DATA_DIRECTORY + ADMIN_PATH;
         public static int Basic_Counter=-0;
         public static int Standard_Counter=0;
 
@@ -135,9 +138,10 @@ public class AdminService {
     }
 
       public static void writeAdminsToFile(List<Admin> admins) {
+          FileUtil.deleteFileContentBeforeWritingNewOne(FILE_PATH);
         for (Admin admin : admins) {
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + ADMIN_PATH))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + ADMIN_PATH,true))) {
                 // Append the new movie details to the file
                 writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",
                         admin.getID(),

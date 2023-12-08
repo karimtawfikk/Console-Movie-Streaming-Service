@@ -4,7 +4,7 @@ import  model.Subscriptions;
 
 public class Regular extends User {
     Subscriptions subscription;
-    Playlist playLists;
+  public  Playlist playLists;
 
     public Regular(int ID, String userName, String password, String firstName, String lastName, String email, Subscriptions subscription, Playlist lists) {
         super(ID, userName, password, firstName, lastName, email);

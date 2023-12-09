@@ -4,6 +4,7 @@ import  model.Subscriptions;
 
 public class Regular extends User {
     Subscriptions subscription;
+
   public  Playlist playLists;
 
     public Regular(int ID, String userName, String password, String firstName, String lastName, String email, Subscriptions subscription, Playlist lists) {
@@ -20,7 +21,8 @@ public class Regular extends User {
         this.subscription = subscription;
     }
 
-    public Playlist getPlayLists() {
+    public Playlist getPlayLists()
+    {
         return playLists;
     }
 

@@ -49,7 +49,6 @@ public class Subscriptions {
         }
         return price;
     }
-
     @Override
     public String toString() {
 

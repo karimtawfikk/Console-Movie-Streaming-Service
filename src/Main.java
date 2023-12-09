@@ -56,6 +56,7 @@ public class Main {
                 }
             }
         }
+
         if (loggedInAsAnAdmin) {
             System.out.println("Press: \n1:To add a movie\n2:To edit a movie\n3:To delete a movie\n4:To display the most subscribed plan");
             int adminResponse = input.nextInt();
@@ -79,7 +80,7 @@ public class Main {
 
         } else {
             checkSubscription(users);
-            System.out.println("Press: \n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To display any of your movie lists\n5:To delete your account");
+            System.out.println("Press: \n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To display any of your movie lists\n5:To display all movies\n6:5:To delete your account");
             int userInput= input.nextInt();
             switch(userInput) {
                 case 1:
@@ -95,8 +96,12 @@ public class Main {
                     displayLists((Regular)loggedInUser);
                     break;
                 case 5:
+                    displayMovies(movies);
+                    break;
+                case 6:
                     deleteUserAccount(users);
                     break;
+
 
             }
         }
@@ -178,7 +183,18 @@ public class Main {
 
     }
 
+public static void displayMovies (List <Movie> movies)
+{
+    System.out.println("Those are our available movies for you to watch:");
+    int i=0;
+    for(Movie movie :movies)
+    {
+        i++;
+        System.out.println(i+":" +movie.getMovieTitle());
+    }
+    System.out.println("To watch a certain movie press the number next to it");
 
+}
     public static void addMovie(List<Movie> movies) {
         Movie newMovie = null;
         try {
@@ -537,7 +553,8 @@ public class Main {
 
     }
 
-    public static void searchForActors(List<Actor> actors) {
+    public static void searchForActors(List<Actor> actors)
+    {
         System.out.println("Enter the actor's name:");
         String actorName = input.nextLine();
         for (int index = 0; index < actors.size(); index++) {
@@ -587,7 +604,6 @@ public class Main {
     public static void displayMostSubscribed(List<Regular> users) {
         System.out.println("The most subscribed plan up till now is the " + AdminService.seeMostSubscribed(users) + " plan");
     }
-
     public static void displayLists(Regular user){
         System.out.println("Press: \n1:To display favourites list \n2:To display watchLater list \n3:To display watched list");
         int entered= input.nextInt();

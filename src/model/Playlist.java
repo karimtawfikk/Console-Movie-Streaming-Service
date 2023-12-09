@@ -9,6 +9,7 @@ public class Playlist {
     private List<String> watchLaterplaylist;
     private List<String> watchedPlaylist;
 
+
     public Playlist(List<String> favoritePlaylist, List<String> watchLaterplaylist, List<String> watchedPlaylist) {
         this.favoritePlaylist = favoritePlaylist;
         this.watchLaterplaylist = watchLaterplaylist;
@@ -48,8 +49,8 @@ public class Playlist {
     }
 
     @Override
-    public String toString() {
-
+    public String toString()
+    {
         String favPl = String.join(":", getFavoritePlaylist());
         String wLPl = String.join(":", getWatchLaterplaylist());
         String wPl = String.join(":", getWatchedPlaylist());

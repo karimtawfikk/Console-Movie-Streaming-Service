@@ -7,6 +7,7 @@ import java.io.IOException;
 import static utils.Constants.DATA_DIRECTORY;
 import static utils.Constants.REGULAR_PATH;
 
+
 public class FileUtil {
     public static void deleteFileContentBeforeWritingNewOne(String filePath) //beymsa7 kol  el maktoob fl file
     {

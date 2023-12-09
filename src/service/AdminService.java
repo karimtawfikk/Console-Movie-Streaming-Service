@@ -139,8 +139,8 @@ public class AdminService {
 
       public static void writeAdminsToFile(List<Admin> admins) {
           FileUtil.deleteFileContentBeforeWritingNewOne(FILE_PATH);
-        for (Admin admin : admins) {
-
+        for (Admin admin : admins)
+        {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + ADMIN_PATH,true))) {
                 // Append the new movie details to the file
                 writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",

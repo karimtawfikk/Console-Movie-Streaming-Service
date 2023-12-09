@@ -1,13 +1,13 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class Subscriptions {
     boolean status;
     String  plan;
     LocalDate subscribeDate;
-
 
     public Subscriptions(boolean status, String plan, LocalDate subscribeDate) {
         this.status = status;
@@ -49,13 +49,33 @@ public class Subscriptions {
         }
         return price;
     }
+    @Override
+    public String toString() {
 
-    void dueDate() {
+       if(!status)
+       {
+           return "false;" + " ;" + " ";
+       }
+      else
+      {
+           String plan=this.plan;
+
+           LocalDate subscribeDate=this.subscribeDate;
+
+           String subscriptionDate = subscribeDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+           return "true;"+plan+";"+subscriptionDate;
+      }
+
+    }
+
+    public void dueDate() {
         long diff = ChronoUnit.DAYS.between(subscribeDate, LocalDate.now());
         if (diff > 30) {
             plan = null;
-            System.out.println("your subscription has ended");
+            System.out.println("Your subscription has ended");
         }
+
 
     }
 

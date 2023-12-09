@@ -1,5 +1,6 @@
 package service;
 import model.Movie;
+import utils.FileUtil;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -44,10 +45,9 @@ public class MovieService {
             System.err.println(e.getMessage());
         }
         return movies;
-// hatb3t kol l elements beta3 movies 3shan 8arad el function di bs enaha te read mn lfile, fa hanb2a 3ayzin nestkhdm l movies di f heta fa hanstlmha fl calling
     }
 
-
+private static final String FILE_PATH= DATA_DIRECTORY+ MOVIE_PATH;
     public static ArrayList<Movie> searchForMovieByGenre(List<Movie> movies,String genreValue){
         ArrayList<Movie> MoviesFound =new ArrayList<>();
         for(Movie movie: movies) {
@@ -56,18 +56,20 @@ public class MovieService {
         }
         return MoviesFound;
     }
-    public static Movie searchForMovieByTitle(List<Movie> movies,String MovieName){
+    public static Movie searchForMovieByTitle(List<Movie> movies,String MovieName)
+    {
         for(Movie movie: movies) {
         if(movie.getMovieTitle().contains(MovieName))
             return movie;
         }
         return null;
     }
-
-
-    public static void writeMoviesToFile(List<Movie> movies) {
+    public static void writeMoviesToFile(List<Movie> movies)
+    {
+        FileUtil.deleteFileContentBeforeWritingNewOne(FILE_PATH);
         for (Movie movie : movies) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + MOVIE_PATH))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH,true)))
+            {
                 // Append the new movie details to the file
                 writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",
                         movie.getMovieId(),
@@ -92,4 +94,8 @@ public class MovieService {
         }
 
     }
+
+
+
+
 }

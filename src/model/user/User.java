@@ -4,7 +4,6 @@ package model.user;
 {
 
     int ID;
-
     String userName;
     String password;
     String firstName;
@@ -67,4 +66,5 @@ package model.user;
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

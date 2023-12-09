@@ -21,7 +21,8 @@ public class CastPerson {
     }
 
 
-    public String getFullName() {
+    public String getFullName()
+    {
         return fullName;
     }
 

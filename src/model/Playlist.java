@@ -5,9 +5,9 @@ import java.util.List;
 public class Playlist {
 
 
-    private List<String> favoritePlaylist;
-    private List<String> watchLaterplaylist;
-    private List<String> watchedPlaylist;
+    private static List<String> favoritePlaylist;
+    private static List<String> watchLaterplaylist;
+    private  static List<String> watchedPlaylist;
 
 
     public Playlist(List<String> favoritePlaylist, List<String> watchLaterplaylist, List<String> watchedPlaylist) {
@@ -16,15 +16,16 @@ public class Playlist {
         this.watchedPlaylist = watchedPlaylist;
     }
 
-    public void addToFav(String movie) {
+    public static void addToFav(String movie)
+    {
         favoritePlaylist.add(movie);
     }
 
-    public void RemoveFromToFav(String movie) {
+    public static void RemoveFromToFav(String movie) {
         favoritePlaylist.remove(movie);
     }
 
-    public void addToToBeWatched(String movie) {
+    public static void addToToBeWatched(String movie) {
         watchLaterplaylist.add(movie);
     }
 

@@ -83,12 +83,12 @@ public class RegularService {
         }
 
     }
-    public static void main(String[] args)  //7atet el main di hena aashan bs negarb w ne run bs fl akher hanms7a
-    {
-
-
-
-    List<Regular> regularUsers = readUsersFromFile();
-     writeUsersToFile(regularUsers);
-    }
+//    public static void main(String[] args)  //7atet el main di hena aashan bs negarb w ne run bs fl akher hanms7a
+//    {
+//
+//
+//
+//    List<Regular> regularUsers = readUsersFromFile();
+//     writeUsersToFile(regularUsers);
+//    }
 }

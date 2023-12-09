@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
+import static service.AdminService.arr;
 import static utils.Constants.*;
 
 
@@ -58,7 +59,7 @@ public class Main {
         }
 
         if (loggedInAsAnAdmin) {
-            System.out.println("Press: \n1:To add a movie\n2:To edit a movie\n3:To delete a movie\n4:To display the most subscribed plan");
+            System.out.println("Press: \n1:To add a movie\n2:To edit a movie\n3:To delete a movie\n4:To display the most subscribed plan\n5: To get the month with the highest revenue");
             int adminResponse = input.nextInt();
             switch (adminResponse) {
                 case 1:
@@ -73,6 +74,8 @@ public class Main {
                 case 4:
                     displayMostSubscribed(users);
                     break;
+                case 5:
+                    displayMonthWithMostRevenue(users);
 
 
             }
@@ -80,7 +83,7 @@ public class Main {
 
         } else {
             checkSubscription(users);
-            System.out.println("Press: \n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To display any of your movie lists\n5:To display all movies\n6:5:To delete your account");
+            System.out.println("Press: \n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To display any of your movie lists\n5:To display all movies\n6:To delete your account");
             int userInput= input.nextInt();
             switch(userInput) {
                 case 1:
@@ -199,7 +202,6 @@ public static void displayMovies (List <Movie> movies)
         Movie newMovie = null;
         try {
             System.out.println("Enter the details of the movie:");
-
             System.out.println("MovieId:");
             int movieId = input.nextInt();
             input.nextLine(); // 3ashan threw error bsabb nextint()
@@ -621,4 +623,26 @@ public static void displayMovies (List <Movie> movies)
         }
     }
 
-}
+//The admin can see which month had the most revenue
+public static void displayMonthWithMostRevenue(List<Regular>users)
+    {
+        for(int i=0; i< users.size(); i++) {
+            Integer monthValue = null;
+            LocalDate date = users.get(i).getSubscription().getSubscribeDate();
+            if (date != null) {
+                monthValue = date.getMonthValue();
+            }
+            if (monthValue != null) {
+              AdminService.calculateRevenue(users, monthValue,i);
+            }
+
+        }
+        int maxIndex=0;
+        for (int i = 0; i < 12; i++) {
+            if (arr[i] > arr[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+        System.out.println("The month that had the most revenue is month"+ arr[maxIndex]);
+
+}  }

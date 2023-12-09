@@ -2,9 +2,14 @@ package model;
 
 import java.util.List;
 
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class Playlist {
-
-
+    private ArrayList<String> favoriteFilms;
+    private ArrayList<String> watchlaterFilms;
+    private ArrayList<String> watchedFilms;
     private List<String> favoritePlaylist;
     private List<String> watchLaterplaylist;
     private List<String> watchedPlaylist;
@@ -56,7 +61,10 @@ public class Playlist {
         String wPl = String.join(":", getWatchedPlaylist());
         return favPl + ";" + wLPl + ";" + wPl;
     }
+    public Playlist(ArrayList<String> favoriteFilms, ArrayList<String> watchlaterFilms, ArrayList<String> watchedFilms) {
+        this.favoriteFilms = favoriteFilms;
+        this.watchlaterFilms = watchlaterFilms;
+        this.watchedFilms = watchedFilms;
+    }
+
 }
-
-
-

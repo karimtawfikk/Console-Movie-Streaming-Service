@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class CastPerson {
-   String fullName;
+    String fullName;
     int age;
     String gender;
     String nationality;
@@ -13,7 +13,7 @@ public class CastPerson {
 
 
     public CastPerson(String fullName, int age, String gender, String nationality, List<String> list_of_movies) {
-       this.fullName=fullName;
+        this.fullName=fullName;
         this.age = age;
         this.gender = gender;
         this.nationality = nationality;
@@ -21,7 +21,8 @@ public class CastPerson {
     }
 
 
-    public String getFullName() {
+    public String getFullName()
+    {
         return fullName;
     }
 

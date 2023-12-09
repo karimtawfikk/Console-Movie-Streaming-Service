@@ -88,7 +88,7 @@ public class RegularService {
 
 
 
-    List<Regular> regularUsers = readUsersFromFile();
-     writeUsersToFile(regularUsers);
+//    List<Regular> regularUsers = readUsersFromFile();
+//     writeUsersToFile(regularUsers);
     }
 }

@@ -9,11 +9,14 @@ public class Subscriptions {
     String  plan;
     LocalDate subscribeDate;
 
+
     public Subscriptions(boolean status, String plan, LocalDate subscribeDate) {
         this.status = status;
         this.plan = plan;
         this.subscribeDate = subscribeDate;
     }
+
+
 
     public boolean isStatus() {
         return status;
@@ -78,6 +81,8 @@ public class Subscriptions {
 
 
     }
+
+
 
 }
 

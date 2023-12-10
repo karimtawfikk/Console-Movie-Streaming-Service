@@ -3,7 +3,6 @@ import model.user.Admin;
 import model.user.Regular;
 import model.user.User;
 import service.*;
-import model.Playlist;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,7 +18,7 @@ import static utils.Constants.*;
 
 public class Main {
     static Scanner input = new Scanner(System.in);
-    static String username; //ehtgtha f function el displayMovies
+    static String username; //ehtgtha f function el displayMovies, w static aashan used in login fn which is static
 
     public static void main(String[] args) {
         List<Movie> movies = MovieService.readMoviesFromFile();
@@ -89,7 +88,7 @@ public class Main {
                 int userInput = input.nextInt();
                 switch (userInput) {
                     case 1:
-                        searchForMovie(movies);
+                        searchForMovie(movies, users);
                         break;
                     case 2:
                         searchForActors(actors);
@@ -113,7 +112,6 @@ public class Main {
                 System.out.println("Need any more service?" + "... Press Y to continue and N to exit");
 
                 response = input.nextLine();
-
             } while (response.equals("y") || response.equals("Y"));
         }
         AdminService.writeAdminsToFile(admins);
@@ -177,10 +175,9 @@ public class Main {
     }
 
     public static void checkSubscription(List<Regular> users) {
-
-
         int index = -1;
-        for (int i = 0; i < users.size(); i++) {
+        for (int i = 0; i < users.size(); i++)  // dayman nestkhdmha aashan neb2a 3arfeen index el user el benshtghl bee
+        {
             if (username.contains(users.get(i).getUserName())) {
                 index = i;
                 break;
@@ -217,10 +214,16 @@ public class Main {
         for (Movie movie : movies) {
             if (response.contains(movie.getMovieTitle())) {
                 users.get(index).getPlayLists().addToWatched(movie.getMovieTitle());
-                Playlist.RecentWatchedMovies(response);
+                Playlist.RecentWatchedMovies(movie.getMovieTitle());
+                Playlist.addToWatched(movie.getMovieTitle());
                 System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-10");
                 int rating = input.nextInt();
-                RatingService.CalculateRating(movies, response, rating);
+                RatingService.CalculateRating(movies, movie.getMovieTitle(), rating);
+                System.out.println("Do you want to add it to your favorite playlist?... Press Y for yes and N for no");
+                String answer = input.nextLine();
+                if ((answer.equals("Y") || answer.equals("y"))) {
+                    users.get(index).getPlayLists().addToFavorite(movie.getMovieTitle());
+                }
             }
 
         }
@@ -609,24 +612,47 @@ public class Main {
 
     }
 
-    public static void searchForMovie(List<Movie> movies) {
+    public static void searchForMovie(List<Movie> movies, List<Regular> users) {
         System.out.println("Press: \n1 to search for a specific movie by its name \n2 to search for movies by a specific genre");
         int in = input.nextInt();
-        switch (in) {
-
+        int index = -1;
+        for (int i = 0; i < users.size(); i++) {
+            if (username.contains(users.get(i).getUserName())) {
+                index = i;
+                break;
+            }
+        }
+        switch (in)
+        {
             case 1:
                 System.out.println("Enter Movie Name to search for");
                 String movieName = input.next();
+
+
                 Movie MovieReturned = MovieService.searchForMovieByTitle(movies, movieName);
                 System.out.println("Movie details: \nDuration: " + MovieReturned.getDurationTime() + "\nImdb_score: " + MovieReturned.getImdb_score() + "\nOrigin country: " + MovieReturned.getCountry() + "\nActors: " + MovieReturned.getActors() + "\nDirector: " + MovieReturned.getDirector() + "\nGenres: " + MovieReturned.getGenres() + "\nLanguaes: " + MovieReturned.getLanguages() + "\nRelease Year: " + MovieReturned.getReleaseDate().getYear());
+                System.out.println("Do you want to watch this movie?");
+                String response = input.next();
+                if ((response.equals("Y") || response.equals("y"))) {
+                    Playlist.RecentWatchedMovies(MovieReturned.getMovieTitle());
+                    Playlist.addToWatched(MovieReturned.getMovieTitle());
+                    System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-10");
+                    int rating = input.nextInt();
+                    RatingService.CalculateRating(movies, MovieReturned.getMovieTitle(), rating);
+                    System.out.println("Do you want to add it to your favorite playlist?... Press Y for yes and N for no");
+                    String answer = input.nextLine();
+                    if ((answer.equals("Y") || answer.equals("y")))
+                    {
+                        users.get(index).getPlayLists().addToFavorite(movieName);
+                    }
+                }
                 break;
             case 2:
                 System.out.println("Enter Genre to search by");
                 String Genre = input.next();
                 List<Movie> MoviesFound = MovieService.searchForMovieByGenre(movies, Genre);
                 int i = 1;
-                for (Movie movie : MoviesFound)
-                {
+                for (Movie movie : MoviesFound) {
                     System.out.println("Movie " + i + ": \nMovie Name:" + movie.getMovieTitle() + " \nMovie duration: " + movie.getDurationTime() + "\nImdb_score: " + movie.getImdb_score() + "\nOrigin country: " + movie.getCountry() + "\nActors: " + movie.getActors() + "\nDirector: " + movie.getDirector() + "\nLanguaes: " + movie.getLanguages() + "\nRelease Year: " + movie.getReleaseDate().getYear() + "\n");
                     i++;
                 }
@@ -662,10 +688,11 @@ public class Main {
             LocalDate date = users.get(i).getSubscription().getSubscribeDate();
             if (date != null) {
                 monthValue = date.getMonthValue();
-            }
-            if (monthValue != null) {
                 AdminService.calculateRevenue(users, monthValue, i);
             }
+//            if (monthValue != null) {
+//                AdminService.calculateRevenue(users, monthValue, i);
+//            }
 
         }
         int maxIndex = 0;
@@ -678,8 +705,7 @@ public class Main {
     }
 
     public static void displayRecentWatched() {
-        for (int i = 1; i < 3; i++)
-        {
+        for (int i = 1; i < 3; i++) {
             System.out.println(recentMovies[i] + '\n');
         }
     }

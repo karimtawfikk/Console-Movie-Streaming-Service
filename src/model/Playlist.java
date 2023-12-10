@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class Playlist {
 
-    private List<String> favoritePlaylist;
-    private List<String> watchLaterplaylist;
-    private List<String> watchedPlaylist;
+    private static List<String> favoritePlaylist;
+    private static List<String> watchLaterplaylist;
+    private static List<String> watchedPlaylist;
     public static String[] recentMovies=new String[3];
 
     public Playlist(List<String> favoritePlaylist, List<String> watchLaterplaylist, List<String> watchedPlaylist)
@@ -20,24 +20,17 @@ public class Playlist {
         this.watchedPlaylist = watchedPlaylist;
     }
 
-    public void addToFav(String movie) {
-        favoritePlaylist.add(movie);
+    public void addToFavorite(String movieTitle)
+    {
+        favoritePlaylist.add(movieTitle);
     }
-
-    public void RemoveFromToFav(String movie) {
-        favoritePlaylist.remove(movie);
+    public void addToToBeWatched(String movieTitle)
+    {
+        watchLaterplaylist.add(movieTitle);
     }
-
-    public void addToToBeWatched(String movie) {
-        watchLaterplaylist.add(movie);
-    }
-
-    public void RemoveFromTobeWatched(String movie) {
-        watchLaterplaylist.remove(movie);
-    }
-
-    public void addToWatched(String movie) {
-        watchedPlaylist.add(movie);
+    public static void addToWatched(String movieTitle)
+    {
+        watchedPlaylist.add(movieTitle);
     }
 
     public List<String> getFavoritePlaylist() {

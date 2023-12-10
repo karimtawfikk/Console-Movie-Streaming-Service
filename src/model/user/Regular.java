@@ -26,6 +26,7 @@ public class Regular extends User {
         return playLists;
     }
 
+
     public void setPlayLists(Playlist playLists) {
         this.playLists = playLists;
     }

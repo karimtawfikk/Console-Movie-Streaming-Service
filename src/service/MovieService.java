@@ -58,7 +58,8 @@ public class MovieService {
     }
     public static Movie searchForMovieByTitle(List<Movie> movies,String MovieName)
     {
-        for(Movie movie: movies) {
+        for(Movie movie: movies)
+        {
             if(movie.getMovieTitle().contains(MovieName))
                 return movie;
         }

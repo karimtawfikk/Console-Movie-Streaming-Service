@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class Playlist {
 
-    private static List<String> favoritePlaylist;
-    private static List<String> watchLaterplaylist;
-    private static List<String> watchedPlaylist;
+    private List<String> favoritePlaylist;
+    private List<String> watchLaterplaylist;
+    private List<String> watchedPlaylist;
     public static String[] recentMovies=new String[3];
 
     public Playlist(List<String> favoritePlaylist, List<String> watchLaterplaylist, List<String> watchedPlaylist)
@@ -28,7 +28,7 @@ public class Playlist {
     {
         watchLaterplaylist.add(movieTitle);
     }
-    public static void addToWatched(String movieTitle)
+    public void addToWatched(String movieTitle)
     {
         watchedPlaylist.add(movieTitle);
     }

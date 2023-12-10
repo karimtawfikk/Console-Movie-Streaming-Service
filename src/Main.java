@@ -105,6 +105,7 @@ public class Main {
                     case 6:
                         displayRecentWatched();
                         break;
+
                     case 7:
                         deleteUserAccount(users);
                         break;
@@ -208,11 +209,13 @@ public class Main {
         System.out.println("Those are our available movies for you to watch:");
         for (Movie movie : movies) {
             System.out.println(movie.getMovieTitle());
+            //TODO do you want to add any of them in the watch later playlist?
         }
         System.out.println("Write the movie name you want to watch:");
         String response = input.nextLine();
         for (Movie movie : movies) {
-            if (response.contains(movie.getMovieTitle())) {
+            if (response.contains(movie.getMovieTitle()))
+            {
                 users.get(index).getPlayLists().addToWatched(movie.getMovieTitle());
                 Playlist.RecentWatchedMovies(movie.getMovieTitle());
                 System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-10");
@@ -634,7 +637,7 @@ public class Main {
                 String response = input.next();
                 if ((response.equals("Y") || response.equals("y"))) {
                     Playlist.RecentWatchedMovies(MovieReturned.getMovieTitle());
-                    Playlist.addToWatched(MovieReturned.getMovieTitle());
+                    users.get(index).getPlayLists().addToWatched(MovieReturned.getMovieTitle());
                     System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-10");
                     int rating = input.nextInt();
                     RatingService.CalculateRating(movies, MovieReturned.getMovieTitle(), rating);

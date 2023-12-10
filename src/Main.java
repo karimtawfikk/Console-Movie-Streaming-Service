@@ -113,7 +113,6 @@ public class Main {
                         break;
 
                 }
-
                 System.out.println("Need any more service?" + "... Press Y to continue and N to exit");
 
                 response = input.nextLine();

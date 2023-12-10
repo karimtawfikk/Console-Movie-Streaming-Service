@@ -2,10 +2,7 @@ import model.*;
 import model.user.Admin;
 import model.user.Regular;
 import model.user.User;
-import service.AdminService;
-import service.CastService;
-import service.MovieService;
-import service.RegularService;
+import service.*;
 import model.Playlist;
 
 
@@ -181,20 +178,7 @@ public class Main {
 
     public static void checkSubscription(List<Regular> users)
     {
-//        for (int i = 0; i < users.size(); i++) {
-//            Regular user = users.get(i);
-//            if (!user.getSubscription().isStatus())
-//            {
-//                System.out.println("Subscribe to one of our plans");
-//                System.out.println("\nBasic Plan: \t Standard Plan: \t Premium Plan: \t ");
-//                System.out.println("\nPrice: " + BASIC_PRICE + "LE  \t Price: " + STANDARD_PRICE + "LE  \t Price: " + PREMIUM_PRICE);
-//                System.out.println("\nYou have up to: " + BASIC_MOVIES + "movies per month \t You have up to: " + STANDARD_MOVIES + "movies per month \t You have up to: " + PREMIUM_MOVIES + "movies per month");
-//                System.out.println("\nWhich plan do you want to subscribe to?\n");
-//                String enteredPlan = input.nextLine().toLowerCase();
-//                AdminService.addSubscription(users, enteredPlan, i);
-//            } else {
-//                System.out.println("You are subscribed to the " + user.getSubscription().getPlan() + " plan");
-//            }
+
 
         int index = -1;
         for (int i = 0; i < users.size(); i++)
@@ -242,8 +226,13 @@ public class Main {
         for(Movie movie :movies){
             if(response.contains(movie.getMovieTitle()))
             {
+
                 users.get(index).getPlayLists().addToWatched(movie.getMovieTitle());
                 Playlist.RecentWatchedMovies(response);
+                System.out.println("Movie watched successfully!"+"\nDid you enjoy the movie?"+"\nPlease enter a movie rating from 1-10");
+                int rating= input.nextInt();
+                Rating.setAndCalculateRating(movies,response,rating);
+
             }
 
         }
@@ -674,7 +663,7 @@ public class Main {
                 break;
         }
     }
-    public static void displayMonthWithMostRevenue(List<Regular>users)
+    public static void displayMonthWithMostRevenue(List<Regular>users)//TODO call fl admin switch cases
     {
         for(int i=0; i< users.size(); i++) {
             Integer monthValue = null;
@@ -695,6 +684,6 @@ public class Main {
             }
         }
         System.out.println("The month that had the most revenue is month"+ arr[maxIndex]);
-    }
+}
 
 }

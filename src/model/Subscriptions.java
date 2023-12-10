@@ -9,11 +9,14 @@ public class Subscriptions {
     String  plan;
     LocalDate subscribeDate;
 
+
     public Subscriptions(boolean status, String plan, LocalDate subscribeDate) {
         this.status = status;
         this.plan = plan;
         this.subscribeDate = subscribeDate;
     }
+
+
 
     public boolean isStatus() {
         return status;
@@ -52,20 +55,20 @@ public class Subscriptions {
     @Override
     public String toString() {
 
-        if(!status)
-        {
-            return "false;" + " ;" + " ";
-        }
-        else
-        {
-            String plan=this.plan;
+       if(!status)
+       {
+           return "false;" + " ;" + " ";
+       }
+      else
+      {
+           String plan=this.plan;
 
-            LocalDate subscribeDate=this.subscribeDate;
+           LocalDate subscribeDate=this.subscribeDate;
 
-            String subscriptionDate = subscribeDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+           String subscriptionDate = subscribeDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
-            return "true;"+plan+";"+subscriptionDate;
-        }
+           return "true;"+plan+";"+subscriptionDate;
+      }
 
     }
 
@@ -74,9 +77,13 @@ public class Subscriptions {
         if (diff > 30) {
             plan = null;
             System.out.println("Your subscription has ended");
+        }
+
+
     }
 
 
-}
 
 }
+
+

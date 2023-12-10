@@ -17,7 +17,7 @@ import static utils.Constants.DATA_DIRECTORY;
 import static utils.Constants.REGULAR_PATH;
 
 public class RegularService {
-   private final static String FILE_PATH = DATA_DIRECTORY + REGULAR_PATH;
+    private final static String FILE_PATH = DATA_DIRECTORY + REGULAR_PATH;
 
     public static List<Regular> readUsersFromFile() {
         ArrayList<Regular> regularUsers = new ArrayList<>();
@@ -83,12 +83,13 @@ public class RegularService {
         }
 
     }
-    public static void main(String[] args)  //7atet el main di hena aashan bs negarb w ne run bs fl akher hanms7a
-    {
+//    public static void main(String[] args)  //7atet el main di hena aashan bs negarb w ne run bs fl akher hanms7a
+//    {
+//
+//
+//
+//    List<Regular> regularUsers = readUsersFromFile();
+//     writeUsersToFile(regularUsers);
+//    }
 
-
-
-    List<Regular> regularUsers = readUsersFromFile();
-     writeUsersToFile(regularUsers);
-    }
 }

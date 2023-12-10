@@ -64,7 +64,7 @@ public class CastService {
     public static void displayActorDetails(List<Actor> actor, int index)
     {
         Actor temporaryActor = actor.get(index);
-        System.out.println("temporaryActor Details:");
+        System.out.println("Actor Details:");
         System.out.println("Name: " + temporaryActor.getFullName());
         System.out.println("Age: " + temporaryActor.getAge());
         System.out.println("Gender: " + temporaryActor.getGender());

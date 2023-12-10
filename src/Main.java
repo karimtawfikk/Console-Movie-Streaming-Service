@@ -17,12 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
-
 import static service.AdminService.arr;
 import static utils.Constants.*;
-
-
 public class Main {
     static Scanner input = new Scanner(System.in);
     static String username; //ehtgtha f function el displayMovies
@@ -83,31 +79,39 @@ public class Main {
         } else {
 
             checkSubscription(users);
-            System.out.println("Press: \n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To display any of your movie lists\n5:To display all movies\n6:To delete your account");
+            String response;
+            do {
+                System.out.println("Press: \n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To display any of your movie lists\n5:To display all movies\n6:To delete your account");
 
-            int userInput= input.nextInt();
-            switch(userInput) {
-                case 1:
-                    searchForMovie(movies);
-                    break;
-                case 2:
-                    searchForActors(actors);
-                    break;
-                case 3:
-                    searchForDirectors(directors);
-                    break;
-                case 4:
-                    displayLists((Regular)loggedInUser);
-                    break;
-                case 5:
-                    displayMovies(movies, users);
-                    break;
-                case 6:
-                    deleteUserAccount(users);
-                    break;
+                int userInput = input.nextInt();
+                switch (userInput)
+                {
+                    case 1:
+                        searchForMovie(movies);
+                        break;
+                    case 2:
+                        searchForActors(actors);
+                        break;
+                    case 3:
+                        searchForDirectors(directors);
+                        break;
+                    case 4:
+                        displayLists((Regular) loggedInUser);
+                        break;
+                    case 5:
+                        displayMovies(movies, users);
+                        break;
+                    case 6:
+                        deleteUserAccount(users);
+                        break;
 
+                }
 
-            }
+                System.out.println("Need any more service?" + "... Press Y to continue and N to exit");
+
+                response = input.nextLine();
+         
+            } while (response.equals("y") || response.equals("Y")) ;
         }
         AdminService.writeAdminsToFile(admins);
         RegularService.writeUsersToFile(users);
@@ -206,13 +210,10 @@ public class Main {
                 AdminService.addSubscription(users, enteredPlan, index);
             } else
             {
-                System.out.println("You are subscribed to the " + users.get(index).getSubscription().getPlan() + " plan");
+                System.out.println("You're subscribed to the " + users.get(index).getSubscription().getPlan() + " plan!");
             }
 
         }
-
-
-
 
 public static void displayMovies (List <Movie> movies, List<Regular> users)
 {
@@ -225,7 +226,6 @@ public static void displayMovies (List <Movie> movies, List<Regular> users)
             break;
         }
     }
-
     System.out.println("Those are our available movies for you to watch:");
     for(Movie movie :movies)
     {
@@ -602,6 +602,7 @@ users.get(index).getPlayLists().addToWatched(movie.getMovieTitle());
     public static void searchForActors(List<Actor> actors)
     {
         System.out.println("Enter the actor's name:");
+        input.nextLine();
         String actorName = input.nextLine();
         for (int index = 0; index < actors.size(); index++) {
             Actor actor = actors.get(index);
@@ -613,8 +614,8 @@ users.get(index).getPlayLists().addToWatched(movie.getMovieTitle());
     }
 
     public static void searchForDirectors(List<Director> directors) {
-        System.out.println("Enter the actor's name:");
-        String directorName = input.nextLine();
+        System.out.println("Enter the director name:");
+        String directorName = input.next();
         for (int index = 0; index < directors.size(); index++) {
             Director director = directors.get(index);
             if (directorName.equals(director.getFullName())) {
@@ -630,13 +631,13 @@ users.get(index).getPlayLists().addToWatched(movie.getMovieTitle());
         switch (in) {
             case 1:
                 System.out.println("Enter Movie Name to search for");
-                String movieName = input.nextLine();
+                String movieName = input.next();
                 Movie MovieReturned = MovieService.searchForMovieByTitle(movies, movieName);
                 System.out.println("Movie details: \nDuration: " + MovieReturned.getDurationTime() + "\nImdb_score: " + MovieReturned.getImdb_score() + "\nOrigin country: " + MovieReturned.getCountry() + "\nActors: " + MovieReturned.getActors() + "\nDirector: " + MovieReturned.getDirector() + "\nGenres: " + MovieReturned.getGenres() + "\nLanguaes: " + MovieReturned.getLanguages() + "\nRelease Year: " + MovieReturned.getReleaseDate().getYear());
                 break;
             case 2:
                 System.out.println("Enter Genre to search by");
-                String Genre = input.nextLine();
+                String Genre = input.next();
                 List<Movie> MoviesFound = MovieService.searchForMovieByGenre(movies, Genre);
                 int i = 1;
                 for (Movie movie : MoviesFound) {

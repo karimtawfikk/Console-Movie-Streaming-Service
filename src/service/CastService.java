@@ -26,8 +26,6 @@ public class CastService {
                 String actorGender = values[2];
                 String actorNationality = values[3];
                 ArrayList<String> actorListOfMovies = new ArrayList<>(Arrays.asList(values[4].split(";")));
-
-
                 Actor createdActor = new Actor(actorFullName, actorAge, actorGender, actorNationality, actorListOfMovies);
                 Actors.add(createdActor);
             }
@@ -38,7 +36,7 @@ public class CastService {
     }
 
 
-  public static List<Director> readDirectorFromFile() {
+    public static List<Director> readDirectorFromFile() {
 
         ArrayList<Director> Directors = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + DIRECTORS_PATH))) {
@@ -81,7 +79,7 @@ public class CastService {
         System.out.println("Gender: " + temporaryDirector.getGender());
         System.out.println("Nationality: " + temporaryDirector.getNationality());
         System.out.println("List of movies: " + temporaryDirector.getList_of_movies());
-    }
+}
 
 
 

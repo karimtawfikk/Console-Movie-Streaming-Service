@@ -3,6 +3,7 @@ package utils;
 import java.io.File;
 
 public class Constants {
+
     public static final String DATA_DIRECTORY = "Data" + File.separator;
     public static final String MOVIE_PATH = "Movie.txt";
     public static final String REGULAR_PATH = "Regular.txt";
@@ -16,7 +17,7 @@ public class Constants {
     public static final int  STANDARD_MOVIES = 10;
     public static final int PREMIUM_MOVIES = 30;
 
-    public static final int CONFIRMATION_CODE = 2408;
+    public static final int CONFIRMATION_CODE=2408;
 
 
 }

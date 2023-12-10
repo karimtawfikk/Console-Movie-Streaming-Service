@@ -4,20 +4,20 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 public class Movie {
 
-   private int movieId;
-   private String movieTitle;
-   private LocalDate releaseDate;
-   private LocalTime durationTime;
+    private int movieId;
+    private String movieTitle;
+    private LocalDate releaseDate;
+    private LocalTime durationTime;
     private ArrayList<String> actors;
-   private String director;
-   private ArrayList<String> genres;
-   private String country;
-   private float budget;
-   private float revenue;
-   private float imdb_score;
+    private String director;
+    private ArrayList<String> genres;
+    private String country;
+    private float budget;
+    private float revenue;
+    private float imdb_score;
 
-   private ArrayList<String> languages;
-   private String poster;
+    private ArrayList<String> languages;
+    private String poster;
 
 //    public Movie(){
 //
@@ -149,5 +149,5 @@ public class Movie {
 
     public boolean hasGenre (String genre){
         return genres.contains(genre);
-    }
+}
 }

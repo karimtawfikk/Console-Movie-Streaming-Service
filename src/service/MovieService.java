@@ -47,7 +47,7 @@ public class MovieService {
         return movies;
     }
 
-private static final String FILE_PATH= DATA_DIRECTORY+ MOVIE_PATH;
+    private static final String FILE_PATH= DATA_DIRECTORY+ MOVIE_PATH;
     public static ArrayList<Movie> searchForMovieByGenre(List<Movie> movies,String genreValue){
         ArrayList<Movie> MoviesFound =new ArrayList<>();
         for(Movie movie: movies) {
@@ -59,8 +59,8 @@ private static final String FILE_PATH= DATA_DIRECTORY+ MOVIE_PATH;
     public static Movie searchForMovieByTitle(List<Movie> movies,String MovieName)
     {
         for(Movie movie: movies) {
-        if(movie.getMovieTitle().contains(MovieName))
-            return movie;
+            if(movie.getMovieTitle().contains(MovieName))
+                return movie;
         }
         return null;
     }
@@ -91,9 +91,9 @@ private static final String FILE_PATH= DATA_DIRECTORY+ MOVIE_PATH;
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-        }
+      }
 
-    }
+}
 
 
 

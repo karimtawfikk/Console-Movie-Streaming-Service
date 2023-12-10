@@ -75,11 +75,8 @@ public class Playlist {
         }
 
 }
-    public static void displayRecentWatched(){ //TODO cal for cases
-        for (int i = 1; i < 3; i++) {
-            System.out.println(recentMovies[i]+'\n');
-        }
 
-    }
+
+
 
 }

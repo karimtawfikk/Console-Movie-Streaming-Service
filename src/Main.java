@@ -215,7 +215,6 @@ public class Main {
             if (response.contains(movie.getMovieTitle())) {
                 users.get(index).getPlayLists().addToWatched(movie.getMovieTitle());
                 Playlist.RecentWatchedMovies(movie.getMovieTitle());
-
                 System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-10");
                 int rating = input.nextInt();
                 RatingService.CalculateRating(movies, movie.getMovieTitle(), rating);
@@ -681,7 +680,7 @@ public class Main {
         }
     }
 
-    public static void displayMonthWithMostRevenue(List<Regular> users)//TODO call fl admin switch cases
+    public static void displayMonthWithMostRevenue(List<Regular> users)
     {
         for (int i = 0; i < users.size(); i++) {
             Integer monthValue = null;
@@ -704,7 +703,8 @@ public class Main {
         System.out.println("The month that had the most revenue is month" + monthRevenues[maxIndex]);
     }
 
-    public static void displayRecentWatched() {
+    public static void displayRecentWatched()
+    {
         for (int i = 1; i < 3; i++) {
             System.out.println(recentMovies[i] + '\n');
         }

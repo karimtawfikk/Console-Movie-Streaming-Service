@@ -263,9 +263,9 @@ public class AdminService
                     monthRevenues[11] += PREMIUM_PRICE;
 
                 break;
-            default:
 
-                break;
+
+
 
         }
 

@@ -57,26 +57,25 @@ public class Playlist {
 
     public static void RecentWatchedMovies(String response){
         //law el array lesa msh malyan hahot gowah el response
-        if(recentMovies.length!=3) {
-            for (int i = 0; i < 4; i++) {
-                recentMovies[i] = response;
+        if(recentMovies.length!=3)
+        {
+            for (int i = 0; i < 3; i++) {
+                if(recentMovies[i]!=null) {
+                    recentMovies[i] = response;
+                }
             }
         }
 //law etmala w galy response zeyada habadel awel movie bel gedeed
         else {
-            recentMovies[0]=response;
-            //by shift it to the left ashan tany mara mayshlsh el movie el recent awyy
-            String firstElement = recentMovies[0];
-            for (int i = 1; i < 3; i++) {
-                recentMovies[i - 1] = recentMovies[i];
+            //by shift it to the left ashan tany mara mayshlsh el movie el recent awyyString firstElement = recentMovies[0];
+            for (int i = 0; i < 3; i++) {
+                recentMovies[i] = recentMovies[i+1];
             }
-            recentMovies[3 - 1] = firstElement;
-
-
+            recentMovies[2]=response;
         }
 
-    }
-    public static void displayRecentWatched(){
+}
+    public static void displayRecentWatched(){ //TODO cal for cases
         for (int i = 1; i < 3; i++) {
             System.out.println(recentMovies[i]+'\n');
         }

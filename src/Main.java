@@ -215,7 +215,7 @@ public class Main {
             if (response.contains(movie.getMovieTitle())) {
                 users.get(index).getPlayLists().addToWatched(movie.getMovieTitle());
                 Playlist.RecentWatchedMovies(movie.getMovieTitle());
-                Playlist.addToWatched(movie.getMovieTitle());
+
                 System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-10");
                 int rating = input.nextInt();
                 RatingService.CalculateRating(movies, movie.getMovieTitle(), rating);

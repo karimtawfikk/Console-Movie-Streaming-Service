@@ -92,7 +92,6 @@ public class Playlist {
     public static void displayRecentWatched(){
         for (int i = 1; i < 3; i++) {
             System.out.println(recentMovies[i]+'\n');
-
         }
 
     }

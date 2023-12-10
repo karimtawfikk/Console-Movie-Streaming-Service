@@ -5,7 +5,6 @@ import model.user.Regular;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 import model.user.Admin;
 import utils.FileUtil;
@@ -23,7 +22,7 @@ public class AdminService
 
     public static int Premium_Counter=0;
 
-    public static int[]  arr={0,0,0,0,0,0,0,0,0,0,0,0};
+    public static int[] monthRevenues ={0,0,0,0,0,0,0,0,0,0,0,0};
 
     public static List<Admin> readAdminsFromFile() {
 
@@ -156,112 +155,112 @@ public class AdminService
             case 1:
                 String planJan = users.get(index).getSubscription().getPlan();
                 if (planJan.equals("Basic"))
-                    arr[0] += BASIC_PRICE;
+                    monthRevenues[0] += BASIC_PRICE;
                 if (planJan.equals("Standard"))
-                    arr[0] += STANDARD_PRICE;
+                    monthRevenues[0] += STANDARD_PRICE;
                 if (planJan.equals("Premium"))
-                    arr[0] += PREMIUM_PRICE;
+                    monthRevenues[0] += PREMIUM_PRICE;
                 break;
             case 2:
                 String planFeb = users.get(index).getSubscription().getPlan();
                 if (planFeb.equals("Basic"))
-                    arr[1] += BASIC_PRICE;
+                    monthRevenues[1] += BASIC_PRICE;
                 if (planFeb.equals("Standard"))
-                    arr[1] += STANDARD_PRICE;
+                    monthRevenues[1] += STANDARD_PRICE;
                 if (planFeb.equals("Premium"))
-                    arr[1] += PREMIUM_PRICE;
+                    monthRevenues[1] += PREMIUM_PRICE;
                 break;
             case 3:
                 String planMar = users.get(index).getSubscription().getPlan();
                 if (planMar.equals("Basic"))
-                    arr[2] += BASIC_PRICE;
+                    monthRevenues[2] += BASIC_PRICE;
                 if (planMar.equals("Standard"))
-                    arr[2] += STANDARD_PRICE;
+                    monthRevenues[2] += STANDARD_PRICE;
                 if (planMar.equals("Premium"))
-                    arr[2] += PREMIUM_PRICE;
+                    monthRevenues[2] += PREMIUM_PRICE;
                 break;
             case 4:
                 String planApr = users.get(index).getSubscription().getPlan();
                 if (planApr.equals("Basic"))
-                    arr[3] += BASIC_PRICE;
+                    monthRevenues[3] += BASIC_PRICE;
                 if (planApr.equals("Standard"))
-                    arr[3] += STANDARD_PRICE;
+                    monthRevenues[3] += STANDARD_PRICE;
                 if (planApr.equals("Premium"))
-                    arr[3] += PREMIUM_PRICE;
+                    monthRevenues[3] += PREMIUM_PRICE;
                 break;
             case 5:
                 String planMay = users.get(index).getSubscription().getPlan();
                 if (planMay.equals("Basic"))
-                    arr[4] += BASIC_PRICE;
+                    monthRevenues[4] += BASIC_PRICE;
                 if (planMay.equals("Standard"))
-                    arr[4] += STANDARD_PRICE;
+                    monthRevenues[4] += STANDARD_PRICE;
                 if (planMay.equals("Premium"))
-                    arr[4] += PREMIUM_PRICE;
+                    monthRevenues[4] += PREMIUM_PRICE;
                 break;
             case 6:
                 String planJune = users.get(index).getSubscription().getPlan();
                 if (planJune.equals("Basic"))
-                    arr[5] += BASIC_PRICE;
+                    monthRevenues[5] += BASIC_PRICE;
                 if (planJune.equals("Standard"))
-                    arr[5] += STANDARD_PRICE;
+                    monthRevenues[5] += STANDARD_PRICE;
                 if (planJune.equals("Premium"))
-                    arr[5] += PREMIUM_PRICE;
+                    monthRevenues[5] += PREMIUM_PRICE;
                 break;
             case 7:
                 String planJuly = users.get(index).getSubscription().getPlan();
                 if (planJuly.equals("Basic"))
-                    arr[6] += BASIC_PRICE;
+                    monthRevenues[6] += BASIC_PRICE;
                 if (planJuly.equals("Standard"))
-                    arr[6] += STANDARD_PRICE;
+                    monthRevenues[6] += STANDARD_PRICE;
                 if (planJuly.equals("Premium"))
-                    arr[6] += PREMIUM_PRICE;
+                    monthRevenues[6] += PREMIUM_PRICE;
                 break;
             case 8:
                 String planAug = users.get(index).getSubscription().getPlan();
                 if (planAug.equals("Basic"))
-                    arr[7] += BASIC_PRICE;
+                    monthRevenues[7] += BASIC_PRICE;
                 if (planAug.equals("Standard"))
-                    arr[7] += STANDARD_PRICE;
+                    monthRevenues[7] += STANDARD_PRICE;
                 if (planAug.equals("Premium"))
-                    arr[7] += PREMIUM_PRICE;
+                    monthRevenues[7] += PREMIUM_PRICE;
                 break;
             case 9:
                 String planSep = users.get(index).getSubscription().getPlan();
                 if (planSep.equals("Basic"))
-                    arr[8] += BASIC_PRICE;
+                    monthRevenues[8] += BASIC_PRICE;
                 if (planSep.equals("Standard"))
-                    arr[8] += STANDARD_PRICE;
+                    monthRevenues[8] += STANDARD_PRICE;
                 if (planSep.equals("Premium"))
-                    arr[8] += PREMIUM_PRICE;
+                    monthRevenues[8] += PREMIUM_PRICE;
 
                 break;
             case 10:
                 String planOct = users.get(index).getSubscription().getPlan();
                 if (planOct.equals("Basic"))
-                    arr[9] += BASIC_PRICE;
+                    monthRevenues[9] += BASIC_PRICE;
                 if (planOct.equals("Standard"))
-                    arr[9] += STANDARD_PRICE;
+                    monthRevenues[9] += STANDARD_PRICE;
                 if (planOct.equals("Premium"))
-                    arr[9] += PREMIUM_PRICE;
+                    monthRevenues[9] += PREMIUM_PRICE;
                 break;
             case 11:
                 String planNov = users.get(index).getSubscription().getPlan();
                 if (planNov.equals("Basic"))
-                    arr[10] += BASIC_PRICE;
+                    monthRevenues[10] += BASIC_PRICE;
                 if (planNov.equals("Standard"))
-                    arr[10] += STANDARD_PRICE;
+                    monthRevenues[10] += STANDARD_PRICE;
                 if (planNov.equals("Premium"))
-                    arr[10] += PREMIUM_PRICE;
+                    monthRevenues[10] += PREMIUM_PRICE;
 
                 break;
             case 12:
                 String planDec = users.get(index).getSubscription().getPlan();
                 if (planDec.equals("Basic"))
-                    arr[11] += BASIC_PRICE;
+                    monthRevenues[11] += BASIC_PRICE;
                 if (planDec.equals("Standard"))
-                    arr[11] += STANDARD_PRICE;
+                    monthRevenues[11] += STANDARD_PRICE;
                 if (planDec.equals("Premium"))
-                    arr[11] += PREMIUM_PRICE;
+                    monthRevenues[11] += PREMIUM_PRICE;
 
                 break;
             default:

@@ -5,7 +5,6 @@ import model.user.User;
 import service.*;
 import model.Playlist;
 
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -13,29 +12,28 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-
-import static service.AdminService.arr;
+import static model.Playlist.recentMovies;
+import static service.AdminService.monthRevenues;
 import static utils.Constants.*;
-
-
 
 
 public class Main {
     static Scanner input = new Scanner(System.in);
     static String username; //ehtgtha f function el displayMovies
+
     public static void main(String[] args) {
         List<Movie> movies = MovieService.readMoviesFromFile();
         List<Regular> users = RegularService.readUsersFromFile();
         List<Admin> admins = AdminService.readAdminsFromFile();
         List<Actor> actors = CastService.readActorsFromFile();
         List<Director> directors = CastService.readDirectorFromFile();
+        RatingService.setRatingOfWatchitMovies(movies);
 //TODO write el welcome w kol l kalam da f function w ncall it
         System.out.println("\t\t\t\t\t\tWelcome to WATCH IT\n\n");
         boolean continueLoop = true;
         boolean loggedInAsAnAdmin = false; // aw momken testkhdm Boolean loggedInAsAnAdmin=null;
         User loggedInUser = null;
-        while (continueLoop)
-        {
+        while (continueLoop) {
             System.out.println("Press: \n 1:To register\n 2:To Login");
             int userResponse = input.nextInt();
             switch (userResponse) {
@@ -57,7 +55,7 @@ public class Main {
         }
 
         if (loggedInAsAnAdmin) {
-            System.out.println("Press: \n1:To add a movie\n2:To edit a movie\n3:To delete a movie\n4:To display the most subscribed plan");
+            System.out.println("Press: \n1:To add a movie\n2:To edit a movie\n3:To delete a movie\n4:To display the most subscribed plan\n5:To edit a specific user's details\n6:To display the month with most revenue");
             int adminResponse = input.nextInt();
             switch (adminResponse) {
                 case 1:
@@ -72,10 +70,14 @@ public class Main {
                 case 4:
                     displayMostSubscribed(users);
                     break;
-
+                case 5:
+                    UserEditInfo(users);
+                    break;
+                case 6:
+                    displayMonthWithMostRevenue(users);
+                    break;
 
             }
-
 
         } else {
 
@@ -85,8 +87,7 @@ public class Main {
                 System.out.println("Press: \n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To display any of your movie lists\n5:To display all movies\n6: To display your recent watched three movies\n7:To delete your account");
 
                 int userInput = input.nextInt();
-                switch (userInput)
-                {
+                switch (userInput) {
                     case 1:
                         searchForMovie(movies);
                         break;
@@ -100,21 +101,20 @@ public class Main {
                         displayLists((Regular) loggedInUser);
                         break;
                     case 5:
-                        displayMovies(movies, users);
+                        displayMoviesAndWatch(movies, users);
                         break;
                     case 6:
-                        Playlist.displayRecentWatched();
+                        displayRecentWatched();
                         break;
                     case 7:
                         deleteUserAccount(users);
                         break;
-
                 }
                 System.out.println("Need any more service?" + "... Press Y to continue and N to exit");
 
                 response = input.nextLine();
 
-            } while (response.equals("y") || response.equals("Y")) ;
+            } while (response.equals("y") || response.equals("Y"));
         }
         AdminService.writeAdminsToFile(admins);
         RegularService.writeUsersToFile(users);
@@ -149,7 +149,7 @@ public class Main {
         System.out.print("Enter email: ");
         String email = input.nextLine();
         Subscriptions newRegisteredSubscription = new Subscriptions(false, null, null);
-        Regular newUser = new Regular(ID, username, password, firstName, lastName, email, newRegisteredSubscription,null);
+        Regular newUser = new Regular(ID, username, password, firstName, lastName, email, newRegisteredSubscription, null);
         AdminService.addRegularUsers(users, newUser);
 
     }
@@ -176,21 +176,17 @@ public class Main {
         }
     }
 
-    public static void checkSubscription(List<Regular> users)
-    {
+    public static void checkSubscription(List<Regular> users) {
 
 
         int index = -1;
-        for (int i = 0; i < users.size(); i++)
-        {
-            if (username.contains(users.get(i).getUserName()))
-            {
+        for (int i = 0; i < users.size(); i++) {
+            if (username.contains(users.get(i).getUserName())) {
                 index = i;
                 break;
             }
         }
-        if (!users.get(index).getSubscription().isStatus())
-        {
+        if (!users.get(index).getSubscription().isStatus()) {
             System.out.println("Subscribe to one of our plans");
             System.out.println("\nBasic Plan: \t Standard Plan: \t Premium Plan: \t ");
             System.out.println("\nPrice: " + BASIC_PRICE + "LE  \t Price: " + STANDARD_PRICE + "LE  \t Price: " + PREMIUM_PRICE);
@@ -198,45 +194,38 @@ public class Main {
             System.out.println("\nWhich plan do you want to subscribe to?\n");
             String enteredPlan = input.next().toLowerCase();
             AdminService.addSubscription(users, enteredPlan, index);
-        } else
-        {
+        } else {
             System.out.println("You're subscribed to the " + users.get(index).getSubscription().getPlan() + " plan!");
         }
 
     }
 
-    public static void displayMovies (List <Movie> movies, List<Regular> users)
-    {
+    public static void displayMoviesAndWatch(List<Movie> movies, List<Regular> users) {
         int index = -1;
-        for (int i = 0; i < users.size(); i++)
-        {
-            if (username.contains(users.get(i).getUserName()))
-            {
+        for (int i = 0; i < users.size(); i++) {
+            if (username.contains(users.get(i).getUserName())) {
                 index = i;
                 break;
             }
         }
         System.out.println("Those are our available movies for you to watch:");
-        for(Movie movie :movies)
-        {
+        for (Movie movie : movies) {
             System.out.println(movie.getMovieTitle());
         }
         System.out.println("Write the movie name you want to watch:");
-        String response= input.nextLine();
-        for(Movie movie :movies){
-            if(response.contains(movie.getMovieTitle()))
-            {
-
+        String response = input.nextLine();
+        for (Movie movie : movies) {
+            if (response.contains(movie.getMovieTitle())) {
                 users.get(index).getPlayLists().addToWatched(movie.getMovieTitle());
                 Playlist.RecentWatchedMovies(response);
-                System.out.println("Movie watched successfully!"+"\nDid you enjoy the movie?"+"\nPlease enter a movie rating from 1-10");
-                int rating= input.nextInt();
-                Rating.setAndCalculateRating(movies,response,rating);
-
+                System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-10");
+                int rating = input.nextInt();
+                RatingService.CalculateRating(movies, response, rating);
             }
 
         }
     }
+
     public static void addMovie(List<Movie> movies) {
         Movie newMovie = null;
         try {
@@ -595,8 +584,7 @@ public class Main {
 
     }
 
-    public static void searchForActors(List<Actor> actors)
-    {
+    public static void searchForActors(List<Actor> actors) {
         System.out.println("Enter the actor's name:");
         input.nextLine();
         String actorName = input.nextLine();
@@ -625,6 +613,7 @@ public class Main {
         System.out.println("Press: \n1 to search for a specific movie by its name \n2 to search for movies by a specific genre");
         int in = input.nextInt();
         switch (in) {
+
             case 1:
                 System.out.println("Enter Movie Name to search for");
                 String movieName = input.next();
@@ -636,7 +625,8 @@ public class Main {
                 String Genre = input.next();
                 List<Movie> MoviesFound = MovieService.searchForMovieByGenre(movies, Genre);
                 int i = 1;
-                for (Movie movie : MoviesFound) {
+                for (Movie movie : MoviesFound)
+                {
                     System.out.println("Movie " + i + ": \nMovie Name:" + movie.getMovieTitle() + " \nMovie duration: " + movie.getDurationTime() + "\nImdb_score: " + movie.getImdb_score() + "\nOrigin country: " + movie.getCountry() + "\nActors: " + movie.getActors() + "\nDirector: " + movie.getDirector() + "\nLanguaes: " + movie.getLanguages() + "\nRelease Year: " + movie.getReleaseDate().getYear() + "\n");
                     i++;
                 }
@@ -647,12 +637,13 @@ public class Main {
     public static void displayMostSubscribed(List<Regular> users) {
         System.out.println("The most subscribed plan up till now is the " + AdminService.seeMostSubscribed(users) + " plan");
     }
-    public static void displayLists(Regular user){
+
+    public static void displayLists(Regular user) {
         System.out.println("Press: \n1:To display favourites list \n2:To display watchLater list \n3:To display watched list");
-        int entered= input.nextInt();
-        switch (entered){
+        int entered = input.nextInt();
+        switch (entered) {
             case 1:
-                System.out.println(user.getPlayLists().getFavoritePlaylist()) ;
+                System.out.println(user.getPlayLists().getFavoritePlaylist());
                 //user:esm l object 3ady, we 3shan tendah getfav function lazm objname.fnname, fa getplaylist beyrg3lna l object
                 break;
             case 2:
@@ -663,27 +654,33 @@ public class Main {
                 break;
         }
     }
-    public static void displayMonthWithMostRevenue(List<Regular>users)//TODO call fl admin switch cases
+
+    public static void displayMonthWithMostRevenue(List<Regular> users)//TODO call fl admin switch cases
     {
-        for(int i=0; i< users.size(); i++) {
+        for (int i = 0; i < users.size(); i++) {
             Integer monthValue = null;
             LocalDate date = users.get(i).getSubscription().getSubscribeDate();
             if (date != null) {
                 monthValue = date.getMonthValue();
             }
             if (monthValue != null) {
-                AdminService.calculateRevenue(users, monthValue,i);
+                AdminService.calculateRevenue(users, monthValue, i);
             }
 
         }
-        int maxIndex=0;
+        int maxIndex = 0;
         for (int i = 0; i < 12; i++) {
-            if (arr[i] > arr[maxIndex])
-            {
+            if (monthRevenues[i] > monthRevenues[maxIndex]) {
                 maxIndex = i;
             }
         }
-        System.out.println("The month that had the most revenue is month"+ arr[maxIndex]);
-}
+        System.out.println("The month that had the most revenue is month" + monthRevenues[maxIndex]);
+    }
 
+    public static void displayRecentWatched() {
+        for (int i = 1; i < 3; i++)
+        {
+            System.out.println(recentMovies[i] + '\n');
+        }
+    }
 }

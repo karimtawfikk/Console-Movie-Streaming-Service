@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import static model.Playlist.recentMovies;
 import static service.AdminService.monthRevenues;
 import static utils.Constants.*;
 
@@ -26,7 +25,8 @@ public class Main {
         List<Admin> admins = AdminService.readAdminsFromFile();
         List<Actor> actors = CastService.readActorsFromFile();
         List<Director> directors = CastService.readDirectorFromFile();
-        RatingService.setRatingOfWatchitMovies(movies);
+        RatingService.setRatingOfWatchItMovies(movies);
+        Playlist.setTopWatchedMovies(movies);
 //TODO write el welcome w kol l kalam da f function w ncall it
         System.out.println("\t\t\t\t\t\tWelcome to WATCH IT\n\n");
         boolean continueLoop = true;
@@ -83,7 +83,7 @@ public class Main {
             checkSubscription(users);
             String response;
             do {
-                System.out.println("Press: \n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To display any of your movie lists\n5:To display all movies\n6: To display your recent watched three movies\n7:To delete your account");
+                System.out.println("Press: \n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To display any of your movie lists\n5:To display all movies\n6: To display your recent watched three movies\n7:To display top rated movies\n8:To delete your account");
 
                 int userInput = input.nextInt();
                 switch (userInput) {
@@ -103,16 +103,17 @@ public class Main {
                         displayMoviesAndWatch(movies, users);
                         break;
                     case 6:
-                        displayRecentWatched();
+                        displayRecentWatched(users);
                         break;
-
                     case 7:
+                        displayTopRated(movies);
+                        break;
+                    case 8:
                         deleteUserAccount(users);
                         break;
                 }
                 System.out.println("Need any more service?" + "... Press Y to continue and N to exit");
-
-                response = input.nextLine();
+                response = input.next();
             } while (response.equals("y") || response.equals("Y"));
         }
         AdminService.writeAdminsToFile(admins);
@@ -201,7 +202,7 @@ public class Main {
     public static void displayMoviesAndWatch(List<Movie> movies, List<Regular> users) {
         int index = -1;
         for (int i = 0; i < users.size(); i++) {
-            if (username.contains(users.get(i).getUserName())) {
+            if (username.equals(users.get(i).getUserName())) {
                 index = i;
                 break;
             }
@@ -211,23 +212,29 @@ public class Main {
             System.out.println(movie.getMovieTitle());
             //TODO do you want to add any of them in the watch later playlist?
         }
+//        System.out.println("Do you want to add any of them in your watch later playlist");
         System.out.println("Write the movie name you want to watch:");
-        String response = input.nextLine();
-        for (Movie movie : movies) {
+        String response = input.next();
+        int jindex = 0;//3shan aayzin ne3raf ehna f anhy index movie
+        for (Movie movie : movies)
+        {
             if (response.contains(movie.getMovieTitle()))
             {
-                users.get(index).getPlayLists().addToWatched(movie.getMovieTitle());
-                Playlist.RecentWatchedMovies(movie.getMovieTitle());
+                Playlist playlist = users.get(index).getPlayLists();
+                playlist.addToWatched(movie.getMovieTitle());     //   da el sah 3shan ehna mafrood call by object msh by class
+                playlist.getAndAddRecentWatchedMovies(movie.getMovieTitle());
                 System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-10");
                 int rating = input.nextInt();
                 RatingService.CalculateRating(movies, movie.getMovieTitle(), rating);
+                Playlist.getAndAddTopWatchedMovies(jindex,movies);
+                //todo change to no static
                 System.out.println("Do you want to add it to your favorite playlist?... Press Y for yes and N for no");
                 String answer = input.nextLine();
                 if ((answer.equals("Y") || answer.equals("y"))) {
                     users.get(index).getPlayLists().addToFavorite(movie.getMovieTitle());
                 }
             }
-
+            jindex++;
         }
     }
 
@@ -342,8 +349,6 @@ public class Main {
         String movieTitle = input.nextLine();
         System.out.println("Press: \n1 to edit movie duration \n2 to edit movie release date \n3 to edit movie actors \n4 to edit movie director \n5 to edit movie genres \n6 to edit movie origin country \n7 to edit movie budget \n8 to edit movie revenue \n9 to edit movie imdb_score \n10 to edit movie languages \n11 to edit movie poster path ");
         int userInput = input.nextInt();
-
-
         for (Movie mov : movies) {
             if (mov.getMovieTitle().contains(movieTitle)) {
                 switch (userInput) {
@@ -624,27 +629,25 @@ public class Main {
                 break;
             }
         }
-        switch (in)
-        {
+        switch (in) {
             case 1:
                 System.out.println("Enter Movie Name to search for");
                 String movieName = input.next();
-
-
                 Movie MovieReturned = MovieService.searchForMovieByTitle(movies, movieName);
                 System.out.println("Movie details: \nDuration: " + MovieReturned.getDurationTime() + "\nImdb_score: " + MovieReturned.getImdb_score() + "\nOrigin country: " + MovieReturned.getCountry() + "\nActors: " + MovieReturned.getActors() + "\nDirector: " + MovieReturned.getDirector() + "\nGenres: " + MovieReturned.getGenres() + "\nLanguaes: " + MovieReturned.getLanguages() + "\nRelease Year: " + MovieReturned.getReleaseDate().getYear());
                 System.out.println("Do you want to watch this movie?");
                 String response = input.next();
                 if ((response.equals("Y") || response.equals("y"))) {
-                    Playlist.RecentWatchedMovies(MovieReturned.getMovieTitle());
-                    users.get(index).getPlayLists().addToWatched(MovieReturned.getMovieTitle());
+                    Playlist playlist = users.get(index).getPlayLists();
+                    playlist.addToWatched(MovieReturned.getMovieTitle());      //  da el sah 3shan ehna mafrood call by object msh by class
+                    playlist.getAndAddRecentWatchedMovies(MovieReturned.getMovieTitle());
+                    //TODO han3ml nafs l hga el aamlnha f fun displaymoviesand watch(call by object msh by class)
                     System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-10");
                     int rating = input.nextInt();
                     RatingService.CalculateRating(movies, MovieReturned.getMovieTitle(), rating);
                     System.out.println("Do you want to add it to your favorite playlist?... Press Y for yes and N for no");
                     String answer = input.nextLine();
-                    if ((answer.equals("Y") || answer.equals("y")))
-                    {
+                    if ((answer.equals("Y") || answer.equals("y"))) {
                         users.get(index).getPlayLists().addToFavorite(movieName);
                     }
                 }
@@ -683,8 +686,7 @@ public class Main {
         }
     }
 
-    public static void displayMonthWithMostRevenue(List<Regular> users)
-    {
+    public static void displayMonthWithMostRevenue(List<Regular> users) {
         for (int i = 0; i < users.size(); i++) {
             Integer monthValue = null;
             LocalDate date = users.get(i).getSubscription().getSubscribeDate();
@@ -706,10 +708,41 @@ public class Main {
         System.out.println("The month that had the most revenue is month" + monthRevenues[maxIndex]);
     }
 
-    public static void displayRecentWatched()
+    public static void displayRecentWatched(List<Regular> users) {
+        int index = -1;
+        for (int i = 0; i < users.size(); i++) {
+            if (username.contains(users.get(i).getUserName())) {
+                index = i;
+                break;
+            }
+        }
+        Playlist playlist = users.get(index).getPlayLists();
+        //
+        //In Java, the default toString() method for arrays doesn't provide a useful representation of the array's contents. It prints the type of the array followed by its hash code. For example, if you have an array of strings:
+        // fa laz, ne override 3shan netal3 l gowa bzbt
+        if (Arrays.toString(playlist.getRecentMovies()).equals("[null, null, null]")) {
+            System.out.println("You haven't completed watching 3 movies");
+        } else
+            System.out.println(Arrays.toString(playlist.getRecentMovies()));
+    }
+
+    public static void displayTopRated(List<Movie> movies)
     {
-        for (int i = 1; i < 3; i++) {
-            System.out.println(recentMovies[i] + '\n');
+        Playlist.getAndAddTopRatedMovies(movies);
+        System.out.println("The top rated movies are:\n");
+        for (int i = 0; i < 3; i++) {
+            System.out.println(i + 1 + "." + Playlist.topRatedMovies[i] + "\n");
         }
     }
+
+    public static void displayTopWatched(List<Movie> movies)
+    {
+        System.out.println("Your top watched movies are:\n");
+    for(int i=0; i<3; i++)
+    {
+        System.out.println(i + 1 + "." +Playlist.topWatchedMovies[i] + "\n");
+    }
+    }
+
+
 }

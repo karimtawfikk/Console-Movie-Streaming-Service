@@ -7,19 +7,21 @@ import java.util.List;
 
 public class RatingService
 {
-    static List<Float> ratingOfWatchitMovies=new ArrayList<>(); //awl elemnt yebaa shayel score beta3 awl film aandena
-    public static void setRatingOfWatchitMovies(List<Movie>movies)
+    public static List<Float> ratingOfWatchItMovies =new ArrayList<>();
+    //TODO maynf3ash tbaa static bs maarfsh ezay 3shan el calling betaaha f void main
+    public static void setRatingOfWatchItMovies
+    (List<Movie>movies)
     {
         for(int i=0; i< movies.size(); i++)
         {
-            ratingOfWatchitMovies.add(movies.get(i).getImdb_score());
+            ratingOfWatchItMovies.add(movies.get(i).getImdb_score());
         }
     }
 
     public static void CalculateRating(List<Movie>movies, String response, int ratingOfUser)
     {
         int index = -1;
-        for (int i = 0; i < movies.size(); i++)  //3ashan ne3raf ehna shaghain ala anhy movie we ne3raf ne add fe anhy index beta3 List:ratingOfWatchitMovies
+        for (int i = 0; i < movies.size(); i++)  //3ashan ne3raf ehna shaghain ala anhy movie we ne3raf ne add fe anhy index beta3 List:ratingOfWatchItMovies
         {
             if (response.contains(movies.get(i).getMovieTitle()))
             {
@@ -27,9 +29,9 @@ public class RatingService
                 break;
             }
         }
-        Float newRating=(ratingOfWatchitMovies.get(index)/10.0f)* ratingOfUser;
-        ratingOfWatchitMovies.set(index,newRating);
-}
+        Float newRating=(ratingOfWatchItMovies.get(index)/10.0f)* ratingOfUser;
+        ratingOfWatchItMovies.set(index,newRating);
+}//todo
 
 
 

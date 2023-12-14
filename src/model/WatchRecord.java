@@ -1,6 +1,7 @@
 package model;
 
-public class WatchRecord {
+public class WatchRecord
+{
 
 
 }

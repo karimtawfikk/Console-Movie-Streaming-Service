@@ -13,8 +13,8 @@ import java.util.Scanner;
 import static utils.Constants.DATA_DIRECTORY;
 import static utils.Constants.MOVIE_PATH;
 
-public class MovieService {
-
+public class MovieService
+{
     public static List<Movie> readMoviesFromFile() {
         ArrayList<Movie> movies = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + MOVIE_PATH))) {
@@ -41,7 +41,8 @@ public class MovieService {
                         budget, revenue, imdbScore, languages, poster);
                 movies.add(movie); // kol loop hathot fe element gedid beta3 movies movie gedid
             }
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e)
+        {
             System.err.println(e.getMessage());
         }
         return movies;

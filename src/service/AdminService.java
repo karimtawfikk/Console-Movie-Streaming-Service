@@ -19,11 +19,8 @@ public class AdminService
     private final static String FILE_PATH = DATA_DIRECTORY + ADMIN_PATH;
     public static int Basic_Counter=-0;
     public static int Standard_Counter=0;
-
     public static int Premium_Counter=0;
-
     public static int[] monthRevenues ={0,0,0,0,0,0,0,0,0,0,0,0};
-
     public static List<Admin> readAdminsFromFile() {
 
         ArrayList<Admin> Admins = new ArrayList<>();
@@ -54,7 +51,6 @@ public class AdminService
             users.add(newUser);
 
     }
-
     public static void addSubscription(List<Regular>users, String plan,int index)
     {
         //Overall, this code snippet demonstrates how to obtain the current date,
@@ -144,10 +140,11 @@ public class AdminService
         else if(mostSubscribed==Standard_Counter){
             return "Standard";
         }
-        else{
+        else
+        {
             return "Premium";
         }
-    }
+    }//FARES W BOBO BYMSOOO
 
     public static void calculateRevenue(List<Regular>users,Integer monthValue,int index) {
 

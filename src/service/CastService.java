@@ -13,8 +13,8 @@ import static utils.Constants.*;
 
 public class CastService {
 
-    public static List<Actor> readActorsFromFile() {
-
+    public static List<Actor> readActorsFromFile()
+    {
         ArrayList<Actor> Actors = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + ACTORS_PATH))) {
             while (scanner.hasNextLine()) {

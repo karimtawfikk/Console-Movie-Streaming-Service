@@ -2,17 +2,31 @@ package model.user;
 
 import model.Playlist;
 import model.Subscriptions;
+import model.WatchRecord;
 
 public class Regular extends User
 {
     public Playlist playLists;
+    public WatchRecord watchrecord;
     Subscriptions subscription;
+    int movieCounter;
 
-    public Regular(int ID, String userName, String password, String firstName, String lastName, String email, Subscriptions subscription, Playlist lists)
+    public Regular(int ID, String userName, String password, String firstName, String lastName, String email, Playlist playLists, WatchRecord watchrecord, Subscriptions subscription,int movieCounter)
     {
         super(ID, userName, password, firstName, lastName, email);
+        this.movieCounter=movieCounter;
+        this.playLists = playLists;
+        this.watchrecord = watchrecord;
         this.subscription = subscription;
-        this.playLists = lists;
+    }
+
+    public void setMovieCounter(int movieCounter) {
+        this.movieCounter = movieCounter;
+    }
+
+    public int getMovieCounter()
+    {
+        return movieCounter;
     }
 
     public Subscriptions getSubscription() {
@@ -31,4 +45,6 @@ public class Regular extends User
     {
         this.playLists = playLists;
     }
+
+
 }

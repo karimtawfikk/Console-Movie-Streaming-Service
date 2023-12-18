@@ -1,7 +1,9 @@
 package service;
 
+import model.MovieRecord;
 import model.Playlist;
 import model.Subscriptions;
+import model.WatchRecord;
 import model.user.Regular;
 import utils.FileUtil;
 
@@ -21,8 +23,10 @@ public class RegularService {
 
     public static List<Regular> readUsersFromFile() {
         ArrayList<Regular> regularUsers = new ArrayList<>();
+        ArrayList<MovieRecord> records = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(FILE_PATH))) {
-            while (scanner.hasNextLine()) {
+            while (scanner.hasNextLine())
+            {
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
                 // Extract the values for each field from the line
@@ -43,11 +47,23 @@ public class RegularService {
                 String[] playlistValues = values[7].split(";");
                 List<String> favourites = new ArrayList<>(Arrays.asList(playlistValues[0].split(":")));
                 List<String> watchLater =new ArrayList<>( Arrays.asList(playlistValues[1].split(":")));
-                List<String> watched = new ArrayList<>(Arrays.asList(playlistValues[2].split(":")));
-
-                Playlist playlist = new Playlist(favourites, watchLater, watched);
-
-                Regular user = new Regular(userId, userName, password, firstName, lastName, email, subscription, playlist);
+                String[] watchRecordValues= values[8].split(";");
+                for(String recordLine:watchRecordValues)
+                {
+                    String [] lines=recordLine.split(":");
+                    String movieName=lines[0];
+                    LocalDate date=LocalDate.parse(lines[1],DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                    float rating = !lines[2].isBlank() ?
+                            Float.parseFloat(lines[2])
+                            :
+                            null;
+                    MovieRecord newRecord=new MovieRecord(movieName,date,rating);
+                    records.add(newRecord);
+                }
+                int movieCounter = Integer.parseInt(values[9],10);
+                Playlist playlist = new Playlist(favourites, watchLater);
+                WatchRecord watchRecord=new WatchRecord(records);
+                Regular user = new Regular(userId, userName, password, firstName, lastName, email,playlist,watchRecord,subscription,movieCounter);
                 regularUsers.add(user);
             }
         } catch (FileNotFoundException e) {
@@ -64,15 +80,17 @@ public class RegularService {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH,true)))  //true 3shan mayms7sh el adim, yaani megher true kan beyktb satr f awl loop ba3diha fe tani loop yemsa7o w yektb el ba3dih
             {
                 // Append the new movie details to the file
-                writer.write(String.format("%s,%s,%s,%s,%s,%s,%s,%s",
-                        strNumber,
+                writer.write(String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                        user.getID(),
                         user.getUserName(),
                         user.getPassword(),
                         user.getFirstName(),
                         user.getLastName(),
                         user.getEmail(),
-                        user.getSubscription().toString(),
-                        user.getPlayLists().toString() //hayndah el toString betaatha, el hya aamlnlha override
+                        user.getPlayLists().toString(),
+                        user.watchrecord.toString(),
+                        user.getSubscription().toString()
+                         //hayndah el toString betaatha, el hya aamlnlha override
                 ));
                 // Add a new line at the end
                 writer.newLine();

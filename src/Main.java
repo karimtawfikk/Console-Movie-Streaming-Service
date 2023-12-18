@@ -83,7 +83,7 @@ public class Main {
             checkSubscription(users);
             char response;
             do {
-                System.out.println("Press: \n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To display any of your movie lists\n5:To watch a movie\n6:To display your recent watched movies\n7:To display top rated movies\n8:To display your top watched movies\n9:To delete your account");
+                System.out.println("Press: \n1:To search for a movie\n2:To search for actors\n3:To search for directors\n4:To display any of your movie lists (favourites,watch later)\n5:To display your watched movie records\n6:To watch a movie\n7:To display your recent watched movies\n8:To display top rated movies\n9:To display your top watched movies\n10:To delete your account");
 
                 int userInput = input.nextInt();
                 switch (userInput) {
@@ -100,25 +100,28 @@ public class Main {
                         displayLists((Regular) loggedInUser);
                         break;
                     case 5:
-                        displayMoviesAndWatch(movies, users);
+                        displayWatchRecord(users);
                         break;
                     case 6:
-                        displayRecentWatched(users);
+                        displayMoviesAndWatch(movies, users);
                         break;
                     case 7:
-                        displayTopRated(movies);
+                        displayRecentWatched(users);
                         break;
                     case 8:
-                        displayTopWatched();
+                        displayTopRated(movies);
                         break;
                     case 9:
+                        displayTopWatched();
+                        break;
+                    case 10:
                         deleteUserAccount(users);
                         break;
                 }
 
                 System.out.println("Need any more service?" + "... Press Y to continue and N to exit");
                 response = input.next().charAt(0);
-            } while (response== 'y'|| response== 'Y');
+            } while (response == 'y' || response == 'Y');
         }
         AdminService.writeAdminsToFile(admins);
         RegularService.writeUsersToFile(users);
@@ -156,7 +159,7 @@ public class Main {
         System.out.print("Enter email: ");
         String email = input.nextLine();
         Subscriptions newRegisteredSubscription = new Subscriptions(false, null, null);
-        Regular newUser = new Regular(ID, username, password, firstName, lastName, email, newRegisteredSubscription, null);
+        Regular newUser = new Regular(ID, username, password, firstName, lastName, email, null, null, newRegisteredSubscription, 0);
         AdminService.addRegularUsers(users, newUser);
 
     }
@@ -185,8 +188,7 @@ public class Main {
 
     public static void checkSubscription(List<Regular> users) {
         int index = -1;
-        for (int i = 0; i < users.size(); i++)
-        {
+        for (int i = 0; i < users.size(); i++) {
             if (username.contains(users.get(i).getUserName())) {
                 index = i;
                 break;
@@ -238,591 +240,639 @@ public class Main {
                 break;
             }
             case 2: {
-                int movieIndex = 0;//3shan aayzin ne3raf ehna f anhy index movie
-                System.out.println("\nWrite the movie name you want to watch:");
-                input.nextLine();
-                String response = input.nextLine();
-                boolean isFound = false;
-                for (Movie movie : movies) {
-                    if (response.equalsIgnoreCase(movie.getMovieTitle())) {
-                        isFound = true;
-                        float rating;
-                        Playlist playlist = users.get(index).getPlayLists();
-                        playlist.addToWatched(movie.getMovieTitle());
-                        playlist.getAndAddRecentWatchedMovies(movie.getMovieTitle());
-                        System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 0-5");
-                        while (true) {
-                            rating = input.nextFloat();
-                            input.nextLine();
-                            if (rating > 0.0f && rating < 5.0f) {
-                                break;
-                            }
-                            System.out.println("Invalid entry...Please enter a rating between 0 and 5");
-                        }
-                        RatingService.CalculateRating(movies, movie.getMovieTitle(), rating);
-                        Playlist.getAndAddTopWatchedMovies(movieIndex, movies);
-                        //todo change to no static
-                        System.out.println("Do you want to add it to your favorite playlist?... Press Y for yes and N for no");
-                        String answer = input.nextLine();
-                        if ((answer.equals("Y") || answer.equals("y"))) {
-                            users.get(index).getPlayLists().addToFavorite(movie.getMovieTitle());
-                            System.out.println("Successfully added to your favorite playlist!");
-                        }
-                        break;
-                    }
-                    movieIndex++;
-                }
-                if (!isFound) System.err.println("Movie not found\n");
-                break;
-            }
-        }
-    }
 
-    public static void addMovie(List<Movie> movies) {
-        Movie newMovie = null;
-        try {
-            System.out.println("Enter the details of the movie:");
-
-            System.out.println("MovieId:");
-            int movieId = input.nextInt();
-            input.nextLine(); // 3ashan threw error bsabb nextint()
-
-            System.out.println("Movie name:");
-            String movieName = input.nextLine();
-
-            System.out.println("Date of release(yyyy-mm-dd):");
-            String movieDateString = input.nextLine();
-            LocalDate releaseDate = LocalDate.parse(movieDateString);
-
-            System.out.println("Movie Duration(hr:min):");
-            LocalTime durationTime = LocalTime.parse(input.nextLine());
-
-            System.out.println("Movie Actors.txt (Write 'done' when finished):");
-            ArrayList<String> actors = new ArrayList<>();
-            while (true) {
-                String actorName = input.nextLine();
-                if (actorName.equalsIgnoreCase("done")) {
-                    break;
-                }
-                actors.add(actorName);
-            }
-
-            System.out.println("Movie Director:");
-            String director = input.nextLine();
-
-            System.out.println("Movie Genres (Write 'done' when finished):");
-            ArrayList<String> genres = new ArrayList<>();
-            while (true) {
-                String genre = input.nextLine();
-                if (genre.equalsIgnoreCase("done")) {
-                    break;
-                }
-                genres.add(genre);
-            }
-
-            System.out.println("Origin country:");
-            String country = input.nextLine();
-
-            System.out.println("Movie Budget:");
-            float budget = input.nextFloat();
-
-            System.out.println("Movie Revenue:");
-            float revenue = input.nextFloat();
-
-            System.out.println("Movie IMDb_Score:");
-            float imdbScore = input.nextFloat();
-
-            input.nextLine(); // Consume the newline character
-
-            System.out.println("Movie Languages (Write 'done' when finished):");
-            ArrayList<String> languages = new ArrayList<>();
-            while (true) {
-                String language = input.nextLine();
-                if (language.equalsIgnoreCase("done")) {
-                    break;
-                }
-                languages.add(language);
-            }
-
-            System.out.println("Movie Poster Path:");
-            String poster = input.nextLine();
-            newMovie = new Movie(movieId, movieName, releaseDate, durationTime, actors, director, genres, country, budget, revenue, imdbScore, languages, poster);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        if (newMovie != null)
-            movies.add(newMovie);
-
-    }
-
-    private static ArrayList<String> getActorsFromUser() {
-
-        System.out.println("Enter the new list of actors (separate each actor with a semicolon):");
-        String actorsInput = input.nextLine();
-
-        //  Arrays.asList to convert the array returned by split to a List
-        return new ArrayList<>(Arrays.asList(actorsInput.split(";")));
-    }
-
-    private static ArrayList<String> getGenresFromUser() {
-
-        System.out.println("Enter the new list of genres (separate each actor with a semicolon):");
-        String genresInput = input.nextLine();
-
-        //  Arrays.asList to convert the array returned by split to a List
-        return new ArrayList<>(Arrays.asList(genresInput.split(";")));
-    }
-
-    private static ArrayList<String> getLanguagesFromUser() {
-
-        System.out.println("Enter the new list of languages (separate each actor with a semicolon):");
-        String languagesInput = input.nextLine();
-
-        //  Arrays.asList to convert the array returned by split to a List
-        return new ArrayList<>(Arrays.asList(languagesInput.split(";")));
-    }
-
-    public static void editMovies(List<Movie> movies) {
-        //how to make sure in el movie da mawgood aandna
-        System.out.println("Enter the movie name you want to edit:");
-        String movieTitle = input.nextLine();
-        System.out.println("Press: \n1 to edit movie duration \n2 to edit movie release date \n3 to edit movie actors \n4 to edit movie director \n5 to edit movie genres \n6 to edit movie origin country \n7 to edit movie budget \n8 to edit movie revenue \n9 to edit movie imdb_score \n10 to edit movie languages \n11 to edit movie poster path ");
-        int userInput = input.nextInt();
-        for (Movie mov : movies) {
-            if (mov.getMovieTitle().contains(movieTitle)) {
-                switch (userInput) {
-                    case 1:
-                        System.out.println("Enter updated time duration:");
-                        String newTime = input.nextLine();
-                        mov.setDurationTime(LocalTime.parse(newTime));
-                        break;
-                    case 2:
-                        System.out.println("Enter updated Date(yyyy-mm-dd):");
-                        String newDate = input.nextLine();
-                        mov.setReleaseDate(LocalDate.parse(newDate));
-                        break;
-                    case 3: //edit an actor
-                        System.out.println("Press:\n 1: To add an actor \n 2:To remove an actor \n 3:Change the whole list ");
-                        int respone = input.nextInt();
-
-                        if (respone == 1) {
-                            System.out.println("Enter new actor name:");
-                            String newActor = input.nextLine();
-                            mov.getActors().add(newActor);
-                        }
-                        if (respone == 2) {
-                            System.out.println("Enter the actor desired to be deleted:");
-                            String actorToBeDeleted = input.nextLine();
-                            int index = -1;
-                            for (int i = 0; i < mov.getActors().size(); i++) {
-                                if (mov.getActors().get(i).equalsIgnoreCase(actorToBeDeleted)) {
-                                    index = i;
-                                    break;
-                                }
-                            }
-                            if (index >= 0) {
-                                mov.getActors().remove(index);
-                                System.out.println("Actor removed successfully.");
-                            } else {
-                                System.out.println("Actor not found in the list.");
-                            }
-
-                        }
-                        if (respone == 3) {
-                            mov.setActors(getActorsFromUser());
-                        }
-                        break;
-                    case 4:
-                        System.out.println("Enter the new director:");
-                        String newDirector = input.nextLine();
-                        mov.setDirector(newDirector);
-                        break;
-                    case 5:
-                        System.out.println("Press:\n 1: To add a genre \n 2:To remove a genre \n 3:Change the entire list of genres ");
-                        int choice = input.nextInt();
-
-                        if (choice == 1) {
-                            System.out.println("Enter new genre:");
-                            String newGenre = input.nextLine();
-                            mov.getGenres().add(newGenre);
-                        }
-                        if (choice == 2) {
-                            System.out.println("Enter the genre desired to be deleted:");
-                            String genreToBeDeleted = input.nextLine().toLowerCase();
-                            int index = -1;
-                            for (int i = 0; i < mov.getGenres().size(); i++) {
-                                if (mov.getGenres().get(i).equalsIgnoreCase(genreToBeDeleted)) {
-                                    index = i;
-                                    break;
-                                }
-                            }
-
-                            if (index >= 0) {
-
-                                mov.getGenres().remove(index);
-                                System.out.println("Genre removed successfully.");
-                            } else {
-                                System.out.println("Genre not found in the list.");
-                            }
-                        }
-                        if (choice == 3) {
-                            mov.setGenres(getGenresFromUser());
-                        }
-                        break;
-                    case 6:
-                        System.out.println("Enter the new country:");
-                        String newCountry = input.nextLine();
-                        mov.setCountry(newCountry);
-                        break;
-                    case 7:
-                        System.out.println("Enter the updated Budget:");
-                        String newBudget = input.nextLine();
-                        mov.setBudget(Float.parseFloat(newBudget));
-                        break;
-                    case 8:
-                        System.out.println("Enter updated Revenue:");
-                        String newRevenue = input.nextLine();
-                        mov.setRevenue(Float.parseFloat(newRevenue));
-                        break;
-                    case 9:
-                        System.out.println("Enter updated Imdb_score:");
-                        String newScore = input.nextLine();
-                        mov.setImdb_score(Float.parseFloat(newScore));
-                        break;
-
-                    case 10:
-                        System.out.println("Press:\n 1: To add a language \n 2:To remove a language \n 3:Change the whole list of languages ");
-                        int answer = input.nextInt();
-
-                        if (answer == 1) {
-                            System.out.println("Enter new language:");
-                            String newLanguage = input.nextLine();
-                            mov.getLanguages().add(newLanguage);
-                        }
-                        if (answer == 2) {
-                            System.out.println("Enter the language desired to be deleted:");
-                            String languageToBeDeleted = input.nextLine();
-                            int index = -1;
-                            for (int i = 0; i < mov.getLanguages().size(); i++) {
-                                if (mov.getLanguages().get(i).equalsIgnoreCase(languageToBeDeleted)) {
-                                    index = i;
-                                    break;
-                                }
-                            }
-                            if (index >= 0) {
-                                mov.getLanguages().remove(index);
-                                System.out.println("language removed successfully.");
-                            } else {
-                                System.out.println("language not found in the list.");
-                            }
-
-                        }
-                        if (answer == 3) {
-                            mov.setLanguages(getLanguagesFromUser());
-                        }
-                        break;
-
-                    case 11:
-                        System.out.println("Enter new movie poster path:");
-                        String newPoster = input.nextLine();
-                        mov.setPoster(newPoster);
-                        break;
-
-                }
-            }
-        }
-
-
-    }
-
-    public static void deleteMovies(List<Movie> movies) {
-        System.out.println("Enter the movie name or list of movies you want to remove (separate movies with a semicolon if more than one ):");
-        String moviesToDelete = input.nextLine();
-        List<String> moviesToBeDeleted = Arrays.asList(moviesToDelete.split(";"));
-        boolean removed = movies.removeIf(movie -> moviesToBeDeleted.contains(movie.getMovieTitle()));
-
-        if (removed) {
-            System.out.println("Movies with the specified titles removed successfully.");
-        } else {
-            System.out.println("No movies found with the specified titles.");
-        }
-    }
-
-    private static boolean isIdValid(String id) {
-        return id.matches("\\d{4}");
-    }
-
-    public static void UserEditInfo(List<Regular> users) {
-
-        System.out.println("Enter your saved id: (last 4 digits only): ");
-        int savedId = input.nextInt();
-
-        while (!isIdValid(Integer.toString(savedId))) {
-            System.out.println("Invalid ID..Please enter exactly 4 digits");
-            savedId = input.nextInt();
-        }
-
-        System.out.println("Press: \n1 to edit your id (write only last 4 numbers) \n2 to edit your username \n3 to edit your password \n4 to edit your first name \n5 to edit your last name \n6 to edit your email \n7 to change your subscription plan ");
-        int choice = input.nextInt();
-
-        switch (choice) {
-            case 1:
-                System.out.println("Enter updated id (last 4 digits only):");
-                int newId = input.nextInt();
-                while (!isIdValid(Integer.toString(newId))) {
-                    System.out.println("Invalid ID..Please enter exactly 4 digits");
-                    newId = input.nextInt();
-                }
-                AdminService.AdminEditUsers(savedId, users, 1, String.valueOf(newId));
-                break;
-            case 2:
-                System.out.println("Enter updated username:");
-                String newUsername = input.nextLine();
-                AdminService.AdminEditUsers(savedId, users, 2, newUsername);
-                break;
-            case 3:
-                System.out.println("Enter updated password:");
-                String newPassword = input.nextLine();
-                AdminService.AdminEditUsers(savedId, users, 3, newPassword);
-                break;
-            case 4:
-                System.out.println("Enter first name after update:");
-                String newFirstName = input.nextLine();
-                AdminService.AdminEditUsers(savedId, users, 4, newFirstName);
-                break;
-            case 5:
-                System.out.println("Enter last name after update:");
-                String newLastName = input.nextLine();
-                AdminService.AdminEditUsers(savedId, users, 5, newLastName);
-                break;
-            case 6:
-                System.out.println("Enter updated email:");
-                String newEmail = input.nextLine();
-                AdminService.AdminEditUsers(savedId, users, 6, newEmail);
-                break;
-            case 7:
-                System.out.println("Press: \n1 to unsubscribe \n2 to change plan ");
-                int ans = input.nextInt();
-                while ((ans != 1) && (ans != 2)) {
-                    System.out.println("Invalid choice ..Please enter either 1 or 2 only ");
-                    ans = input.nextInt();
-                }
-                if (ans == 1) {
-                    AdminService.AdminEditUsers(savedId, users, 7, "false");
+                if (users.get(index).getMovieCounter() > checkRequiredCounter(users, index)) {
+                    System.out.println("You've exceeded the number of movies available to watch this month");
                 } else {
-                    System.out.println("What plan do you want to upgrade to (Basic/Standard/Premium)");
-                    String newPlan = input.nextLine().toLowerCase();
-                    AdminService.AdminEditUsers(savedId, users, 8, newPlan);
+                    int movieIndex = 0;//3shan aayzin ne3raf ehna f anhy index movie
+                    System.out.println("\nWrite the movie name you want to watch:");
+                    input.nextLine();
+                    String response = input.nextLine();
+                    boolean isFound = false;
+                    for (Movie movie : movies) {
+                        if (response.equalsIgnoreCase(movie.getMovieTitle())) {
+                            isFound = true;
+                            Float rating;
+                            Playlist playlist = users.get(index).getPlayLists();
+                            playlist.getAndAddRecentWatchedMovies(movie.getMovieTitle());
+                            System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-5..Enter 0 if you don't want to rate");
+                            int newCounter = users.get(index).getMovieCounter();
+                            users.get(index).setMovieCounter(newCounter++);
+                            while (true) {
+                                rating = input.nextFloat();
+                                if (rating == 0) {
+                                    rating = null;
+                                    break;
+                                }
+                                input.nextLine();
+                                if (rating > 0.0f && rating < 5.0f) {
+                                    break;
+                                }
+                                System.out.println("Invalid entry...Please enter a rating between 1 and 5");
+                            }
+
+                            users.get(index).watchrecord.addToWatched(movie.getMovieTitle(), LocalDate.now(), rating);
+                            RatingService.CalculateRating(movies, movie.getMovieTitle(), rating);
+                            Playlist.getAndAddTopWatchedMovies(movieIndex, movies);
+                            //todo change to no static
+                            System.out.println("Do you want to add it to your favorite playlist?... Press Y for yes and N for no");
+                            String answer = input.nextLine();
+                            if ((answer.equals("Y") || answer.equals("y"))) {
+                                users.get(index).getPlayLists().addToFavorite(movie.getMovieTitle());
+                                System.out.println("Successfully added to your favorite playlist!");
+                            }
+                            break;
+                        }
+                        movieIndex++;
+                    }
+                    if (!isFound) System.err.println("Movie not found\n");
+                    break;
+                } }
+            }
+        }
+
+        public static void addMovie (List < Movie > movies) {
+            Movie newMovie = null;
+            try {
+                System.out.println("Enter the details of the movie:");
+
+                System.out.println("MovieId:");
+                int movieId = input.nextInt();
+                input.nextLine(); // 3ashan threw error bsabb nextint()
+
+                System.out.println("Movie name:");
+                String movieName = input.nextLine();
+
+                System.out.println("Date of release(yyyy-mm-dd):");
+                String movieDateString = input.nextLine();
+                LocalDate releaseDate = LocalDate.parse(movieDateString);
+
+                System.out.println("Movie Duration(hr:min):");
+                LocalTime durationTime = LocalTime.parse(input.nextLine());
+
+                System.out.println("Movie Actors.txt (Write 'done' when finished):");
+                ArrayList<String> actors = new ArrayList<>();
+                while (true) {
+                    String actorName = input.nextLine();
+                    if (actorName.equalsIgnoreCase("done")) {
+                        break;
+                    }
+                    actors.add(actorName);
                 }
 
-                break;
+                System.out.println("Movie Director:");
+                String director = input.nextLine();
+
+                System.out.println("Movie Genres (Write 'done' when finished):");
+                ArrayList<String> genres = new ArrayList<>();
+                while (true) {
+                    String genre = input.nextLine();
+                    if (genre.equalsIgnoreCase("done")) {
+                        break;
+                    }
+                    genres.add(genre);
+                }
+
+                System.out.println("Origin country:");
+                String country = input.nextLine();
+
+                System.out.println("Movie Budget:");
+                float budget = input.nextFloat();
+
+                System.out.println("Movie Revenue:");
+                float revenue = input.nextFloat();
+
+                System.out.println("Movie IMDb_Score:");
+                float imdbScore = input.nextFloat();
+
+                input.nextLine(); // Consume the newline character
+
+                System.out.println("Movie Languages (Write 'done' when finished):");
+                ArrayList<String> languages = new ArrayList<>();
+                while (true) {
+                    String language = input.nextLine();
+                    if (language.equalsIgnoreCase("done")) {
+                        break;
+                    }
+                    languages.add(language);
+                }
+
+                System.out.println("Movie Poster Path:");
+                String poster = input.nextLine();
+                newMovie = new Movie(movieId, movieName, releaseDate, durationTime, actors, director, genres, country, budget, revenue, imdbScore, languages, poster);
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            if (newMovie != null)
+                movies.add(newMovie);
 
         }
-    }
 
-    public static void deleteUserAccount(List<Regular> users) {
-        System.out.println("To confirm deleting your account enter your password");
-        String response = input.nextLine();
+        private static ArrayList<String> getActorsFromUser () {
 
-        for (int index = 0; index < users.size(); index++) {
-            Regular user = users.get(index);
-            if (response.equals(user.getPassword())) {
-                AdminService.adminRemovesUserAccount(users, index);
+            System.out.println("Enter the new list of actors (separate each actor with a semicolon):");
+            String actorsInput = input.nextLine();
+
+            //  Arrays.asList to convert the array returned by split to a List
+            return new ArrayList<>(Arrays.asList(actorsInput.split(";")));
+        }
+
+        private static ArrayList<String> getGenresFromUser () {
+
+            System.out.println("Enter the new list of genres (separate each actor with a semicolon):");
+            String genresInput = input.nextLine();
+
+            //  Arrays.asList to convert the array returned by split to a List
+            return new ArrayList<>(Arrays.asList(genresInput.split(";")));
+        }
+
+        private static ArrayList<String> getLanguagesFromUser () {
+
+            System.out.println("Enter the new list of languages (separate each actor with a semicolon):");
+            String languagesInput = input.nextLine();
+
+            //  Arrays.asList to convert the array returned by split to a List
+            return new ArrayList<>(Arrays.asList(languagesInput.split(";")));
+        }
+
+        public static void editMovies (List < Movie > movies) {
+            //how to make sure in el movie da mawgood aandna
+            System.out.println("Enter the movie name you want to edit:");
+            String movieTitle = input.nextLine();
+            System.out.println("Press: \n1 to edit movie duration \n2 to edit movie release date \n3 to edit movie actors \n4 to edit movie director \n5 to edit movie genres \n6 to edit movie origin country \n7 to edit movie budget \n8 to edit movie revenue \n9 to edit movie imdb_score \n10 to edit movie languages \n11 to edit movie poster path ");
+            int userInput = input.nextInt();
+            for (Movie mov : movies) {
+                if (mov.getMovieTitle().contains(movieTitle)) {
+                    switch (userInput) {
+                        case 1:
+                            System.out.println("Enter updated time duration:");
+                            String newTime = input.nextLine();
+                            mov.setDurationTime(LocalTime.parse(newTime));
+                            break;
+                        case 2:
+                            System.out.println("Enter updated Date(yyyy-mm-dd):");
+                            String newDate = input.nextLine();
+                            mov.setReleaseDate(LocalDate.parse(newDate));
+                            break;
+                        case 3: //edit an actor
+                            System.out.println("Press:\n 1: To add an actor \n 2:To remove an actor \n 3:Change the whole list ");
+                            int respone = input.nextInt();
+
+                            if (respone == 1) {
+                                System.out.println("Enter new actor name:");
+                                String newActor = input.nextLine();
+                                mov.getActors().add(newActor);
+                            }
+                            if (respone == 2) {
+                                System.out.println("Enter the actor desired to be deleted:");
+                                String actorToBeDeleted = input.nextLine();
+                                int index = -1;
+                                for (int i = 0; i < mov.getActors().size(); i++) {
+                                    if (mov.getActors().get(i).equalsIgnoreCase(actorToBeDeleted)) {
+                                        index = i;
+                                        break;
+                                    }
+                                }
+                                if (index >= 0) {
+                                    mov.getActors().remove(index);
+                                    System.out.println("Actor removed successfully.");
+                                } else {
+                                    System.out.println("Actor not found in the list.");
+                                }
+
+                            }
+                            if (respone == 3) {
+                                mov.setActors(getActorsFromUser());
+                            }
+                            break;
+                        case 4:
+                            System.out.println("Enter the new director:");
+                            String newDirector = input.nextLine();
+                            mov.setDirector(newDirector);
+                            break;
+                        case 5:
+                            System.out.println("Press:\n 1: To add a genre \n 2:To remove a genre \n 3:Change the entire list of genres ");
+                            int choice = input.nextInt();
+
+                            if (choice == 1) {
+                                System.out.println("Enter new genre:");
+                                String newGenre = input.nextLine();
+                                mov.getGenres().add(newGenre);
+                            }
+                            if (choice == 2) {
+                                System.out.println("Enter the genre desired to be deleted:");
+                                String genreToBeDeleted = input.nextLine().toLowerCase();
+                                int index = -1;
+                                for (int i = 0; i < mov.getGenres().size(); i++) {
+                                    if (mov.getGenres().get(i).equalsIgnoreCase(genreToBeDeleted)) {
+                                        index = i;
+                                        break;
+                                    }
+                                }
+
+                                if (index >= 0) {
+
+                                    mov.getGenres().remove(index);
+                                    System.out.println("Genre removed successfully.");
+                                } else {
+                                    System.out.println("Genre not found in the list.");
+                                }
+                            }
+                            if (choice == 3) {
+                                mov.setGenres(getGenresFromUser());
+                            }
+                            break;
+                        case 6:
+                            System.out.println("Enter the new country:");
+                            String newCountry = input.nextLine();
+                            mov.setCountry(newCountry);
+                            break;
+                        case 7:
+                            System.out.println("Enter the updated Budget:");
+                            String newBudget = input.nextLine();
+                            mov.setBudget(Float.parseFloat(newBudget));
+                            break;
+                        case 8:
+                            System.out.println("Enter updated Revenue:");
+                            String newRevenue = input.nextLine();
+                            mov.setRevenue(Float.parseFloat(newRevenue));
+                            break;
+                        case 9:
+                            System.out.println("Enter updated Imdb_score:");
+                            String newScore = input.nextLine();
+                            mov.setImdb_score(Float.parseFloat(newScore));
+                            break;
+
+                        case 10:
+                            System.out.println("Press:\n 1: To add a language \n 2:To remove a language \n 3:Change the whole list of languages ");
+                            int answer = input.nextInt();
+
+                            if (answer == 1) {
+                                System.out.println("Enter new language:");
+                                String newLanguage = input.nextLine();
+                                mov.getLanguages().add(newLanguage);
+                            }
+                            if (answer == 2) {
+                                System.out.println("Enter the language desired to be deleted:");
+                                String languageToBeDeleted = input.nextLine();
+                                int index = -1;
+                                for (int i = 0; i < mov.getLanguages().size(); i++) {
+                                    if (mov.getLanguages().get(i).equalsIgnoreCase(languageToBeDeleted)) {
+                                        index = i;
+                                        break;
+                                    }
+                                }
+                                if (index >= 0) {
+                                    mov.getLanguages().remove(index);
+                                    System.out.println("language removed successfully.");
+                                } else {
+                                    System.out.println("language not found in the list.");
+                                }
+
+                            }
+                            if (answer == 3) {
+                                mov.setLanguages(getLanguagesFromUser());
+                            }
+                            break;
+
+                        case 11:
+                            System.out.println("Enter new movie poster path:");
+                            String newPoster = input.nextLine();
+                            mov.setPoster(newPoster);
+                            break;
+
+                    }
+                }
+            }
+
+
+        }
+
+        public static void deleteMovies (List < Movie > movies) {
+            System.out.println("Enter the movie name or list of movies you want to remove (separate movies with a semicolon if more than one ):");
+            String moviesToDelete = input.nextLine();
+            List<String> moviesToBeDeleted = Arrays.asList(moviesToDelete.split(";"));
+            boolean removed = movies.removeIf(movie -> moviesToBeDeleted.contains(movie.getMovieTitle()));
+
+            if (removed) {
+                System.out.println("Movies with the specified titles removed successfully.");
+            } else {
+                System.out.println("No movies found with the specified titles.");
             }
         }
 
-    }
+        private static boolean isIdValid (String id){
+            return id.matches("\\d{4}");
+        }
 
-    public static void searchForActors(List<Actor> actors) {
-        boolean isFound = false;
-        System.out.println("Enter the actor's name:");
-        input.nextLine();
-        String actorName = input.nextLine();
-        for (int index = 0; index < actors.size(); index++) {
-            Actor actor = actors.get(index);
-            if (actorName.equalsIgnoreCase(actor.getFullName())) {
-                isFound = true;
-                CastService.displayActorDetails(actors, index);
+        public static void UserEditInfo (List < Regular > users) {
+
+            System.out.println("Enter your saved id: (last 4 digits only): ");
+            int savedId = input.nextInt();
+
+            while (!isIdValid(Integer.toString(savedId))) {
+                System.out.println("Invalid ID..Please enter exactly 4 digits");
+                savedId = input.nextInt();
+            }
+
+            System.out.println("Press: \n1 to edit your id (write only last 4 numbers) \n2 to edit your username \n3 to edit your password \n4 to edit your first name \n5 to edit your last name \n6 to edit your email \n7 to change your subscription plan ");
+            int choice = input.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter updated id (last 4 digits only):");
+                    int newId = input.nextInt();
+                    while (!isIdValid(Integer.toString(newId))) {
+                        System.out.println("Invalid ID..Please enter exactly 4 digits");
+                        newId = input.nextInt();
+                    }
+                    AdminService.AdminEditUsers(savedId, users, 1, String.valueOf(newId));
+                    break;
+                case 2:
+                    System.out.println("Enter updated username:");
+                    String newUsername = input.nextLine();
+                    AdminService.AdminEditUsers(savedId, users, 2, newUsername);
+                    break;
+                case 3:
+                    System.out.println("Enter updated password:");
+                    String newPassword = input.nextLine();
+                    AdminService.AdminEditUsers(savedId, users, 3, newPassword);
+                    break;
+                case 4:
+                    System.out.println("Enter first name after update:");
+                    String newFirstName = input.nextLine();
+                    AdminService.AdminEditUsers(savedId, users, 4, newFirstName);
+                    break;
+                case 5:
+                    System.out.println("Enter last name after update:");
+                    String newLastName = input.nextLine();
+                    AdminService.AdminEditUsers(savedId, users, 5, newLastName);
+                    break;
+                case 6:
+                    System.out.println("Enter updated email:");
+                    String newEmail = input.nextLine();
+                    AdminService.AdminEditUsers(savedId, users, 6, newEmail);
+                    break;
+                case 7:
+                    System.out.println("Press: \n1 to unsubscribe \n2 to change plan ");
+                    int ans = input.nextInt();
+                    while ((ans != 1) && (ans != 2)) {
+                        System.out.println("Invalid choice ..Please enter either 1 or 2 only ");
+                        ans = input.nextInt();
+                    }
+                    if (ans == 1) {
+                        AdminService.AdminEditUsers(savedId, users, 7, "false");
+                    } else {
+                        System.out.println("What plan do you want to upgrade to (Basic/Standard/Premium)");
+                        String newPlan = input.nextLine().toLowerCase();
+                        AdminService.AdminEditUsers(savedId, users, 8, newPlan);
+                    }
+
+                    break;
+
+            }
+        }
+
+        public static void deleteUserAccount (List < Regular > users) {
+            System.out.println("To confirm deleting your account enter your password");
+            String response = input.nextLine();
+
+            for (int index = 0; index < users.size(); index++) {
+                Regular user = users.get(index);
+                if (response.equals(user.getPassword())) {
+                    AdminService.adminRemovesUserAccount(users, index);
+                }
             }
 
         }
-        if (!isFound) System.err.println("Actor not found");
-    }
 
-    public static void searchForDirectors(List<Director> directors) {
-        boolean isFound = false;
-        System.out.println("Enter the director's name:");
-        input.nextLine();
-        String directorName = input.nextLine();
-        for (int index = 0; index < directors.size(); index++) {
-            Director director = directors.get(index);
-            if (directorName.equalsIgnoreCase(director.getFullName())) {
-                CastService.displayDirectorDetails(directors, index);
-                isFound = true;
-            }
-        }
-        if (!isFound) System.err.println("Director not found");
-    }
+        public static void searchForActors (List < Actor > actors) {
+            boolean isFound = false;
+            System.out.println("Enter the actor's name:");
+            input.nextLine();
+            String actorName = input.nextLine();
+            for (int index = 0; index < actors.size(); index++) {
+                Actor actor = actors.get(index);
+                if (actorName.equalsIgnoreCase(actor.getFullName())) {
+                    isFound = true;
+                    CastService.displayActorDetails(actors, index);
+                }
 
-    public static void searchForMovie(List<Movie> movies, List<Regular> users) {
-        System.out.println("Press: \n1 to search for a specific movie by its name \n2 to search for movies by a specific genre");
-        int in = input.nextInt();
-        int index = -1;
-        for (int i = 0; i < users.size(); i++) {
-            if (username.contains(users.get(i).getUserName())) {
-                index = i;
-                break;
             }
+            if (!isFound) System.err.println("Actor not found");
         }
-        input.nextLine();
-        switch (in) {
-            case 1:
-                System.out.println("Enter Movie Name to search for:");
-                String movieName = input.nextLine();
-                Movie MovieReturned = MovieService.searchForMovieByTitle(movies, movieName);
-//                if (MovieReturned == null) System.out.println("This movie isn't available");
-                try {
-                    System.out.println("Movie details: \nDuration: " + MovieReturned.getDurationTime() + "\nImdb_score: " + MovieReturned.getImdb_score() + "\nOrigin country: " + MovieReturned.getCountry() + "\nActors: " + MovieReturned.getActors() + "\nDirector: " + MovieReturned.getDirector() + "\nGenres: " + MovieReturned.getGenres() + "\nLanguaes: " + MovieReturned.getLanguages() + "\nRelease Year: " + MovieReturned.getReleaseDate().getYear());
-                    System.out.println("Do you want to watch this movie?.....Enter yes to watch");
-                    String response = input.nextLine();
-                    if (response.equalsIgnoreCase("yes"))
-                    {
-                        Playlist playlist = users.get(index).getPlayLists();
-                        playlist.addToWatched(MovieReturned.getMovieTitle());      //  da el sah 3shan ehna mafrood call by object msh by class
-                        playlist.getAndAddRecentWatchedMovies(MovieReturned.getMovieTitle());
-                        System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-10");
-                        int rating = input.nextInt();
-                        input.nextLine();
-                        RatingService.CalculateRating(movies, MovieReturned.getMovieTitle(), rating);
-                        System.out.println("Do you want to add it to your favorite playlist?... Press Y for yes and N for no");
-                        String answer = input.nextLine();
-                        if ((answer.equals("Y") || answer.equals("y")))
-                        {
-                            users.get(index).getPlayLists().addToFavorite(MovieReturned.getMovieTitle());
+
+        public static void searchForDirectors (List < Director > directors) {
+            boolean isFound = false;
+            System.out.println("Enter the director's name:");
+            input.nextLine();
+            String directorName = input.nextLine();
+            for (int index = 0; index < directors.size(); index++) {
+                Director director = directors.get(index);
+                if (directorName.equalsIgnoreCase(director.getFullName())) {
+                    CastService.displayDirectorDetails(directors, index);
+                    isFound = true;
+                }
+            }
+            if (!isFound) System.err.println("Director not found");
+        }
+
+        public static int checkRequiredCounter (List < Regular > users,int index)
+        {
+            if (users.get(index).getSubscription().getPlan().equalsIgnoreCase("basic"))
+                return BASIC_MOVIES;
+            else if (users.get(index).getSubscription().getPlan().equalsIgnoreCase("standard"))
+                return STANDARD_MOVIES;
+            else if (users.get(index).getSubscription().getPlan().equalsIgnoreCase("premium"))
+                return PREMIUM_MOVIES;
+           return 0; //todo recheck
+        }
+        public static void searchForMovie (List < Movie > movies, List < Regular > users){
+            System.out.println("Press: \n1 to search for a specific movie by its name \n2 to search for movies by a specific genre");
+            int in = input.nextInt();
+            int index = -1;
+            for (int i = 0; i < users.size(); i++) {
+                if (username.contains(users.get(i).getUserName())) {
+                    index = i;
+                    break;
+                }
+            }
+            input.nextLine();
+            switch (in) {
+                case 1:
+                    System.out.println("Enter Movie Name to search for:");
+                    String movieName = input.nextLine();
+                    Movie MovieReturned = MovieService.searchForMovieByTitle(movies, movieName);
+
+                    try {
+                        System.out.println("Movie details: \nDuration: " + MovieReturned.getDurationTime() + "\nImdb_score: " + MovieReturned.getImdb_score() + "\nOrigin country: " + MovieReturned.getCountry() + "\nActors: " + MovieReturned.getActors() + "\nDirector: " + MovieReturned.getDirector() + "\nGenres: " + MovieReturned.getGenres() + "\nLanguaes: " + MovieReturned.getLanguages() + "\nRelease Year: " + MovieReturned.getReleaseDate().getYear());
+                        System.out.println("Do you want to watch this movie?.....Enter yes to watch");
+                        String response = input.nextLine();
+
+
+                        if (response.equalsIgnoreCase("yes")) {
+                            if (users.get(index).getMovieCounter() > checkRequiredCounter(users, index)) {
+                                System.out.println("You've exceeded the number of movies available to watch this month");
+                            } else {
+                                Playlist playlist = users.get(index).getPlayLists();
+                                //  da el sah 3shan ehna mafrood call by object msh by class
+                                playlist.getAndAddRecentWatchedMovies(MovieReturned.getMovieTitle());
+                                System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 1-5..Enter 0 if you don't want to rate");
+                                int newCounter = users.get(index).getMovieCounter();
+                                users.get(index).setMovieCounter(newCounter++);
+                                Float rating;
+                                while (true) {
+                                    rating = input.nextFloat();
+                                    if (rating == 0) {
+                                        rating = null;
+                                        break;
+                                    }
+                                    input.nextLine();
+                                    if (rating > 0.0f && rating < 5.0f) {
+                                        break;
+                                    }
+                                    System.out.println("Invalid entry...Please enter a rating between 1 and 5");
+                                }
+                                users.get(index).watchrecord.addToWatched(MovieReturned.getMovieTitle(), LocalDate.now(), rating);
+                                input.nextLine();
+                                RatingService.CalculateRating(movies, MovieReturned.getMovieTitle(), rating);
+                                System.out.println("Do you want to add it to your favorite playlist?... Press Y for yes and N for no");
+                                String answer = input.nextLine();
+                                if ((answer.equals("Y") || answer.equals("y"))) {
+                                    users.get(index).getPlayLists().addToFavorite(MovieReturned.getMovieTitle());
+                                }
+                            }
+                        }
+                    } catch (NullPointerException exp) {
+                        System.err.println("This movie isn't available");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Enter Genre to search by:");
+                    String Genre = input.next();
+                    List<Movie> MoviesFound = MovieService.searchForMovieByGenre(movies, Genre);
+                    int i = 1;
+                    if (MoviesFound.isEmpty()) System.err.println("\nMovies with that genre are not found");
+                    else {
+                        for (Movie movie : MoviesFound) {
+                            System.out.println("Movie " + i + ": \nMovie Name:" + movie.getMovieTitle() + " \nMovie duration: " + movie.getDurationTime() + "\nImdb_score: " + movie.getImdb_score() + "\nOrigin country: " + movie.getCountry() + "\nActors: " + movie.getActors() + "\nDirector: " + movie.getDirector() + "\nLanguaes: " + movie.getLanguages() + "\nRelease Year: " + movie.getReleaseDate().getYear() + "\nGenres:" + movie.getGenres() + "\n");
+                            i++;
                         }
                     }
-                } catch (NullPointerException exp)
-                {
-                    System.err.println("This movie isn't available");
-                }
-                break;
-            case 2:
-
-                System.out.println("Enter Genre to search by:");
-                String Genre = input.next();
-                List<Movie> MoviesFound = MovieService.searchForMovieByGenre(movies, Genre);
-                int i = 1;
-                if (MoviesFound.isEmpty()) System.err.println("\nMovies with that genre are not found");
-                else {
-                    for (Movie movie : MoviesFound) {
-                        System.out.println("Movie " + i + ": \nMovie Name:" + movie.getMovieTitle() + " \nMovie duration: " + movie.getDurationTime() + "\nImdb_score: " + movie.getImdb_score() + "\nOrigin country: " + movie.getCountry() + "\nActors: " + movie.getActors() + "\nDirector: " + movie.getDirector() + "\nLanguaes: " + movie.getLanguages() + "\nRelease Year: " + movie.getReleaseDate().getYear() + "\nGenres:" + movie.getGenres() + "\n");
-                        i++;
-                    }
-                }
-                break;
-
-        }
-    }
-
-
-    public static void displayMostSubscribed(List<Regular> users) {
-        System.out.println("The most subscribed plan up till now is the " + AdminService.seeMostSubscribed(users) + " plan");
-    }
-
-    public static void displayLists(Regular user) {
-        System.out.println("Press: \n1:To display favourites list \n2:To display watchLater list \n3:To display watched list");
-        int entered = input.nextInt();
-        switch (entered) {
-            case 1:
-                System.out.println(user.getPlayLists().getFavoritePlaylist());
-                //user:esm l object 3ady, we 3shan tendah getfav function lazm objname.fnname, fa getplaylist beyrg3lna l object
-                break;
-            case 2:
-                System.out.println(user.getPlayLists().getWatchLaterplaylist());
-                break;
-            case 3:
-                System.out.println(user.getPlayLists().getWatchedPlaylist());
-                break;
-        }
-    }
-
-    public static void displayMonthWithMostRevenue(List<Regular> users) {
-        for (int i = 0; i < users.size(); i++) {
-            Integer monthValue = null;
-            LocalDate date = users.get(i).getSubscription().getSubscribeDate();
-            if (date != null) {
-                monthValue = date.getMonthValue();
-                AdminService.calculateRevenue(users, monthValue, i);
+                    break;
             }
+        }
+
+
+        public static void displayMostSubscribed (List < Regular > users) {
+            System.out.println("The most subscribed plan up till now is the " + AdminService.seeMostSubscribed(users) + " plan");
+        }
+
+        public static void displayLists (Regular user){
+            System.out.println("Press: \n1:To display favourites list \n2:To display watchLater list");
+            int entered = input.nextInt();
+            switch (entered) {
+                case 1:
+                    System.out.println(user.getPlayLists().getFavoritePlaylist());
+                    //user:esm l object 3ady, we 3shan tendah getfav function lazm objname.fnname, fa getplaylist beyrg3lna l object
+                    break;
+                case 2:
+                    System.out.println(user.getPlayLists().getWatchLaterplaylist());
+                    break;
+            }
+        }
+        public static void displayWatchRecord (List < Regular > users)
+        {
+
+            int index = -1;
+            for (int i = 0; i < users.size(); i++) {
+                if (username.equals(users.get(i).getUserName())) {
+                    index = i;
+                    break;
+                }
+            }
+
+            System.out.println("Watched Movies are:\nName\t \t Date Of Watching ");
+            for (MovieRecord record : users.get(index).watchrecord.getWatchedRecord())
+            {
+                System.out.println(record.getMovieName() + "\t \t" + record.getWatchDate());
+            }
+        }
+        public static void displayMonthWithMostRevenue (List < Regular > users) {
+            for (int i = 0; i < users.size(); i++) {
+                Integer monthValue = null;
+                LocalDate date = users.get(i).getSubscription().getSubscribeDate();
+                if (date != null) {
+                    monthValue = date.getMonthValue();
+                    AdminService.calculateRevenue(users, monthValue, i);
+                }
 //            if (monthValue != null) {
 //                AdminService.calculateRevenue(users, monthValue, i);
 //            }
 
+            }
+            int maxIndex = 0;
+            for (int i = 0; i < 12; i++) {
+                if (monthRevenues[i] > monthRevenues[maxIndex]) {
+                    maxIndex = i;
+                }
+            }
+            System.out.println("The month that had the most revenue is month" + monthRevenues[maxIndex]);
         }
-        int maxIndex = 0;
-        for (int i = 0; i < 12; i++) {
-            if (monthRevenues[i] > monthRevenues[maxIndex]) {
-                maxIndex = i;
+
+        public static void displayRecentWatched (List < Regular > users) {
+            int index = -1;
+            for (int i = 0; i < users.size(); i++) {
+                if (username.contains(users.get(i).getUserName())) {
+                    index = i;
+                    break;
+                }
+            }
+
+            Playlist playlist = users.get(index).getPlayLists();
+            //In Java, the default toString() method for arrays doesn't provide a useful representation of the array's contents. It prints the type of the array followed by its hash code. For example, if you have an array of strings:
+            // fa laz, ne override 3shan netal3 l gowa bzbt
+            if (Arrays.toString(playlist.getRecentMovies()).equals("[null, null, null]")) {
+                System.out.println("You haven't watched any movies");
+            } else {
+                String[] RecentMovies = playlist.getRecentMovies();
+                System.out.println("Your recently watched movies are: ");
+                for (int i = 2; i >= 0; i--) {
+                    if (RecentMovies[i] != null)
+                        System.out.println(RecentMovies[i]); //beyrag3 address el array msh el object l gowah bzbt
+                }
             }
         }
-        System.out.println("The month that had the most revenue is month" + monthRevenues[maxIndex]);
+
+        public static void displayTopRated (List < Movie > movies) {
+            Playlist.getAndAddTopRatedMovies(movies);
+            System.out.println("The top rated movies are:\n");
+            for (int i = 0; i < 3; i++) {
+                System.out.println(i + 1 + "." + Playlist.topRatedMovies[i] + "\n");
+            }
+
+        }
+
+        public static void displayTopWatched () {
+
+            boolean allNull = true;
+            for (String element : Playlist.topWatchedMovies) {
+                if (element != null) {
+                    allNull = false;
+                    break;
+                }
+            }
+            if (allNull) {
+                System.out.println("You haven't watched anything yet");
+            } else {
+                System.out.println("Your top watched movies are:\n");
+                for (int i = 0; i < 3; i++) {
+                    if (Playlist.topWatchedMovies[i] != null) {
+                        System.out.println(Playlist.topWatchedMovies[i] + "\n");
+                    }
+                }
+            }
+        }
+
     }
-
-    public static void displayRecentWatched(List<Regular> users) {
-        int index = -1;
-        for (int i = 0; i < users.size(); i++) {
-            if (username.contains(users.get(i).getUserName())) {
-                index = i;
-                break;
-            }
-        }
-        Playlist playlist = users.get(index).getPlayLists();
-        //In Java, the default toString() method for arrays doesn't provide a useful representation of the array's contents. It prints the type of the array followed by its hash code. For example, if you have an array of strings:
-        // fa laz, ne override 3shan netal3 l gowa bzbt
-        if (Arrays.toString(playlist.getRecentMovies()).equals("[null, null, null]")) {
-            System.out.println("You haven't watched any movies");
-        } else {
-            String [] RecentMovies= playlist.getRecentMovies();
-            System.out.println("Your recently watched movies are: ");
-            for (int i = 2; i >= 0; i--) {
-                if (RecentMovies[i]!=null)
-                    System.out.println(RecentMovies[i]); //beyrag3 address el array msh el object l gowah bzbt
-            }
-        }
-    }
-
-    public static void displayTopRated(List<Movie> movies) {
-        Playlist.getAndAddTopRatedMovies(movies);
-        System.out.println("The top rated movies are:\n");
-        for (int i = 0; i < 3; i++) {
-            System.out.println(i + 1 + "." + Playlist.topRatedMovies[i] + "\n");
-        }
-
-    }
-
-    public static void displayTopWatched() {
-
-        boolean allNull = true;
-        for (String element : Playlist.topWatchedMovies) {
-            if (element != null) {
-                allNull = false;
-                break;
-            }
-        }
-        if(allNull)  {
-            System.out.println("You haven't watched anything yet");
-        } else
-        {
-            System.out.println("Your top watched movies are:\n");
-            for (int i = 0; i < 3; i++)
-            {
-               if (Playlist.topWatchedMovies[i] != null)
-               {
-                    System.out.println(Playlist.topWatchedMovies[i] +"\n");
-            }
-            }
-        }
-    }
-
-}

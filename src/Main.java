@@ -109,7 +109,7 @@ public class Main {
                         displayTopRated(movies);
                         break;
                     case 8:
-                        displayTopWatched(movies);
+                        displayTopWatched();
                         break;
                     case 9:
                         deleteUserAccount(users);
@@ -250,14 +250,14 @@ public class Main {
                         Playlist playlist = users.get(index).getPlayLists();
                         playlist.addToWatched(movie.getMovieTitle());
                         playlist.getAndAddRecentWatchedMovies(movie.getMovieTitle());
-                        System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 0-10");
+                        System.out.println("Movie watched successfully!" + "\nDid you enjoy the movie?" + "\nPlease enter a movie rating from 0-5");
                         while (true) {
                             rating = input.nextFloat();
                             input.nextLine();
-                            if (rating > 0.0f && rating < 10.0f) {
+                            if (rating > 0.0f && rating < 5.0f) {
                                 break;
                             }
-                            System.out.println("Invalid entry...Please enter a rating between 0 and 10");
+                            System.out.println("Invalid entry...Please enter a rating between 0 and 5");
                         }
                         RatingService.CalculateRating(movies, movie.getMovieTitle(), rating);
                         Playlist.getAndAddTopWatchedMovies(movieIndex, movies);
@@ -697,8 +697,9 @@ public class Main {
                         RatingService.CalculateRating(movies, MovieReturned.getMovieTitle(), rating);
                         System.out.println("Do you want to add it to your favorite playlist?... Press Y for yes and N for no");
                         String answer = input.nextLine();
-                        if ((answer.equals("Y") || answer.equals("y"))) {
-                            users.get(index).getPlayLists().addToFavorite(movieName);
+                        if ((answer.equals("Y") || answer.equals("y")))
+                        {
+                            users.get(index).getPlayLists().addToFavorite(MovieReturned.getMovieTitle());
                         }
                     }
                 } catch (NullPointerException exp)
@@ -797,19 +798,29 @@ public class Main {
         for (int i = 0; i < 3; i++) {
             System.out.println(i + 1 + "." + Playlist.topRatedMovies[i] + "\n");
         }
+
     }
 
-    public static void displayTopWatched(List<Movie> movies) {
-        if(Playlist.topWatchedMovies==null)  System.out.println("You haven't watched anything yet");
+    public static void displayTopWatched() {
 
-       else
+        boolean allNull = true;
+        for (String element : Playlist.topWatchedMovies) {
+            if (element != null) {
+                allNull = false;
+                break;
+            }
+        }
+        if(allNull)  {
+            System.out.println("You haven't watched anything yet");
+        } else
         {
             System.out.println("Your top watched movies are:\n");
             for (int i = 0; i < 3; i++)
             {
-                if (Playlist.topWatchedMovies[i] != null) {
-                    System.out.println(Playlist.topWatchedMovies[i] + "\n");
-                }
+               if (Playlist.topWatchedMovies[i] != null)
+               {
+                    System.out.println(Playlist.topWatchedMovies[i] +"\n");
+            }
             }
         }
     }

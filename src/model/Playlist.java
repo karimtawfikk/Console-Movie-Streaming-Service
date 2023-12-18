@@ -15,6 +15,9 @@ public class Playlist {
     private List<String> watchLaterPlaylist;
     private List<String> watchedPlaylist;
 
+    public Playlist() {
+    }
+
     public Playlist(List<String> favoritePlaylist, List<String> watchLaterPlaylist, List<String> watchedPlaylist)
     {
         this.favoritePlaylist = favoritePlaylist;
@@ -58,45 +61,61 @@ public class Playlist {
     }
 
     public static void setTopWatchedMovies(List<Movie> movies) {
-        for (int i = 0; i < movies.size(); i++) {
+        for (int i = 0; i < movies.size(); i++)
+        {
             counterOfWatchedMovie.add(0);
         }
     }
-    public static void getAndAddTopWatchedMovies(int index, List<Movie> movies) {
+    public static void getAndAddTopWatchedMovies(int index, List<Movie> movies)
+    {
         int currentCounter = counterOfWatchedMovie.get(index);
         currentCounter++;
         counterOfWatchedMovie.set(index, currentCounter);
-        int max1 = counterOfWatchedMovie.get(0);
-        int max2 = -1;
-        int max3 = -1;
-        for (int i = 1; i < counterOfWatchedMovie.size(); i++) {
-            if (counterOfWatchedMovie.get(i) > max1) {
+        int max1 = 0;
+        int max2 = 0;
+        int max3 = 0;
+        for (int i = 0; i < counterOfWatchedMovie.size(); i++) {
+            if (counterOfWatchedMovie.get(i) > counterOfWatchedMovie.get(max1)) {
                 max3 = max2;
                 max2 = max1;
-                max1 = counterOfWatchedMovie.get(i);
-            } else if (counterOfWatchedMovie.get(i) > max2) {
+                max1 = i;
+            } else if (counterOfWatchedMovie.get(i) > counterOfWatchedMovie.get(max2)) {
                 max3 = max2;
-                max2 = counterOfWatchedMovie.get(i);
-            } else if (counterOfWatchedMovie.get(i) > max3) {
-                max3 = counterOfWatchedMovie.get(i);
+                max2 = i;
+            } else if (counterOfWatchedMovie.get(i) > counterOfWatchedMovie.get(max3)) {
+                max3 = i;
             }
         }
-        topWatchedMovies[0] = movies.get(max1).getMovieTitle();
-        topWatchedMovies[1] = movies.get(max2).getMovieTitle();
-        topWatchedMovies[2] = movies.get(max3).getMovieTitle();
+        if(counterOfWatchedMovie.get(max1) != 0) {
+            topWatchedMovies[0] = movies.get(max1).getMovieTitle();
+        }
+        if(counterOfWatchedMovie.get(max2) != 0){
+            topWatchedMovies[1] = movies.get(max2).getMovieTitle();
+        }
+        if(counterOfWatchedMovie.get(max3) != 0) {
+            topWatchedMovies[2] = movies.get(max3).getMovieTitle();
+        }
 
     }
 
     public void addToFavorite(String movieTitle) {
-        favoritePlaylist.add(movieTitle);
-    }
 
+        if(!favoritePlaylist.contains(movieTitle)){
+
+        favoritePlaylist.add(movieTitle);
+        }
+    }
     public void addToToBeWatched(String movieTitle) {
+        if(!watchLaterPlaylist.contains(movieTitle))
+        {
         watchLaterPlaylist.add(movieTitle);
+        }
     }
 
     public void addToWatched(String movieTitle) {
-        watchedPlaylist.add(movieTitle);
+        if(!favoritePlaylist.contains(movieTitle)) {
+            watchedPlaylist.add(movieTitle);
+        }
     }
 
     public List<String> getFavoritePlaylist() {

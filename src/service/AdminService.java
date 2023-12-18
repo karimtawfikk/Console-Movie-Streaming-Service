@@ -285,7 +285,7 @@ public class AdminService
         for (Admin admin : admins) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + ADMIN_PATH, true))) {
                 // Append the new movie details to the file
-                writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%.1f,%.1f,%.1f,%s,%s",
+                writer.write(String.format("%d,%s,%s,%s,%s,%s",
                         admin.getID(),
                         admin.getUserName(),
                         admin.getPassword(),

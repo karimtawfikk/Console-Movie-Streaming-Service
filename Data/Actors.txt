@@ -1,8 +1,25 @@
-Karim Abdelaziz,48,Male,Egyptian,El Basha Telmeez
+Karim Abdelaziz,48,Male,Egyptian,El Basha Telmeez;The Blue Elephant
 Ghada Adel,48,Female,Egyptian,El Basha Telmeez;Gaalatny Mogreman
-Ahmed Helmy,54,Male,Egyptian,Gaalatny Mogreman
-Hassan Hosny,88,Male,Egyptian,Gaalatny Mogreman
-Yasmin Abdelaziz,43,Female,Egyptian,Al Talata Yashtghloonaha
+Ahmed Helmy,54,Male,Egyptian,Gaalatny Mogreman;Zaky Shan
+Hassan Hosny,88,Male,Egyptian,Gaalatny Mogreman;Zaky Shan
+Yasmin Abdelaziz,43,Female,Egyptian,Al Talata Yashtghloonaha;Zaky Shan
 Lotfy Labib,76,Male,Egyptian,Al Talata Yashtghloonaha
 Ragaa AlGiddawy,81,Female,Egyptian,Al Talata Yashtghloonaha
 Salah Abdullah,68,Male,Egyptian,Al Talata Yashtghloonaha
+Ahmed Fahmi,43,Male,Egyptian,Mr X;El Harb El Alameya El Talta
+Ahmed Dash,23,Male,Egyptian,Harley
+Hesham Maged,43,Male,Egyptian,El Harb El Alameya El Talta
+Chico,43,Male,Egyptian,El Harb El Alameya El Talta
+Mohamed Ramadan,35,Male,Egypian,Harley
+Ahmed El Sakka,50,Male,Egyptian,Harb Atalia
+Nilli Karim,48,Female,Egyptian,The Blue Elephant;Harb Atalia
+Khaled El-Sawi,60,Male,Egyptian,The Blue Elephant
+Khaled Saleh,50,Male,Egyptian,Harb Atalia
+Amir Karara,46,Male,Egyptian,Casablanca
+Amr Abdulgalil,60,Male,Egyptian,Casablanca
+Eyad Nassar,52,Male,Jordanian,Casablanca
+Hana El Zahed,29,Female,Egyptian,Mr X
+Akram Hosny,49,Male,Egyptian,Mr X
+Bayoumi Fouad,58,Male,Egyptian,El Harb El Alameya El Talta
+Mahmoud Hemida,70,Male,Egyptian,Harley
+Mai Omar,35,Female,Egyptian,Harley

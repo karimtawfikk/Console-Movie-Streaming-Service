@@ -51,7 +51,8 @@ public class MovieService
     private static final String FILE_PATH= DATA_DIRECTORY+ MOVIE_PATH;
     public static ArrayList<Movie> searchForMovieByGenre(List<Movie> movies,String genreValue){
         ArrayList<Movie> MoviesFound =new ArrayList<>();
-        for(Movie movie: movies) {
+        for(Movie movie: movies)
+        {
             if(movie.hasGenre(genreValue))
                 MoviesFound.add(movie);
         }
@@ -61,7 +62,7 @@ public class MovieService
     {
         for(Movie movie: movies)
         {
-            if(movie.getMovieTitle().contains(MovieName))
+            if(movie.getMovieTitle().equalsIgnoreCase(MovieName))
                 return movie;
         }
         return null;

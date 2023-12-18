@@ -147,7 +147,8 @@ public class Movie {
         this.poster = poster;
     }
 
-    public boolean hasGenre (String genre){
-        return genres.contains(genre);
+    public boolean hasGenre (String genre)
+    {
+        return genres.contains(genre.toLowerCase());
     }
 }

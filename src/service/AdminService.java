@@ -1,5 +1,6 @@
 package service;
 
+import model.Payment;
 import model.Subscriptions;
 import model.user.Regular;
 import java.io.*;
@@ -40,7 +41,8 @@ public class AdminService
                 Admin createdAdmin = new Admin(AdminId, adminUserName, adminPassword, adminFname, adminLname, adminEmail);
                 Admins.add(createdAdmin); // kol loop hathot fe element gedid beta3 movies movie gedid
             }
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e)
+        {
             System.err.println(e.getMessage());
         }
         return Admins;
@@ -53,16 +55,25 @@ public class AdminService
     }
     public static void addSubscription(List<Regular>users, String plan,int index)
     {
+        Payment payment = new Payment();
+        payment.paymentMethod();
         //Overall, this code snippet demonstrates how to obtain the current date,
         // format it into a desired string representation using a DateTimeFormatter,
         // and then parsethat formatted string back into a LocalDate object using the same formatter.
+        if (payment.isPaid()) {
+            System.out.println("Payment successful. Enjoy your plan!");
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            String formattedCurrentDate = currentDate.format(formatter);
+            LocalDate parsedDate = LocalDate.parse(formattedCurrentDate, formatter);
+            Subscriptions newSub = new Subscriptions(true, plan, parsedDate);
+            users.get(index).setSubscription(newSub);
 
-        LocalDate currentDate=LocalDate.now();
-        DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String formattedCurrentDate=currentDate.format(formatter);
-        LocalDate parsedDate = LocalDate.parse(formattedCurrentDate, formatter);
-        Subscriptions newSub=new Subscriptions(true,plan,parsedDate);
-        users.get(index).setSubscription(newSub);
+        }
+        else {
+            System.out.println("Invalid confirmation code. Payment not confirmed.");
+            addSubscription(users,plan,index);
+        }
     }
     public static void AdminEditUsers(int id,List<Regular> users,int choice,String newValue) {
         int index = -1;

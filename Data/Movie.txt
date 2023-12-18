@@ -1,3 +1,10 @@
-1,El Basha Telmeez,2023-11-30,02:15,Karim Abdelaziz;Ghada Adel,Wael Ehsan,Action;Adventure,Country 1,1000000.0,5000000.0,8.2,English,poster1.jpg
-2,Gaalatny Mogreman,2023-11-30,01:45,Ahmed Helmy;Ghada Adel;Hassan Hosny,Amr Arafaa,Drama,Country 2,500000.0,2000000.0,7.5,English;Spanish,poster2.jpg
-3,Al Talata Yashtghloonaha,2022-12-01,03:05,Yasmin Abdelaziz;Lotfy Labib;Ragaa AlGiddawy; Salah Abdullah,Ali Idris,Comedy;Romance,Country 3,600000.0,2000000.0,9.0,English;Arabic,poster3.jpg
+1,El Basha Telmeez,2009-11-30,02:15,Karim Abdelaziz;Ghada Adel,Wael Ehsan,action;adventure,Egypt,1000000.0,5000000.0,8.2,English,poster1.jpg
+2,Gaalatny Mogreman,2008-11-30,01:45,Ahmed Helmy;Ghada Adel;Hassan Hosny,Amr Arafaa,drama,Egypt,500000.0,2000000.0,7.5,English;Spanish,poster2.jpg
+3,Al Talata Yashtghloonaha,2022-12-01,03:05,Yasmin Abdelaziz;Lotfy Labib;Ragaa AlGiddawy; Salah Abdullah,Ali Idris,comedy;romance,Egypt,600000.0,2000000.0,9.0,English;Arabic,poster3.jpg
+4,Zaky Shan,2005-05-20,01:54,Ahmed Helmy;Yasmin Abdulaziz;Hassan Hosny,Wael Ihsan,comedy;romance,Egypt,700000.0,2500000.0,6.6,English;Arabic,poster4.jpg
+5,Casablanca,2019-06-04,01:55,Amir Karara;Amr Abdulgalil;Eyad Nassar;Ghada Adel,Peter Mimi,action;thriller,Egypt,3000000.0,5400000.0,6.1,English;Arabic,poster5.jpg
+6,The Blue Elephant,2014-07-30,02:50,Karim Abdelaziz;Khaled El-Sawi;Nilli Karim,Marwan Hamed,Drama;horror;mystery;thriller,Egypt,3500000.0,7500000.0,8.0,English;Arabic,poster6.jpg
+7,Harb Atalia,2005-07-27,01:50,Ahmed El Sakka;Nilli Karim;Khaled Saleh,Ahmed Saleh,action;comedy;crime;drama,Egypt,500000.0,800000.0,6.2,English;Italy,poster7.jpg
+8,Mr X,2023-06-27,01:44,Ahmed Fahmi;Hana El Zahed;Akram Hosny,Ahmed Abdelwahab,action;aomedy,Egypt,5000000.0,9000000.0,5.6,English;Arabic,poster8.jpg
+9,El Harb El Alameya El Talta,2014-07-28,01:45,Ahmed Fahmi;Hesham Maged;Chico;Bayoumi Fouad,Ahmed El Gendy,comedy,Egypt,3000000.0,4800000.0,6.9,English;Arabic,poster9.jpg
+10,Harley,2023-04-20,02:05,Mohamed Ramadan;Mahmoud Hemida;Mai Omar;Ahmed Dash,Kamel EL-Torky,action,Egypt,700000.0,1000000.0,3.1,English;Arabic,poster10.jpg

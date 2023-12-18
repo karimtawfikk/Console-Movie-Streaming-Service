@@ -2,7 +2,6 @@ package model.user;
 
  public abstract class User
 {
-
     int ID;
     String userName;
     String password;

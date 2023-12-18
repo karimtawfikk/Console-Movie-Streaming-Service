@@ -17,7 +17,8 @@ public class CastService {
     {
         ArrayList<Actor> Actors = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + ACTORS_PATH))) {
-            while (scanner.hasNextLine()) {
+            while (scanner.hasNextLine())
+            {
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
 
@@ -26,7 +27,6 @@ public class CastService {
                 String actorGender = values[2];
                 String actorNationality = values[3];
                 ArrayList<String> actorListOfMovies = new ArrayList<>(Arrays.asList(values[4].split(";")));
-
 
                 Actor createdActor = new Actor(actorFullName, actorAge, actorGender, actorNationality, actorListOfMovies);
                 Actors.add(createdActor);
@@ -64,7 +64,7 @@ public class CastService {
     public static void displayActorDetails(List<Actor> actor, int index)
     {
         Actor temporaryActor = actor.get(index);
-        System.out.println("temporaryActor Details:");
+        System.out.println("Actor Details:");
         System.out.println("Name: " + temporaryActor.getFullName());
         System.out.println("Age: " + temporaryActor.getAge());
         System.out.println("Gender: " + temporaryActor.getGender());
@@ -75,7 +75,7 @@ public class CastService {
     {
 
         Director temporaryDirector = director.get(index);
-        System.out.println("Actor Details:");
+        System.out.println("Director Details:");
         System.out.println("Name: " + temporaryDirector.getFullName());
         System.out.println("Age: " + temporaryDirector.getAge());
         System.out.println("Gender: " + temporaryDirector.getGender());

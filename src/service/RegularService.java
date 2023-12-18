@@ -26,7 +26,7 @@ public class RegularService {
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
                 // Extract the values for each field from the line
-                int userId = Integer.parseInt(values[0]);
+                int userId = Integer.parseInt(values[0],10);
                 String userName = values[1];
                 String password = values[2];
                 String firstName = values[3];
@@ -40,11 +40,10 @@ public class RegularService {
                         :
                         null;
                 Subscriptions subscription = new Subscriptions(isSubscribed, subscriptionPlan, subscriptionDate);
-
                 String[] playlistValues = values[7].split(";");
-                List<String> favourites = Arrays.asList(playlistValues[0].split(":"));
-                List<String> watchLater = Arrays.asList(playlistValues[1].split(":"));
-                List<String> watched = Arrays.asList(playlistValues[2].split(":"));
+                List<String> favourites = new ArrayList<>(Arrays.asList(playlistValues[0].split(":")));
+                List<String> watchLater =new ArrayList<>( Arrays.asList(playlistValues[1].split(":")));
+                List<String> watched = new ArrayList<>(Arrays.asList(playlistValues[2].split(":")));
 
                 Playlist playlist = new Playlist(favourites, watchLater, watched);
 

@@ -7,7 +7,7 @@ import model.WatchRecord;
 public class Regular extends User
 {
     public Playlist playLists;
-    public WatchRecord watchrecord;
+    private WatchRecord watchrecord;
     Subscriptions subscription;
     int numberOfMoviesWatched;
 
@@ -34,6 +34,9 @@ public class Regular extends User
         return subscription;
     }
 
+    public WatchRecord getWatchrecord() {
+        return watchrecord;
+    }
     public void setSubscription(Subscriptions subscription) {
         this.subscription = subscription;
     }

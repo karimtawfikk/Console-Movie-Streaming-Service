@@ -1,44 +1,61 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
-import model.user.Regular;
 
 
-public class WatchRecord
-{
-//this entity has (User ID<, Movie>, Date of watching>
-// the movie, Rating (from 1 to 5 , The user may not enter the rating to the movie)>).
-//String wPl = String.join(":", getWatchedPlaylist()); ayzen nehot dii
+public class WatchRecord {
 
+    private int id;
     private List<MovieRecord> watchedPlaylist;
-    public WatchRecord( List<MovieRecord> watchedPlaylist) {
+
+    public WatchRecord() {
+    }
+
+    public WatchRecord(int id, List<MovieRecord> watchedPlaylist) {
+        this.id = id;
         this.watchedPlaylist = watchedPlaylist;
     }
 
-    public void addToWatched(String movieTite, LocalDate date, Float rating,int userId)
-    {
-        MovieRecord record=new MovieRecord(movieTite,date,rating,userId);
+    public int getUserId() {
+        return id;
+    }
+
+    public void addToWatched(String movieTite, LocalDate date, Float rating, int userId) {
+        if (watchedPlaylist == null) {
+            watchedPlaylist = new ArrayList<>();
+        }
+
+        MovieRecord record = new MovieRecord(movieTite, date, rating, userId);
         watchedPlaylist.add(record);
     }
-    public List<MovieRecord> getWatchedRecord()
-    {
+
+    public List<MovieRecord> getWatchedRecord() {
         return watchedPlaylist;
     }
 
     @Override
-    public String toString()
-    {
-        String line;
-        List <String>records=new ArrayList<>();
-        for(MovieRecord record: getWatchedRecord())
-        {
-            line= record.getMovieName()+":"+ record.getWatchDate()+":"+record.getRating();
-            records.add(line);
+    public String toString() {
+
+
+//       int userId = users.get(index).getID();
+        List<String> recordStrings = new ArrayList<>();
+        for (MovieRecord record : watchedPlaylist) {
+            if(record.getUserId() == getUserId()) {
+                String recordString = String.format("%s:%s:%s",
+                        record.getMovieName(),
+                        record.getWatchDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                        record.getRating() == null ? " " : record.getRating().intValue());
+                recordStrings.add(recordString);
+            }
+
         }
-        return String.join(";",records);
+        //todo mafrod
+
+
+        return String.join(";", recordStrings);
     }
 }
 

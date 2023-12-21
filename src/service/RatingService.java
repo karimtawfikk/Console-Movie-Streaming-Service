@@ -29,7 +29,7 @@ public class RatingService
                 break;
             }
         }
-        Float newRating=(ratingOfWatchItMovies.get(index)/10.0f)* ratingOfUser;
+        Float newRating=(ratingOfWatchItMovies.get(index)/5.0f)* ratingOfUser;
         ratingOfWatchItMovies.set(index,newRating);
 }
 

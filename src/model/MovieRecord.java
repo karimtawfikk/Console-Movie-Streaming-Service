@@ -8,7 +8,16 @@ public class MovieRecord {
     private LocalDate watchDate;
     private Float Rating;
 
-    public MovieRecord(String movieName, LocalDate watchDate, Float rating, int userId) {
+
+
+//    public MovieRecord( String movieName, LocalDate watchDate, Float rating) {
+//        this.movieName = movieName;
+//        this.watchDate = watchDate;
+//        Rating = rating;
+//    }
+
+    public MovieRecord(String movieName, LocalDate watchDate, Float rating, int userId)
+    {
         this.userId = userId;
         this.movieName = movieName;
         this.watchDate = watchDate;
@@ -30,5 +39,8 @@ public class MovieRecord {
     public int getUserId() {
         return userId;
     }
+
+
+
 }
 

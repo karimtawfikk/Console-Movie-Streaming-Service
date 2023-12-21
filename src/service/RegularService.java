@@ -62,7 +62,7 @@ public class RegularService {
                 }
                 int movieCounter = Integer.parseInt(values[9], 10);
                 Playlist playlist = new Playlist(favourites, watchLater);
-                WatchRecord watchRecord=new WatchRecord(records);
+                WatchRecord watchRecord=new WatchRecord(userId, records);
                 Regular user = new Regular(userId, userName, password, firstName, lastName, email,playlist,watchRecord,subscription,movieCounter);
                 regularUsers.add(user);
             }
@@ -74,38 +74,35 @@ public class RegularService {
     }
 
     public static void writeUsersToFile(List<Regular> regularUsers) {
-        FileUtil.deleteFileContentBeforeWritingNewOne(FILE_PATH);
-        for (Regular user : regularUsers) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH,true)))  //true 3shan mayms7sh el adim, yaani megher true kan beyktb satr f awl loop ba3diha fe tani loop yemsa7o w yektb el ba3dih
+        try {
+            FileUtil.deleteFileContentBeforeWritingNewOne(FILE_PATH);
+            // Open the file for writing (true for append mode)
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true)))
             {
-                // Append the new movie details to the file
-                writer.write(String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
-                        Integer.toString(user.getID(),10),
-                        user.getUserName(),
-                        user.getPassword(),
-                        user.getFirstName(),
-                        user.getLastName(),
-                        user.getEmail(),
-                        user.getPlayLists().toString(),
-                        user.watchrecord.toString(),
-                        user.getSubscription().toString()
-                         //hayndah el toString betaatha, el hya aamlnlha override
-                ));
-                // Add a new line at the end
-                writer.newLine();
-            } catch (IOException e)
-            {
-                System.out.println(e.getMessage());
+                for (Regular user : regularUsers) {
+                    writer.write(String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%d",
+                            Integer.toString(user.getID(), 10),
+                            user.getUserName(),
+                            user.getPassword(),
+                            user.getFirstName(),
+                            user.getLastName(),
+                            user.getEmail(),
+                            user.getSubscription().toString(),
+                            user.getPlayLists().toString(),
+                            user.getWatchrecord().toString(),
+                            user.getNumberOfMoviesWatched()
+                    ));
+                    writer.newLine();
+                }
             }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
-//    public static void main(String[] args)  //7atet el main di hena aashan bs negarb w ne run bs fl akher hanms7a
-//    {
-//
-//
-//
-//    List<Regular> regularUsers = readUsersFromFile();
-//     writeUsersToFile(regularUsers);
-//    }
+  public static void main(String[] args)  //7atet el main di hena aashan bs negarb w ne run bs fl akher hanms7a
+   {
+    List<Regular> regularUsers = readUsersFromFile();
+    writeUsersToFile(regularUsers);
+   }
 
 }

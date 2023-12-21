@@ -3,7 +3,8 @@ package model;
 import java.util.Scanner;
 import java.util.Random;
 import java.time.LocalDate;
-public class Payment {
+public class Payment
+{
 
     final int confirmationCode=2408;
     int price;
@@ -12,6 +13,10 @@ public class Payment {
     public void paymentMethod(){
         Random random = new Random();
         long randomNumber = random.nextLong();
+        while(randomNumber<-1)
+        {
+            randomNumber = random.nextLong();
+        }
         System.out.println("Choose your payment method \n -F for fawry \n -C for credit card");
         char payWay = input.next().charAt(0);
         if(payWay =='f' || payWay =='F'){

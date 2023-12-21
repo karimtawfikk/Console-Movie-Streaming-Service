@@ -8,12 +8,13 @@ import static service.RatingService.ratingOfWatchItMovies;
 public class Playlist {
     public static String[] topRatedMovies = new String[3];
     public String[] recentMovies = new String[3];
-    //todo recentmovies we watched nehotaha f watchrecord
     public static String[] topWatchedMovies = new String[3];
     public static List<Integer>counterOfWatchedMovie=new ArrayList<>();
     private List<String> favoritePlaylist;
     private List<String> watchLaterplaylist;
-    //    private List<String> watchedPlaylist;
+
+    public Playlist() {
+    }
     public Playlist(List<String> favoritePlaylist, List<String> watchLaterplaylist) {
         this.favoritePlaylist = favoritePlaylist;
         this.watchLaterplaylist = watchLaterplaylist;
@@ -56,17 +57,43 @@ public class Playlist {
         topRatedMovies[2]=movies.get(thirdIndex).getMovieTitle();
     }
     public void addToFavorite(String movieTitle) {
-        favoritePlaylist.add(movieTitle);
+        if (favoritePlaylist == null) //ma3naha law el logged in user la 3amel register
+        {
+            favoritePlaylist = new ArrayList<>(); // Initialize the list if it's null
+        }
+        boolean isFound=false;
+        for(String checkMovie:favoritePlaylist)
+        {
+          if(movieTitle.equalsIgnoreCase(checkMovie))
+          {
+              isFound=true;
+              break;
+          }
+      }
+       if(!isFound)  favoritePlaylist.add(movieTitle);
     }
 
     public void addToToBeWatched(String movieTitle)
     {
-        watchLaterplaylist.add(movieTitle);
+        if (watchLaterplaylist == null) {
+            watchLaterplaylist = new ArrayList<>(); // Initialize the list if it's null
+        }
+        boolean isFound=false;
+        for(String checkMovie:watchLaterplaylist)
+        {
+            if(movieTitle.equalsIgnoreCase(checkMovie))
+            {
+                isFound=true;
+                break;
+            }
+        }
+        if(!isFound)   watchLaterplaylist.add(movieTitle);
     }
 
 
 
-    public List<String> getFavoritePlaylist() {
+    public List<String> getFavoritePlaylist()
+    {
         return favoritePlaylist;
     }
 
@@ -82,25 +109,31 @@ public class Playlist {
         // Check if the movie is already in the recentMovies array
         //
         boolean movieAlreadyAdded = false;
-      for(int i=0; i<3; i++){
-       if(recentMovies[i]==null)
-       {
-           recentMovies[i]=movieName;
-           movieAlreadyAdded=true;
-           break;
-       }
-      }
-        // If the movie is not already in the list, add it
-        if (!movieAlreadyAdded)
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                if (recentMovies[i + 1] != null) {
-                    recentMovies[i] = recentMovies[i + 1];
-                }
+        boolean isFound=false;
+        for(int i=0; i<3; i++) {
+            if (recentMovies[i] == movieName) {
+                isFound = true;
+                break;
             }
-            recentMovies[2] = movieName;
         }
+       if(!isFound) {
+           for (int i = 0; i < 3; i++) {
+               if (recentMovies[i] == null) {
+                   recentMovies[i] = movieName;
+                   movieAlreadyAdded = true;
+                   break;
+               }
+           }
+
+           if (!movieAlreadyAdded) {
+               for (int i = 0; i < 2; i++) {
+                   if (recentMovies[i + 1] != null) {
+                       recentMovies[i] = recentMovies[i + 1];
+                   }
+               }
+               recentMovies[2] = movieName;
+           }
+       }
     }
 
 

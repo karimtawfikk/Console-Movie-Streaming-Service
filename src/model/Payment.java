@@ -16,7 +16,6 @@ public class Payment {
         char payWay = input.next().charAt(0);
         if(payWay =='f' || payWay =='F'){
             System.out.println("Send money to this number: "+" "+randomNumber);
-
         }
         else if(payWay =='c' || payWay =='C'){
 
@@ -44,8 +43,6 @@ public class Payment {
         }
 
     }
-
-
     private static boolean checkCvv(String cvv)
     {
         return cvv.matches("\\d{3}");

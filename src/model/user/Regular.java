@@ -9,24 +9,25 @@ public class Regular extends User
     public Playlist playLists;
     public WatchRecord watchrecord;
     Subscriptions subscription;
-    int movieCounter;
+    int numberOfMoviesWatched;
 
-    public Regular(int ID, String userName, String password, String firstName, String lastName, String email, Playlist playLists, WatchRecord watchrecord, Subscriptions subscription,int movieCounter)
+    public Regular(int ID, String userName, String password, String firstName, String lastName, String email, Playlist playLists, WatchRecord watchrecord, Subscriptions subscription,int numberOfMoviesWatched)
     {
         super(ID, userName, password, firstName, lastName, email);
-        this.movieCounter=movieCounter;
+        this.numberOfMoviesWatched = numberOfMoviesWatched;
         this.playLists = playLists;
         this.watchrecord = watchrecord;
         this.subscription = subscription;
     }
 
-    public void setMovieCounter(int movieCounter) {
-        this.movieCounter = movieCounter;
+    public void setNumberOfMoviesWatched(int numberOfMoviesWatched)
+    {
+        this.numberOfMoviesWatched = numberOfMoviesWatched;
     }
 
-    public int getMovieCounter()
+    public int getNumberOfMoviesWatched()
     {
-        return movieCounter;
+        return numberOfMoviesWatched;
     }
 
     public Subscriptions getSubscription() {

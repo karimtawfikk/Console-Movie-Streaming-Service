@@ -47,11 +47,9 @@ public class AdminService
         }
         return Admins;
     }
-    public static void addRegularUsers(List<Regular> users, Regular newUser) {
-
-        if (newUser != null)
+    public static void addRegularUsers(List<Regular> users, Regular newUser)
+    {
             users.add(newUser);
-
     }
     public static void addSubscription(List<Regular>users, String plan,int index)
     {
@@ -60,7 +58,8 @@ public class AdminService
         //Overall, this code snippet demonstrates how to obtain the current date,
         // format it into a desired string representation using a DateTimeFormatter,
         // and then parsethat formatted string back into a LocalDate object using the same formatter.
-        if (payment.isPaid()) {
+        if (payment.isPaid())
+        {
             System.out.println("Payment successful. Enjoy your plan!");
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -68,7 +67,6 @@ public class AdminService
             LocalDate parsedDate = LocalDate.parse(formattedCurrentDate, formatter);
             Subscriptions newSub = new Subscriptions(true, plan, parsedDate);
             users.get(index).setSubscription(newSub);
-
         }
         else {
             System.out.println("Invalid confirmation code. Payment not confirmed.");

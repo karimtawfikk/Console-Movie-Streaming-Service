@@ -53,14 +53,14 @@ public class RegularService {
                     String [] lines=recordLine.split(":");
                     String movieName=lines[0];
                     LocalDate date=LocalDate.parse(lines[1],DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-                    float rating = !lines[2].isBlank() ?
+                    Float rating = !lines[2].isBlank() ?
                             Float.parseFloat(lines[2])
                             :
                             null;
-                    MovieRecord newRecord=new MovieRecord(movieName,date,rating);
+                    MovieRecord newRecord=new MovieRecord(movieName,date,rating,userId);
                     records.add(newRecord);
                 }
-                int movieCounter = Integer.parseInt(values[9],10);
+                int movieCounter = Integer.parseInt(values[9], 10);
                 Playlist playlist = new Playlist(favourites, watchLater);
                 WatchRecord watchRecord=new WatchRecord(records);
                 Regular user = new Regular(userId, userName, password, firstName, lastName, email,playlist,watchRecord,subscription,movieCounter);
@@ -76,12 +76,11 @@ public class RegularService {
     public static void writeUsersToFile(List<Regular> regularUsers) {
         FileUtil.deleteFileContentBeforeWritingNewOne(FILE_PATH);
         for (Regular user : regularUsers) {
-            String strNumber = Integer.toString( user.getID());
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH,true)))  //true 3shan mayms7sh el adim, yaani megher true kan beyktb satr f awl loop ba3diha fe tani loop yemsa7o w yektb el ba3dih
             {
                 // Append the new movie details to the file
                 writer.write(String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
-                        user.getID(),
+                        Integer.toString(user.getID(),10),
                         user.getUserName(),
                         user.getPassword(),
                         user.getFirstName(),
@@ -94,11 +93,11 @@ public class RegularService {
                 ));
                 // Add a new line at the end
                 writer.newLine();
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 System.out.println(e.getMessage());
             }
         }
-
     }
 //    public static void main(String[] args)  //7atet el main di hena aashan bs negarb w ne run bs fl akher hanms7a
 //    {

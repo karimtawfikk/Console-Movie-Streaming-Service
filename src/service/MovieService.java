@@ -15,7 +15,8 @@ import static utils.Constants.MOVIE_PATH;
 
 public class MovieService
 {
-    public static List<Movie> readMoviesFromFile() {
+    public static List<Movie> readMoviesFromFile()
+    {
         ArrayList<Movie> movies = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + MOVIE_PATH))) {
             while (scanner.hasNextLine()) {
@@ -35,7 +36,6 @@ public class MovieService
                 float imdbScore = Float.parseFloat(values[10]);
                 ArrayList<String> languages = new ArrayList<>(Arrays.asList(values[11].split(";")));
                 String poster = values[12];
-
                 // Create a new Movie instance and add it to the list
                 Movie movie = new Movie(movieId, movieTitle, releaseDate, durationTime, actors, director, genres, country,
                         budget, revenue, imdbScore, languages, poster);

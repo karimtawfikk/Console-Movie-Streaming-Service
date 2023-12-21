@@ -14,21 +14,19 @@ public class WatchRecord
 //String wPl = String.join(":", getWatchedPlaylist()); ayzen nehot dii
 
     private List<MovieRecord> watchedPlaylist;
-
-    public WatchRecord(List<MovieRecord> watchedPlaylist) {
+    public WatchRecord( List<MovieRecord> watchedPlaylist) {
         this.watchedPlaylist = watchedPlaylist;
     }
 
-    public void addToWatched(String movieTite, LocalDate date,Float rating)
+    public void addToWatched(String movieTite, LocalDate date, Float rating,int userId)
     {
-        MovieRecord record=new MovieRecord(movieTite,date,rating);
+        MovieRecord record=new MovieRecord(movieTite,date,rating,userId);
         watchedPlaylist.add(record);
     }
     public List<MovieRecord> getWatchedRecord()
     {
         return watchedPlaylist;
     }
-
 
     @Override
     public String toString()

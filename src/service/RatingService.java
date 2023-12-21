@@ -18,7 +18,7 @@ public class RatingService
         }
     }
 
-    public static void CalculateRating(List<Movie>movies, String response, float ratingOfUser)
+    public static void CalculateRating(List<Movie>movies, String response, Float ratingOfUser)
     {
         int index = -1;
         for (int i = 0; i < movies.size(); i++)  //3ashan ne3raf ehna shaghain ala anhy movie we ne3raf ne add fe anhy index beta3 List:ratingOfWatchItMovies

@@ -33,9 +33,9 @@ public class AdminService
                 int AdminId = Integer.parseInt(values[0]);
                 String adminUserName = values[1];
                 String adminPassword = values[2];
-                String adminFname = values[2];
-                String adminLname = values[2];
-                String adminEmail = values[2];
+                String adminFname = values[3];
+                String adminLname = values[4];
+                String adminEmail = values[5];
 
                 // Create a new Admin instance and add it to the list
                 Admin createdAdmin = new Admin(AdminId, adminUserName, adminPassword, adminFname, adminLname, adminEmail);
@@ -295,6 +295,10 @@ public class AdminService
             }
            }
 }
-
+    public static void main(String[] args)  //7atet el main di hena aashan bs negarb w ne run bs fl akher hanms7a
+    {
+        List<Admin> regularUsers = readAdminsFromFile();
+        writeAdminsToFile(regularUsers);
+    }
 
 }

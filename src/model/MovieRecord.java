@@ -36,7 +36,8 @@ public class MovieRecord {
         return watchDate;
     }
 
-    public int getUserId() {
+    public int getUserId()
+    {
         return userId;
     }
 

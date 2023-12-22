@@ -36,7 +36,6 @@ public class AdminService
                 String adminFname = values[3];
                 String adminLname = values[4];
                 String adminEmail = values[5];
-
                 // Create a new Admin instance and add it to the list
                 Admin createdAdmin = new Admin(AdminId, adminUserName, adminPassword, adminFname, adminLname, adminEmail);
                 Admins.add(createdAdmin); // kol loop hathot fe element gedid beta3 movies movie gedid

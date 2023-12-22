@@ -62,7 +62,7 @@ public class RegularService {
                 }
                 int movieCounter = Integer.parseInt(values[9], 10);
                 Playlist playlist = new Playlist(favourites, watchLater);
-                WatchRecord watchRecord=new WatchRecord(userId, records);
+                WatchRecord watchRecord=new WatchRecord(userId, records); //todo wehna ben read create benbaat el userID
                 Regular user = new Regular(userId, userName, password, firstName, lastName, email,playlist,watchRecord,subscription,movieCounter);
                 regularUsers.add(user);
             }
@@ -70,7 +70,6 @@ public class RegularService {
             System.err.println(e.getMessage());
         }
         return regularUsers;
-
     }
 
     public static void writeUsersToFile(List<Regular> regularUsers) {

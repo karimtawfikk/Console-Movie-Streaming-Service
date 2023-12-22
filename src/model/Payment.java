@@ -6,14 +6,15 @@ import java.time.LocalDate;
 public class Payment
 {
 
-    final int confirmationCode=2408;
-    int price;
+    int confirmationCode;
     static Scanner input=new Scanner(System.in);
 
     public void paymentMethod(){
+
         Random random = new Random();
+         confirmationCode = random.nextInt(9000) + 1000;
         long randomNumber = random.nextLong();
-        while(randomNumber<-1)
+        while(randomNumber<0)
         {
             randomNumber = random.nextLong();
         }
@@ -59,10 +60,14 @@ public class Payment
     public boolean isPaid()
     {
         boolean payStatus;
-        System.out.println("Enter confirmation code that was sent to you: ");
+        System.out.println("OTP code for WATCH IT is "+ confirmationCode);
+        System.out.println("Enter the OTP code:");
         int inConfirm=input.nextInt();
-        if(inConfirm==confirmationCode){
+        if(inConfirm==confirmationCode)
+        {
+
             payStatus=true;
+
         }
         else{
             payStatus=false;

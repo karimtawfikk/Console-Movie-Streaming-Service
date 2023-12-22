@@ -725,14 +725,15 @@ public class Main
             Actor actor = actors.get(index);
             if (actorName.equalsIgnoreCase(actor.getFullName()))
             {
-                isFound = true;
                 CastService.displayActorDetails(actors, index);
+                isFound = true;
             }
         }
         if (!isFound) System.err.println("Actor not found");
     }
 
-    public static void searchForDirectors(List<Director> directors) {
+    public static void searchForDirectors(List<Director> directors)
+    {
         boolean isFound = false;
         System.out.println("Enter the director's name:");
         input.nextLine();
@@ -824,7 +825,7 @@ public class Main
                             {
                                 w_record=new WatchRecord(); //akhaly yesawr ala constructor fady fa watchrecord ybaa null
                             }
-                            users.get(index).getWatchrecord().addToWatched(MovieReturned.getMovieTitle(), LocalDate.now(), rating, users.get(index).getID());
+                            w_record.addToWatched(MovieReturned.getMovieTitle(), LocalDate.now(), rating, users.get(index).getID());
                             input.nextLine();
                             if (rating != null)
                                 RatingService.CalculateRating(movies, MovieReturned.getMovieTitle(), rating);
@@ -865,12 +866,13 @@ public class Main
         switch (entered)
         {
             case 1:
-                if(user.getPlayLists().getFavoritePlaylist()==null) System.out.println("Your favorite playlist is currently empty. Add some favorite movies to create your personalized playlist!");
-                System.out.println(user.getPlayLists().getFavoritePlaylist());
+                if(user.getPlayLists()==null) //law da new register
+                    System.out.println("Your favorite playlist is currently empty. Add some favorite movies to create your personalized playlist!");
+               else System.out.println(user.getPlayLists().getFavoritePlaylist());
                 break;
             case 2:
-                if(user.getPlayLists().getFavoritePlaylist()==null) System.out.println("Your Watchlater playlist is currently empty. Add some movies to create your personalized playlist!");
-                System.out.println(user.getPlayLists().getWatchLaterplaylist());
+                if(user.getPlayLists()==null) System.out.println("Your Watchlater playlist is currently empty. Add some movies to create your personalized playlist!");
+                else System.out.println(user.getPlayLists().getWatchLaterplaylist());
                 break;
         }
     }

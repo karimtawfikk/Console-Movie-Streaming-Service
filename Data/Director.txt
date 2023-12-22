@@ -1,3 +1,10 @@
-Wael Ehsan,60,Male,Egyptian,El Basha Telmeez
+Wael Ehsan,60,Male,Egyptian,El Basha Telmeez;Zaky Shan
 Amr Arafaa,60,Male,Egyptian,Gaalatny Mogreman
 Ali Idris,60,Male,Egyptian,Al Talata Yashtghloonaha
+Peter Mimi,36,Male,Egyptian,Casablanca
+Marwan Hamed,46,Male,Egyptian,The Blue Elephant
+Ahmed Saleh,45,Male,Egyptian,Harb Atalia
+Ahmed Abdelwahab,34,Male,Egyptian,Mr X
+Ahmed El Gendy,43,Male,Egyptian,El Harb El Alameya El Talta
+Kamel EL-Torky,20,Male,Egyptian,Harley
+Ismail Farouk,49,Male,Egyptian,Abdu Mouta

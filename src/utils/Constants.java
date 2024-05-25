@@ -15,7 +15,7 @@ public class Constants {
     public static final int PREMIUM_PRICE=200;
     public static final int BASIC_MOVIES = 5;
     public static final int  STANDARD_MOVIES = 10;
-    public static final int PREMIUM_MOVIES = 30;
+    public static final int PREMIUM_MOVIES=30;
 
 
 

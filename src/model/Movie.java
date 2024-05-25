@@ -4,24 +4,20 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 public class Movie {
 
-   private int movieId;
-   private String movieTitle;
-   private LocalDate releaseDate;
-   private LocalTime durationTime;
+    private final int movieId;
+    private final String movieTitle;
+    private LocalDate releaseDate;
+    private LocalTime durationTime;
     private ArrayList<String> actors;
-   private String director;
-   private ArrayList<String> genres;
-   private String country;
-   private float budget;
-   private float revenue;
-   private float imdb_score;
+    private String director;
+    private ArrayList<String> genres;
+    private String country;
+    private float budget;
+    private float revenue;
+    private float imdb_score;
 
-   private ArrayList<String> languages;
-   private String poster;
-
-//    public Movie(){
-//
-//    }
+    private ArrayList<String> languages;
+    private String poster;
 
     public Movie(int movieId, String movieTitle, LocalDate releaseDate, LocalTime durationTime,ArrayList<String> actors, String director, ArrayList<String> genres, String country, float budget, float revenue, float imdb_score, ArrayList<String> languages, String poster) {
         this.movieId = movieId;
@@ -95,14 +91,6 @@ public class Movie {
         return languages;
     }
 
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
-    }
-
-    public void setMovieTitle(String movieTitle) {
-        this.movieTitle = movieTitle;
-    }
-
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
@@ -150,5 +138,5 @@ public class Movie {
     public boolean hasGenre (String genre)
     {
         return genres.contains(genre.toLowerCase());
-    }
+}
 }

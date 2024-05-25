@@ -2,26 +2,27 @@ package service;
 
 import model.Payment;
 import model.Subscriptions;
+import model.user.Admin;
 import model.user.Regular;
+import utils.FileUtil;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import model.user.Admin;
-import utils.FileUtil;
-
-import java.util.Scanner;
-import static utils.Constants.*;
 import java.util.ArrayList;
-import java.lang.Math;
-public class AdminService
-{
+import java.util.List;
+import java.util.Scanner;
+
+import static utils.Constants.*;
+
+public class AdminService {
 
     private final static String FILE_PATH = DATA_DIRECTORY + ADMIN_PATH;
-    public static int Basic_Counter=-0;
-    public static int Standard_Counter=0;
-    public static int Premium_Counter=0;
-    public static int[] monthRevenues ={0,0,0,0,0,0,0,0,0,0,0,0};
+    private static int Basic_Counter = 0;
+    private static int Standard_Counter = 0;
+    private static int Premium_Counter = 0;
+    private static final int[] monthRevenues = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
     public static List<Admin> readAdminsFromFile() {
 
         ArrayList<Admin> Admins = new ArrayList<>();
@@ -30,7 +31,7 @@ public class AdminService
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
                 // Extract the values for each field from the line
-                int AdminId = Integer.parseInt(values[0]);
+                String AdminId = values[0];
                 String adminUserName = values[1];
                 String adminPassword = values[2];
                 String adminFname = values[3];
@@ -40,26 +41,28 @@ public class AdminService
                 Admin createdAdmin = new Admin(AdminId, adminUserName, adminPassword, adminFname, adminLname, adminEmail);
                 Admins.add(createdAdmin); // kol loop hathot fe element gedid beta3 movies movie gedid
             }
-        } catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             System.err.println(e.getMessage());
         }
         return Admins;
     }
-    public static void addRegularUsers(List<Regular> users, Regular newUser)
-    {
-            users.add(newUser);
+
+    public static int[] getMonthRevenues() {
+        return monthRevenues;
     }
-    public static void addSubscription(List<Regular>users, String plan,int index)
-    {
+
+    public static void addRegularUsers(List<Regular> users, Regular newUser) {
+        users.add(newUser);
+    }
+
+    public static void addSubscription(List<Regular> users, String plan, int index) {
 
         Payment payment = new Payment();
         payment.paymentMethod();
         //Overall, this code snippet demonstrates how to obtain the current date,
         // format it into a desired string representation using a DateTimeFormatter,
         // and then parsethat formatted string back into a LocalDate object using the same formatter.
-        if (payment.isPaid())
-        {
+        if (payment.isPaid()) {
             System.out.println("Payment successful. Enjoy your plan!");
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -67,24 +70,24 @@ public class AdminService
             LocalDate parsedDate = LocalDate.parse(formattedCurrentDate, formatter);
             Subscriptions newSub = new Subscriptions(true, plan, parsedDate);
             users.get(index).setSubscription(newSub);
-        }
-        else {
+        } else {
             System.out.println("Invalid confirmation code. Payment not confirmed.");
-            addSubscription(users,plan,index);
+            addSubscription(users, plan, index);
         }
     }
-    public static void AdminEditUsers(int id,List<Regular> users,int choice,String newValue) {
+
+    public static void AdminEditUsers(String id, List<Regular> users, int choice, String newValue) {
         int index = -1;
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getID()==id) {
+            if (users.get(i).getID().equals(id)) {
                 index = i;
                 break;
             }
         }
         if (index >= 0) {
-            switch(choice){
+            switch (choice) {
                 case 1:
-                    users.get(index).setID(Integer.parseInt(newValue));
+                    users.get(index).setID(newValue);
                     System.out.println("Id updated successfully");
                     break;
                 case 2:
@@ -119,45 +122,45 @@ public class AdminService
                     subscriptionn.setSubscribeDate(LocalDate.now());
                     break;
             }
-        }
-        else {
+        } else {
             System.out.println("User not found.");
         }
-
     }
-    public static void adminRemovesUserAccount(List<Regular> users, int index)
-    {
+
+    public static void adminRemovesUserAccount(List<Regular> users, int index) {
         users.remove(index);
+        System.out.println("Account deleted successfully\nTo continue enjoying our service you'd have to log in!");
+        RegularService.writeUsersToFile(users);
+        System.exit(0);
     }
 
-    public static String seeMostSubscribed(List<Regular> users){
-        for(Regular user:users){
-            if(user.getSubscription().getPlan().equals("basic")) {
-                Basic_Counter++;
-            }
-            else if (user.getSubscription().getPlan().equals("standard")) {
-                Standard_Counter++;
-            }
-            else if(user.getSubscription().getPlan().equals("premium")){
-                Premium_Counter++;
-            }
-        }
-        int mostSubscribed = Math.max(Basic_Counter, Math.max(Standard_Counter, Premium_Counter));
-        if(mostSubscribed==Basic_Counter){
-            return "Basic";
-        }
-        else if(mostSubscribed==Standard_Counter){
-            return "Standard";
-        }
-        else
+    public static String seeMostSubscribed(List<Regular> users)
+    {
+        for (Regular user : users)
         {
+            switch (user.getSubscription().getPlan())
+            {
+                case "basic" -> Basic_Counter++;
+                case "standard" -> Standard_Counter++;
+                case "premium" -> Premium_Counter++;
+            }
+        }
+
+        int mostSubscribed = Math.max(Basic_Counter, Math.max(Standard_Counter, Premium_Counter));
+        if (mostSubscribed == Basic_Counter)
+        {
+            return "Basic";
+        } else if (mostSubscribed == Standard_Counter) {
+            return "Standard";
+        } else {
             return "Premium";
         }
-    }//FARES W BOBO BYMSOOO
+    }
 
-    public static void calculateRevenue(List<Regular>users,Integer monthValue,int index) {
+    public static void calculateRevenue(List<Regular> users, Integer monthValue, int index) {
 
-        switch (monthValue) {
+        switch (monthValue)
+        {
             case 1:
                 String planJan = users.get(index).getSubscription().getPlan();
                 if (planJan.equals("basic"))
@@ -269,35 +272,28 @@ public class AdminService
                     monthRevenues[11] += PREMIUM_PRICE;
 
                 break;
-        }}
+        }
+    }
 
 
-    public static void writeAdminsToFile (List <Admin> admins)
-    {
+    public static void writeAdminsToFile(List<Admin> admins) {
         FileUtil.deleteFileContentBeforeWritingNewOne(FILE_PATH);
         for (Admin admin : admins) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_DIRECTORY + ADMIN_PATH, true))) {
                 // Append the new movie details to the file
-                writer.write(String.format("%d,%s,%s,%s,%s,%s",
+                writer.write(String.format("%s,%s,%s,%s,%s,%s",
                         admin.getID(),
                         admin.getUserName(),
                         admin.getPassword(),
                         admin.getFirstName(),
                         admin.getLastName(),
                         admin.getEmail()
-
                 ));
 
                 writer.newLine();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-           }
+ }
 }
-    public static void main(String[] args)  //7atet el main di hena aashan bs negarb w ne run bs fl akher hanms7a
-    {
-        List<Admin> regularUsers = readAdminsFromFile();
-        writeAdminsToFile(regularUsers);
-    }
-
 }

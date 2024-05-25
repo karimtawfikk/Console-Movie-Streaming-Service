@@ -1,28 +1,28 @@
 package model.user;
 
- public abstract class User
-{
-    int ID;
-    String userName;
-    String password;
-    String firstName;
-    String lastName;
-    String email;
+public abstract class User {
+    private String ID;
+    private String userName;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private String email;
 
-    public User(int ID,String userName, String password, String firstName, String lastName, String email) {
+
+    public User(String ID, String userName, String password, String firstName, String lastName, String email) {
         this.ID = ID;
-        this.userName=userName;
+        this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
@@ -65,5 +65,8 @@ package model.user;
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+
 
 }

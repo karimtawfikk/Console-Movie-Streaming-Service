@@ -3,14 +3,11 @@ package model;
 import java.util.List;
 
 public class CastPerson {
-    String fullName;
-    int age;
-    String gender;
-    String nationality;
-    List <String> list_of_movies;
-
-
-
+    private final String fullName;
+    private final int age;
+    private final String gender;
+    private final String nationality;
+    private final List <String> list_of_movies;
 
     public CastPerson(String fullName, int age, String gender, String nationality, List<String> list_of_movies) {
         this.fullName=fullName;
@@ -40,25 +37,6 @@ public class CastPerson {
 
     public List<String> getList_of_movies() {
         return list_of_movies;
-    }
+}
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public void setList_of_movies(List<String> list_of_movies) {
-        this.list_of_movies = list_of_movies;
-    }
 }

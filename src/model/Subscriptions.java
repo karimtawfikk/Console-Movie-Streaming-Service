@@ -6,17 +6,15 @@ import java.time.temporal.ChronoUnit;
 
 public class Subscriptions
 {
-    boolean status;
-    String  plan;
-    LocalDate subscribeDate;
+    private  boolean status;
+    private  String  plan;
+    private  LocalDate subscribeDate;
 
     public Subscriptions(boolean status, String plan, LocalDate subscribeDate) {
         this.status = status;
         this.plan = plan;
         this.subscribeDate = subscribeDate;
     }
-
-
 
     public boolean isStatus() {
         return status;
@@ -41,49 +39,31 @@ public class Subscriptions
     public void setSubscribeDate(LocalDate subscribeDate) {
         this.subscribeDate = subscribeDate;
     }
-
-    public float calcprice(float price, char plan) {
-        if (plan == 'B' || plan == 'b') {
-            price += 100;
-        } else if (plan == 'S' || plan == 's') {
-            price += 250;
-        } else if (plan == 'P' || plan == 'p') {
-            price += 500;
-        }
-        return price;
-    }
     @Override
     public String toString() {
 
-       if(!status)
-       {
-           return "false;" + " ;" + " ";
-       }
-      else
-      {
-           String plan=this.plan;
-
-           LocalDate subscribeDate=this.subscribeDate;
-
-           String subscriptionDate = subscribeDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-
-           return "true;"+plan+";"+subscriptionDate;
-      }
-
-    }
-
-    public void dueDate() {
-        long diff = ChronoUnit.DAYS.between(subscribeDate, LocalDate.now());
-        if (diff > 30) {
-            plan = null;
-            System.out.println("Your subscription has ended");
+        if(!status)
+        {
+            return "false;" + " ;" + " ";
+        }
+        else
+        {
+            String subscriptionDate = subscribeDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            return "true;"+plan+";"+subscriptionDate;
         }
 
-
     }
+
+    public static boolean dueDate(LocalDate subscribeDate) {
+        long diff = ChronoUnit.DAYS.between(subscribeDate, LocalDate.now());
+        if (diff > 30)
+        {
+            return true;
+        }
+        else
+            return false;
+}
 
 
 
 }
-
-

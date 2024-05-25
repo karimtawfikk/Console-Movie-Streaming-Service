@@ -6,12 +6,12 @@ import model.WatchRecord;
 
 public class Regular extends User
 {
-    public Playlist playLists;
+    private Playlist playLists;
     private WatchRecord watchrecord;
-    Subscriptions subscription;
-    int numberOfMoviesWatched;
+    private Subscriptions subscription;
+    private int numberOfMoviesWatched;
 
-    public Regular(int ID, String userName, String password, String firstName, String lastName, String email, Playlist playLists, WatchRecord watchrecord, Subscriptions subscription,int numberOfMoviesWatched)
+    public Regular(String ID, String userName, String password, String firstName, String lastName, String email, Playlist playLists, WatchRecord watchrecord, Subscriptions subscription,int numberOfMoviesWatched)
     {
         super(ID, userName, password, firstName, lastName, email);
         this.numberOfMoviesWatched = numberOfMoviesWatched;
@@ -30,15 +30,20 @@ public class Regular extends User
         return numberOfMoviesWatched;
     }
 
-    public Subscriptions getSubscription() {
+    public Subscriptions getSubscription()
+    {
         return subscription;
-    }
-
-    public WatchRecord getWatchrecord() {
-        return watchrecord;
     }
     public void setSubscription(Subscriptions subscription) {
         this.subscription = subscription;
+    }
+    public WatchRecord getWatchrecord()
+    {
+        return watchrecord;
+    }
+
+    public void setWatchrecord(WatchRecord watchrecord) {
+        this.watchrecord = watchrecord;
     }
 
     public Playlist getPlayLists()
@@ -48,7 +53,13 @@ public class Regular extends User
     public void setPlayLists(Playlist playLists)
     {
         this.playLists = playLists;
-    }
+}
+
+//    @Override
+//    public void hello(int z) {
+////        super.hello(5);
+//        System.out.println("hey");
+//    }
 
 
 }

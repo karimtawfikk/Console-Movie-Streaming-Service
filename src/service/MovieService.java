@@ -94,11 +94,8 @@ public class MovieService
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-      }
-
+    }
 }
-
-
 
 
 }

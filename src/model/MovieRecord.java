@@ -3,20 +3,11 @@ package model;
 import java.time.LocalDate;
 
 public class MovieRecord {
-    private int userId;
-    private String movieName;
-    private LocalDate watchDate;
-    private Float Rating;
-
-
-
-//    public MovieRecord( String movieName, LocalDate watchDate, Float rating) {
-//        this.movieName = movieName;
-//        this.watchDate = watchDate;
-//        Rating = rating;
-//    }
-
-    public MovieRecord(String movieName, LocalDate watchDate, Float rating, int userId)
+    private final String userId;
+    private final String movieName;
+    private final LocalDate watchDate;
+    private final Float Rating;
+    public MovieRecord(String movieName, LocalDate watchDate, Float rating, String userId)
     {
         this.userId = userId;
         this.movieName = movieName;
@@ -36,12 +27,11 @@ public class MovieRecord {
         return watchDate;
     }
 
-    public int getUserId()
+    public String getUserId()
     {
         return userId;
-    }
+}
 
 
 
 }
-

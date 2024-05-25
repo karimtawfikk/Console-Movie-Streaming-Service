@@ -14,6 +14,7 @@ import static utils.Constants.*;
 public class CastService {
 
     public static List<Actor> readActorsFromFile()
+
     {
         ArrayList<Actor> Actors = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + ACTORS_PATH))) {
@@ -38,7 +39,7 @@ public class CastService {
     }
 
 
-  public static List<Director> readDirectorFromFile() {
+    public static List<Director> readDirectorFromFile() {
 
         ArrayList<Director> Directors = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(DATA_DIRECTORY + DIRECTORS_PATH))) {
@@ -81,11 +82,5 @@ public class CastService {
         System.out.println("Gender: " + temporaryDirector.getGender());
         System.out.println("Nationality: " + temporaryDirector.getNationality());
         System.out.println("List of movies: " + temporaryDirector.getList_of_movies());
-    }
-
-
-
-
-
-
+}
 }

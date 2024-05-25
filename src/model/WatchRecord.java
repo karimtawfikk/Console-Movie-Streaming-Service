@@ -6,20 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class WatchRecord
-{
-    private int id;
+public class WatchRecord {
+    private String id;
     private List<MovieRecord> watchedPlaylist;
-    public WatchRecord() {
+
+    public WatchRecord(String id) {
+        this.id = id;
     }
-    public WatchRecord(int id, List<MovieRecord> watchedPlaylist)
-    {
+
+    public WatchRecord(String id, List<MovieRecord> watchedPlaylist) {
         this.id = id;
         this.watchedPlaylist = watchedPlaylist;
     }
-    //todo hwa da l aly aamlo
 
-    public void addToWatched(String movieTite, LocalDate date, Float rating, int userId) {
+    public void addToWatched(String movieTite, LocalDate date, Float rating, String userId) {
         if (watchedPlaylist == null) {
             watchedPlaylist = new ArrayList<>();
         }
@@ -31,22 +31,31 @@ public class WatchRecord
         return watchedPlaylist;
     }
 
-    @Override
-    public String toString() {
+    public void setWatchedRecord(List<MovieRecord> watchedPlaylist) {
+        this.watchedPlaylist = watchedPlaylist;
+    }
 
+    @Override
+    public String toString()
+    {
         List<String> recordStrings = new ArrayList<>();
         for (MovieRecord record : watchedPlaylist)
         {
-            if(record.getUserId() == id)
+            if (record.getUserId().equals(id))
             {
                 String recordString = String.format("%s:%s:%s",
-                        record.getMovieName(),
-                        record.getWatchDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                        record.getMovieName()==null ? " :": record.getMovieName(),
+                        record.getWatchDate()==null? " :":
+                                record.getWatchDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
                         record.getRating() == null ? " " : record.getRating().intValue());
                 recordStrings.add(recordString);
             }
-
         }
-        return String.join(";", recordStrings);
-    }
+        if(recordStrings.isEmpty())
+        {
+            return " ";
+        }else {
+            return String.join(";", recordStrings);
+ }
+}
 }

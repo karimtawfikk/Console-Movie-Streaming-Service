@@ -1,5 +1,8 @@
 package model;
 
+import com.sun.security.jgss.GSSUtil;
+import jdk.swing.interop.SwingInterOpUtils;
+
 import java.util.Scanner;
 import java.util.Random;
 import java.time.LocalDate;
@@ -12,7 +15,7 @@ public class Payment
     public void paymentMethod(){
 
         Random random = new Random();
-         confirmationCode = random.nextInt(9000) + 1000;
+        confirmationCode = random.nextInt(9000) + 1000;
         long randomNumber = random.nextLong();
         while(randomNumber<0)
         {
@@ -20,11 +23,16 @@ public class Payment
         }
         System.out.println("Choose your payment method \n -F for fawry \n -C for credit card");
         char payWay = input.next().charAt(0);
+        while(payWay!='f' && payWay!='F' && payWay!='C' && payWay!='c' )
+        {
+            System.out.println("Invalid entry!");
+            System.out.println("Choose your payment method \n -F for fawry \n -C for credit card");
+             payWay = input.next().charAt(0);
+        }
         if(payWay =='f' || payWay =='F'){
             System.out.println("Send money to this number: "+" "+randomNumber);
         }
-        else if(payWay =='c' || payWay =='C'){
-
+        else {
             System.out.println("Enter your credit card number:");
             long cardId=input.nextLong(); //long zay int bs more capacity
             while (!checkCard(Long.toString(cardId)))
